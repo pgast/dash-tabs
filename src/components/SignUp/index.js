@@ -30,29 +30,30 @@ class SignUpFormBase extends Component {
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
+
       .then(authUser => {
-        this.props.firebase
-          .user(authUser.user.uid)
-          .set({
-            username,
-            email,
-          })
+        this.props.firebase.user(authUser.user.uid)
+        // agregar en tables el takeout point y generarlo cuando se cree usuario
+        .set({ username, email, tables: 0 })
+        
+        .then(() => {
+          this.props.firebase.userMenu(authUser.user.uid)
+          .set({ drinks: 0, dishes: 0 })
+
           .then(() => {
-            this.setState({ ...INITIAL_STATE });
-            this.props.firebase.userMenu(authUser.user.uid).set({
-              bebidas: 0,
-              comidas: 0
-            });
-            this.props.history.push(ROUTES.HOME);
+            this.props.firebase.userOrders(authUser.user.uid)
+            .set({ current: 0, past: 0 })
           })
-          .catch(error => {
-            this.setState({ error });
-          });
+        })
       })
+      
       .catch(error => {
         this.setState({ error });
-      })
-    event.preventDefault();
+      });
+
+      this.setState({ ...INITIAL_STATE });
+      this.props.history.push(ROUTES.HOME);
+      event.preventDefault();
   };
 
   onChange = event => {

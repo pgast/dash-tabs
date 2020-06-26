@@ -40,26 +40,30 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          type="password"
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          placeholder="New Password"
-        />
-        <input
-          type="password"
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          placeholder="Confirm New Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
-        {error && <p>{error.message}</p>}
-      </form>
+      <>
+        <h3>Password Change Form</h3>
+        <p>Cambiar contrasena pero ya desde dentro de app</p>
+        <form onSubmit={this.onSubmit}>
+          <input
+            type="password"
+            name="passwordOne"
+            value={passwordOne}
+            onChange={this.onChange}
+            placeholder="New Password"
+          />
+          <input
+            type="password"
+            name="passwordTwo"
+            value={passwordTwo}
+            onChange={this.onChange}
+            placeholder="Confirm New Password"
+          />
+          <button disabled={isInvalid} type="submit">
+            Reset My Password
+          </button>
+          {error && <p>{error.message}</p>}
+        </form>
+      </>
     );
   }
 }

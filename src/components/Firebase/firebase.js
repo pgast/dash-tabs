@@ -62,6 +62,7 @@ class Firebase {
   getCurrentUserUid = () => this.auth.currentUser.uid;
 
   // *** User API ***
+  userOrders = uid => this.db.ref(`orders/${uid}`);
   userMenu = uid => this.db.ref(`menus/${uid}`);
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
