@@ -35,7 +35,8 @@ class Dashboard extends Component {
       userObject.uid = this.props.firebase.getCurrentUserUid();
 
       this.setState({ user: userObject, loading: false });
-    });
+    })
+
 
     // fetch menu with user uid
     this.props.firebase.userMenu(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
@@ -52,10 +53,20 @@ class Dashboard extends Component {
     if(newMenu.drinks.length === 0) newMenu.drinks = 0;
     if(newMenu.dishes.length === 0) newMenu.dishes = 0;
 
-    this.props.firebase.userMenu(this.props.firebase.getCurrentUserUid()).set({ 
+
+      // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
+    this.props.firebase.userMenu(this.state.user.uid).set({ 
       drinks: newMenu.drinks,
       dishes: newMenu.dishes
     });
+  }
+
+  updateTablesDb = (newTables) => {
+    // REVISAR QUE SEA SIEMPRE ARRAY CON ITEMS O SOLO 0
+    if(newTables.length === 0) newTables = 0;
+
+    // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
+    this.props.firebase.user(this.state.user.uid).set({ tables: newTables });
   }
 
   toggleView = (input) => this.setState({ view: input });
@@ -88,7 +99,7 @@ class Dashboard extends Component {
         </div>
 
         {this.state.view === "orders" && <OrdersManager />}
-        {this.state.view === "tables" && <TablesManager createQR={this.createQR} qrCode={qrCode} tables={this.state.menu.tables}/>}
+        {this.state.view === "tables" && <TablesManager createQR={this.createQR} qrCode={qrCode} dbTables={this.state.user.tables} updateTablesDb={this.updateTablesDb}/>}
         {this.state.view === "menu" && <MenuManager menu={menu} updateDb={this.updateDb} />}
 
         {loading && <div>Loading ...</div>}

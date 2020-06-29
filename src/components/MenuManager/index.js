@@ -67,7 +67,7 @@ class MenuManager extends Component {
     event.preventDefault();
     let newItem = { 
       name: this.state.inputItem.name, 
-      price: this.state.inputItem.price, 
+      price: parseInt(this.state.inputItem.price, 10), 
       available: this.state.inputItem.available 
     };
     let newMenu = {...this.state.menu};
@@ -95,7 +95,7 @@ class MenuManager extends Component {
     event.preventDefault();
     let newItem = { 
       name: this.state.itemEdit.newName, 
-      price: this.state.itemEdit.newPrice, 
+      price: parseInt(this.state.itemEdit.newPrice, 10), 
       available: this.state.itemEdit.available, 
     };
     let newMenu = {...this.state.menu};
@@ -155,12 +155,14 @@ class MenuManager extends Component {
     })
   };
 
+  numberIsInvalid = number => number <= 0 || number === '';
+
   render() {
     const { name, price, type } = this.state.inputItem;
-    const isInvalid = name === '' || price === '' || type === '';
+    const isInvalid = name === '' || this.numberIsInvalid(price) || type === '';
 
     const { newName, newPrice, current } = this.state.itemEdit;
-    const isInvalidEdit = newName === '' || newPrice === '';
+    const isInvalidEdit = newName === '' || this.numberIsInvalid(newPrice);
 
     const { drinks, dishes } = this.state.menu;
 

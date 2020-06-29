@@ -65,6 +65,7 @@ class Firebase {
   userOrders = uid => this.db.ref(`orders/${uid}`);
   userMenu = uid => this.db.ref(`menus/${uid}`);
   user = uid => this.db.ref(`users/${uid}`);
+  // userTables = uid => this.db.ref(`users/${uid}/tables`);
   users = () => this.db.ref('users');
 }
 
