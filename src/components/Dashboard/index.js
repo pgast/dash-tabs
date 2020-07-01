@@ -14,7 +14,6 @@ class Dashboard extends Component {
       loading: false,
       user: {},
       menu: {},
-      qrCode: '',
       view: "orders"
     };
   };
@@ -66,24 +65,26 @@ class Dashboard extends Component {
     if(newTables.length === 0) newTables = 0;
 
     // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
-    this.props.firebase.user(this.state.user.uid).set({ tables: newTables });
+    // this.props.firebase.user(this.state.user.uid).set({ tables: newTables });
+    this.props.firebase.userTables(this.state.user.uid).set(newTables);
   }
 
   toggleView = (input) => this.setState({ view: input });
 
-  createQR = () => {
+  createQR = (tableNum) => {
     const currentUrl = window.location.href;
     let qrUrl = currentUrl.split('').slice(0, currentUrl.length-9).join('');
-    qrUrl = qrUrl + "menu/" + this.state.user.uid;
+    qrUrl = `${qrUrl}menu/${this.state.user.uid}/${tableNum}`
     console.log(`CURRENT URL: ${currentUrl} / QRURL: ${qrUrl}`);
-    this.setState({ qrCode: `https://api.qrserver.com/v1/create-qr-code/?data=${qrUrl}&amp;size=500x500` })
+
+    return `https://api.qrserver.com/v1/create-qr-code/?data=${qrUrl}&amp;size=500x500`;
   }
 
   // AGREGAR FUNCIONALIDAD, DE QUE SI NO HAY ITEMS EN EL MENU NO SE PUEDE CREAR CODIGO QR
   
 
   render() {
-    const { loading, menu, qrCode } = this.state;
+    const { loading, menu } = this.state;
 
     return (
       <div className="dashboard">
@@ -99,7 +100,7 @@ class Dashboard extends Component {
         </div>
 
         {this.state.view === "orders" && <OrdersManager />}
-        {this.state.view === "tables" && <TablesManager createQR={this.createQR} qrCode={qrCode} dbTables={this.state.user.tables} updateTablesDb={this.updateTablesDb}/>}
+        {this.state.view === "tables" && <TablesManager createQR={this.createQR} dbTables={this.state.user.tables} updateTablesDb={this.updateTablesDb}/>}
         {this.state.view === "menu" && <MenuManager menu={menu} updateDb={this.updateDb} />}
 
         {loading && <div>Loading ...</div>}

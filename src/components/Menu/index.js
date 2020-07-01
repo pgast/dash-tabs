@@ -8,12 +8,14 @@ class Menu extends Component {
     this.state = {
       dataFetched: false,
       error: false,
-      menu: { drinks: 0, dishes: 0 }
+      menu: { drinks: 0, dishes: 0 },
+      table: ''
     };
   };
 
   componentWillMount() {
     this.fetchMenu(this.props.match.params.uid);
+    // conseguir params mesa del url.
   }
 
   componentWillUnmount() {
@@ -27,7 +29,8 @@ class Menu extends Component {
         if(snapshot.val().dishes !== 0) newMenu.dishes = snapshot.val().dishes.filter(el => el.available);
         if(snapshot.val().drinks !== 0) newMenu.drinks = snapshot.val().drinks.filter(el => el.available);
         
-        this.setState({ menu: newMenu, dataFetched: true });
+        // this.setState({ menu: newMenu, dataFetched: true });
+        this.setState({ menu: newMenu, dataFetched: true, table: this.props.match.params.table });
 
       } else {
         this.setState({ error: 'data not found' });
@@ -52,6 +55,7 @@ class Menu extends Component {
           :
         (
           <>
+            <h2>Table {this.state.table}</h2>
             <h4 onClick={() => console.log(this.state)}>Bebidas</h4>
             {drinksIsEmpty ? 
               <h3>No hay bebidas registradas</h3>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function TablesManager({ createQR, qrCode, dbTables, updateTablesDb }) {
+export default function TablesManager({ createQR, dbTables, updateTablesDb }) {
   const [tables, setTables] = useState(dbTables);
   const [inputTable, setInputTable] = useState({ number: '', description: '', waitingOrder: false });
   const [tableEdit, setTableEdit] = useState({ 
@@ -9,11 +9,14 @@ export default function TablesManager({ createQR, qrCode, dbTables, updateTables
     newDescription: '', 
     waitingOrder: false, 
   });
+  const [tablesQrCodes, setTablesQrCodes] = useState(null);
+  const [showQrs, setShowQrs] = useState(false);
+
 
   const numberIsInvalid = (number) => (number <= 0) || (number === '');
   const inputIsInvalid = numberIsInvalid(inputTable.number) || inputTable.description === '';
   const editIsInvalid = numberIsInvalid(tableEdit.newNumber) || tableEdit.newDescription === '';
-
+  const tablesIsEmpty = tables === 0 || tables.length === 0 ? true : false;
   const [error, setError] = useState({ exists: false });
 
   const tableIsDuplicate = (newNumber, currentIdx=null) => {
@@ -32,6 +35,18 @@ export default function TablesManager({ createQR, qrCode, dbTables, updateTables
     }
 
     return false;
+  }
+
+
+  const generateQrCodes = () => {
+    let newQrs = [];
+
+    tables.forEach(el => {
+      newQrs.push({ number: el.number, qr: createQR(el.number) })
+    });
+
+    setTablesQrCodes(newQrs);
+    setShowQrs(true);
   }
 
   const editTable = (tableIdx) => {
@@ -86,11 +101,15 @@ export default function TablesManager({ createQR, qrCode, dbTables, updateTables
       setError(newError);
 
     } else {
-      let newTables = [...tables];
-      let number = parseInt(inputTable.number, 10);
-      newTables.push({ ...inputTable, number});
-      setInputTable({ number: '', description: '', waitingOrder: false });
-      setTables(newTables);
+      if(!tables) {
+        setTables([]);
+      } else {
+        let newTables = [...tables];
+        let number = parseInt(inputTable.number, 10);
+        newTables.push({ ...inputTable, number});
+        setInputTable({ number: '', description: '', waitingOrder: false });
+        setTables(newTables);
+      }
     }
   }
 
@@ -100,35 +119,40 @@ export default function TablesManager({ createQR, qrCode, dbTables, updateTables
     {error && <h4>{error.msg}</h4>}
     <hr />
 
-    <ol>
-      {tables.map((el, idx) => (
-        <React.Fragment key={idx}>
-          {tableEdit.current !== idx ? 
-            <li key={idx} onClick={() => editTable(idx)}>Table number {el.number} - {el.description}</li>
-          :
-            <li key={idx}>
-              <form onSubmit={(e) => saveEditTable(e)}>
-                <input 
-                  type="number"
-                  value={tableEdit.newNumber}
-                  placeholder="New table number"
-                  onChange={(e) => setTableEdit({ ...tableEdit, newNumber: e.target.value })}
-                />
-                <input 
-                  type="text"
-                  value={tableEdit.newDescription}
-                  placeholder="New table description"
-                  onChange={(e) => setTableEdit({ ...tableEdit, newDescription: e.target.value })}
-                />
-                <button disabled={editIsInvalid} type="submit">Save</button>
-                <button onClick={() => deleteTable(idx)}>Delete Item</button>
-                <button onClick={() => resetTableEdit()}>Cancel Edit</button>
-              </form>
-            </li>
-          }
-        </React.Fragment>
-      ))}
-    </ol>
+    {tablesIsEmpty ?
+      <h3>NO TABLES REGISTERED</h3>
+      :
+      <ol>
+        {tables.map((el, idx) => (
+          <React.Fragment key={idx}>
+            {tableEdit.current !== idx ? 
+              <li key={idx} onClick={() => editTable(idx)}>Table number {el.number} - {el.description}</li>
+            :
+              <li key={idx}>
+                <form onSubmit={(e) => saveEditTable(e)}>
+                  <input 
+                    type="number"
+                    value={tableEdit.newNumber}
+                    placeholder="New table number"
+                    onChange={(e) => setTableEdit({ ...tableEdit, newNumber: e.target.value })}
+                  />
+                  <input 
+                    type="text"
+                    value={tableEdit.newDescription}
+                    placeholder="New table description"
+                    onChange={(e) => setTableEdit({ ...tableEdit, newDescription: e.target.value })}
+                  />
+                  <button disabled={editIsInvalid} type="submit">Save</button>
+                  <button>Get Table QR Code</button>
+                  <button onClick={() => deleteTable(idx)}>Delete Item</button>
+                  <button onClick={() => resetTableEdit()}>Cancel Edit</button>
+                </form>
+              </li>
+            }
+          </React.Fragment>
+        ))}
+      </ol>
+    }
 
     <hr />
 
@@ -154,17 +178,25 @@ export default function TablesManager({ createQR, qrCode, dbTables, updateTables
     </div>
 
 
+    <hr />
     {/* GENERATE QR CODE WITH PUSH OF A BUTTON and display qr code here */}
-    <h3>QR Code</h3>
-    <button onClick={() => createQR()}>Generate Code</button>
-
-    {qrCode !== '' && (
-      <img 
-        src={qrCode}
-        alt="" 
-        title="" 
-        />
-    )}
+    <h3>QR Codes</h3>
+    <button onClick={() => generateQrCodes()}>Generate Tables QR Codes</button>
+    {
+      showQrs && (
+        <React.Fragment>
+          <button onClick={() => setShowQrs(false)}>Close QRs</button>
+          <ol>
+            {tablesQrCodes.map((el, idx) => (
+              <li key={idx}>
+                <h5>Table number: {el.number}</h5>
+                <img src={el.qr} alt="" title="" />
+              </li>
+            ))}
+          </ol>
+        </React.Fragment>
+      )
+    }
     </>
   );
 };
