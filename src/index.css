@@ -48,4 +48,23 @@ html{
   margin: 0 1rem;
 }
 
+.orderCard {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.orderCard .info {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+  justify-content: space-around;
+}
+
+.items {
+  background: black;
+  color: white;
+}
+
 /* DEBUG AND PRODUCTION STYLING */

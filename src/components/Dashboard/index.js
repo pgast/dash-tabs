@@ -14,15 +14,10 @@ class Dashboard extends Component {
       loading: false,
       user: {},
       menu: {},
-      view: "orders"
+      view: "orders",
+      orders: { current: [], past: [] },
     };
   };
-
-    /* TABLES 
-     num de mesa input 
-      descripcion de ubicacion o mesa
-      tiene orden actual = true / false
-    */
 
 
   componentDidMount() {
@@ -41,6 +36,12 @@ class Dashboard extends Component {
     this.props.firebase.userMenu(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
       this.setState({ menu: snapshot.val() });
     });
+
+
+    // fetch orders with user uid
+    this.props.firebase.userOrders(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
+      this.setState({ orders: snapshot.val() });
+    })
   }
 
   componentWillUnmount() {
@@ -67,6 +68,11 @@ class Dashboard extends Component {
     // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
     // this.props.firebase.user(this.state.user.uid).set({ tables: newTables });
     this.props.firebase.userTables(this.state.user.uid).set(newTables);
+  }
+
+  // UPDATE ORDERS 
+  updateOrders = (newOrders) => {
+    this.props.firebase.userOrders(this.state.user.uid).set(newOrders);
   }
 
   toggleView = (input) => this.setState({ view: input });
@@ -99,7 +105,7 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        {this.state.view === "orders" && <OrdersManager />}
+        {this.state.view === "orders" && <OrdersManager dbOrders={this.state.orders} updateOrders={this.updateOrders}/>}
         {this.state.view === "tables" && <TablesManager createQR={this.createQR} dbTables={this.state.user.tables} updateTablesDb={this.updateTablesDb}/>}
         {this.state.view === "menu" && <MenuManager menu={menu} updateDb={this.updateDb} />}
 
