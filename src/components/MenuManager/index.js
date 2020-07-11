@@ -14,7 +14,7 @@ class MenuManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: this.props.menu,
+      menu: { drinks: [], dishes: [] },
       itemEdit: {
         type: '',
         current: '',
@@ -31,14 +31,15 @@ class MenuManager extends Component {
     };
   };
 
-  // DEJAR O QUITAR ESTE LIFECYCLE HOOK
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.menu !== prevProps.menu) {
-  //     console.log('realoading component');
-  //     let menu = this.props.menu;
-  //     this.setState({ menu });
-  //   }
-  // }
+  componentDidMount() {
+    this.setState({ menu: this.props.menu})
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.menu !== prevProps.menu) {
+      this.setState({ menu: this.props.menu });
+    }
+  }
 
   onChange = event => {
     let newInputItem = {...this.state.inputItem};
@@ -47,10 +48,6 @@ class MenuManager extends Component {
   };
 
   onChangeEdit = event => {
-    // let newEditItem = {...this.state.itemEdit};
-    // newEditItem[event.target.name] = event.target.value;
-    // this.setState({ itemEdit: newEditItem });
-
     let newEditItem = {...this.state.itemEdit};
 
     if(event.target.name === 'available') {
@@ -283,8 +280,6 @@ class MenuManager extends Component {
           </ol>
         }
         <hr />
-
-
 
         {/* ADD NEW ITEM FORM */}
         <form onSubmit={this.addItem}>

@@ -17,7 +17,6 @@ class OrdersManager extends Component {
   componentDidUpdate(prevProps) {
     if(this.props.dbOrders !== prevProps.dbOrders) {
       this.setState({ orders: this.props.dbOrders });
-      console.log('data updated');
     }
   }
 
@@ -54,6 +53,14 @@ class OrdersManager extends Component {
     this.props.updateOrders(newOrders);
   }
 
+  itemsAreValid = (items) => {
+    if(items === 0) {
+      return false;
+    }
+
+    return true;
+  };
+
   render() {
     const currentOrdersValid = this.state.orders.current === 0 ? false : true;
     const pastOrdersValid = this.state.orders.past === 0 ? false : true;
@@ -84,19 +91,31 @@ class OrdersManager extends Component {
                       {
                         this.state.showItems === idx ?
                         <>
-                          <p>SHOWING ITEMS</p>
-                          <p>DISHES</p>
-                          <ol>
-                            {el.items.dishes.map((item, index) => (
-                              <li key={index}>{item.item} - Qty: {item.qty}</li>
-                            ))}
-                          </ol>
-                          <p>DRINKS</p>
-                          <ol>
-                            {el.items.drinks.map((item, index) => (
-                              <li key={index}>{item.item} - Qty: {item.qty}</li>
-                            ))}
-                          </ol>
+                          {this.itemsAreValid(el.items.dishes) ?
+                            <>
+                              <p>DISHES</p>
+                              <ol>
+                                {el.items.dishes.map((item, index) => (
+                                  <li key={index}>{item.name} - Qty: {item.qty}</li>
+                                ))}
+                              </ol>
+                            </>
+                            :
+                            null
+                          }
+
+                          {this.itemsAreValid(el.items.drinks) ?
+                            <>
+                              <p>DRINKS</p>
+                              <ol>
+                                {el.items.drinks.map((item, index) => (
+                                  <li key={index}>{item.name} - Qty: {item.qty}</li>
+                                ))}
+                              </ol>
+                            </>
+                            :
+                            null
+                          }
                           <button onClick={this.toggleItems}>Close</button>
                         </>
                         :
@@ -132,21 +151,31 @@ class OrdersManager extends Component {
                       {
                           this.state.showItems === idx ?
                           <>
-                            <p>SHOWING ITEMS</p>
-
-                            <p>DISHES</p>
-                            <ol>
-                              {el.items.dishes.map((item, index) => (
-                                <li key={index}>{item.item} - Qty: {item.qty}</li>
-                              ))}
-                            </ol>
+                            {this.itemsAreValid(el.items.dishes) ? 
+                              <>
+                                <p>DISHES</p>
+                                <ol>
+                                  {el.items.dishes.map((item, index) => (
+                                    <li key={index}>{item.name} - Qty: {item.qty}</li>
+                                  ))}
+                                </ol>
+                              </>
+                              :
+                              null
+                            }
                             
-                            <p>DRINKS</p>
-                            <ol>
-                              {el.items.drinks.map((item, index) => (
-                                <li key={index}>{item.item} - Qty: {item.qty}</li>
-                              ))}
-                            </ol>
+                            {this.itemsAreValid(el.items.drinks) ?
+                              <>
+                                <p>DRINKS</p>
+                                <ol>
+                                  {el.items.drinks.map((item, index) => (
+                                    <li key={index}>{item.name} - Qty: {item.qty}</li>
+                                  ))}
+                                </ol>
+                              </>
+                              :
+                              null
+                            }
 
                             <button onClick={this.toggleItems}>Close</button>
                           </>

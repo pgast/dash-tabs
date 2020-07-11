@@ -4,7 +4,7 @@ class TablesManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tables: this.props.dbTables,
+      tables: [],
       inputTable: {
         number: '',
         description: '',
@@ -19,6 +19,16 @@ class TablesManager extends Component {
       showQrs: false,
       tablesQrCodes: null,
       error: { exists: false },
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ tables: this.props.dbTables})
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.dbTables !== prevProps.dbTables) {
+      this.setState({ tables: this.props.dbTables });
     }
   }
 

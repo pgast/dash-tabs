@@ -67,4 +67,69 @@ html{
   color: white;
 }
 
+.clientMenu h2 {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.menu > div {
+  width: 34%;
+  margin: 1rem;
+}
+
+.menu > div > h4 {
+  margin-bottom: 1rem;
+} 
+
+.clientMenu_orderForm {
+  border-top: 1px solid gray;
+  margin: 0 2rem;
+  padding: 2rem 0;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.clientMenu_orderForm > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.clientMenu ul {
+  margin-top: 1rem;
+}
+
+.clientMenu_orderForm li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.clientMenu_orderForm li div {
+  margin: 0 0.4rem;
+}
+
+#itemQty {
+  display: flex;
+  align-items: center;
+}
+
+.clientMenu button {
+  height: 100%;
+  font-size: 0.7rem;
+  padding: 0 .2rem;
+}
+
+.clientMenu_orderForm > hr {
+  margin: 2rem;
+}
+
 /* DEBUG AND PRODUCTION STYLING */
