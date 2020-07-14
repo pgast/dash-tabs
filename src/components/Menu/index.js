@@ -15,7 +15,7 @@ class Menu extends Component {
         end: "23:03",
         ready: false,
         start: "12:36",
-        table: 5,
+        table: '',
         items: {
           dishes: [],
           drinks: [],
@@ -29,6 +29,7 @@ class Menu extends Component {
     // VER SI SE PUEDE PASAR LOS VALIDADORES DE ORDEN A OTRA FUNCION Y NO EN EL MONTADO
     this.orderIsValid(this.props.match.params.uid);
     this.tableIsValid(this.props.match.params.uid);
+    console.dir(this.state);
   }
 
   componentWillUnmount() {
@@ -89,16 +90,12 @@ class Menu extends Component {
   }
 
   sendOrder = (uid) => {
-    // check if table is valid
     if(this.state.tableIsValid === false) {
-      console.log('table is invalid');
       this.setState({ error: "Check table number" });
       return;
     }
 
-    // check if order is valid
     if(this.state.orderIsValid === false) {
-      console.log('order is invalid');
       this.setState({ error: "Order number is invalid" });
       return;
     }
@@ -117,7 +114,8 @@ class Menu extends Component {
     }
 
     newOrders.current.push(order);
-    this.props.firebase.userOrders(uid).set(newOrders);
+    console.dir(newOrders);
+    //this.props.firebase.userOrders(uid).set(newOrders);
   }
 
   itemExistsInOrder = (name, type) => {
@@ -126,90 +124,48 @@ class Menu extends Component {
     return exists === undefined ? false : true;
   }
 
-  upgradeCost = (price, item, type) => {
-    if(price !== undefined) {
-      return this.state.order.cost + price;
-    } else {
-      // recibir item name / item
-      // buscar el precio en menu
-      let foundItem = this.state.menu[type].find(el => el.name === item.name)
-      // agregar el precio al costo
-      // inmutable!
-      // return this.state.order.cost + price
-    }
-  };
-
   addItem = (item, type) => {
     if(this.itemExistsInOrder(item.name, type)) return;
-    let newCost = this.upgradeCost(item.price);
+    let newOrder = {...this.state.order};
+    let newCost = newOrder.cost + this.getItemCost(item.name, type);
     let orderItem = { name: item.name, qty: 1 };
-
-    if(type === 'dishes') {
-      let newDishes = [...this.state.order.items.dishes];
-      newDishes.push(orderItem);
-      this.setState({ 
-        ...this.state, 
-        order: { 
-          ...this.state.order, 
-          items: { ...this.state.order.items, dishes: newDishes },
-          cost: newCost,
-        } 
-      })
-    }
-
-    if(type === 'drinks') {
-      let newDrinks = [...this.state.order.items.drinks];
-      newDrinks.push(orderItem);
-      this.setState({
-        ...this.state, 
-        order: { 
-          ...this.state.order, 
-          items: { ...this.state.order.items, drinks: newDrinks },
-          cost: newCost,
-        }
-      })
-    }
+    let newItems = [...this.state.order.items[type]];
+    newItems.push(orderItem);
+    newOrder.items[type] = newItems;
+    newOrder.cost = newCost;
+    this.setState({ order: newOrder });
   }
+
+  getItemCost = (name, type) => {
+    return this.state.menu[type].find(el => el.name === name).price;
+  };
 
   deleteItem = (item, type) => {
     let newOrders = {...this.state.order};
     newOrders.items[type] = newOrders.items[type].filter(el => el.name !== item.name);
-    
-    // inmutable!
-    let itemCost = this.state.menu[type].find(el => el.name === item.name);
-    itemCost = -Math.abs(itemCost.price * item.qty);
-    newOrders.cost = this.upgradeCost(itemCost);
+    let itemCost = this.getItemCost(item.name, type) * item.qty;
+    newOrders.cost = newOrders.cost - itemCost;
     this.setState({ order: newOrders });
-
   }
 
-  upgradeItemQty = (item, type, qty) => {
-    
-    // copy orders
+  upgradeItemQty = (name, type, qty) => {  
     let newOrder = {...this.state.order};
-    // find item and copy
-    let upgradedItem = newOrder.items[type].find(el => el.item === item);
-    
-    // if current item qty is 1 and input qty is -1 do nothing
-    if(upgradedItem.qty === 1 && qty === -1) return;
-
-
-    // upgrade item qty not less than 1
-    upgradedItem.qty = upgradedItem.qty + qty;
-    // filter out item from array (dishes, drinks)
-    newOrder.items[type] = newOrder.items[type].filter(el => el.item !== item) 
-    // add new updated item to array (dishes, drinks)
-    newOrder.items[type].push(upgradedItem);
-    // update state with newOrder 
+    let itemIndex = newOrder.items[type].findIndex(el => el.name == name);
+    if(newOrder.items[type][itemIndex].qty === 1 && qty === -1) return;
+    newOrder.items[type][itemIndex].qty = newOrder.items[type][itemIndex].qty + qty;
+    let itemCost = this.getItemCost(name, type);
+    if(qty === -1) {
+      newOrder.cost = newOrder.cost - itemCost; 
+    } else {
+      newOrder.cost = newOrder.cost + itemCost;
+    }
     this.setState({ order: newOrder });
   }
 
   render() {
     const orderIsEmpty = this.state.order.items.dishes.length === 0 && this.state.order.items.drinks.length === 0;
-
     const { dataFetched, order } = this.state;
     const { drinks, dishes } = this.state.menu;
-
     const drinksIsEmpty = (drinks.length === 0 || drinks === 0 ) ? true : false;
     const dishesIsEmpty = (dishes.length === 0 || dishes === 0 ) ? true : false;
     const orderDrinksIsEmpty = order.items.drinks.length === 0 ? true : false;
