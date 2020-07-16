@@ -61,13 +61,18 @@ class MenuManager extends Component {
   };
 
   addItem = (event) => {
+    // IMMUTABLE ADD ITEM
     event.preventDefault();
     let newItem = { 
       name: this.state.inputItem.name, 
       price: parseInt(this.state.inputItem.price, 10), 
       available: this.state.inputItem.available 
     };
-    let newMenu = {...this.state.menu};
+
+    let newMenu = {
+      drinks: [...this.state.menu.drinks],
+      dishes: [...this.state.menu.dishes],
+    };
 
     if(this.state.inputItem.type === 'drink') {
       if(!newMenu.drinks) newMenu.drinks = [];
@@ -86,16 +91,49 @@ class MenuManager extends Component {
         available: true, 
       } 
     });
+
+
+
+    // event.preventDefault();
+    // let newItem = { 
+    //   name: this.state.inputItem.name, 
+    //   price: parseInt(this.state.inputItem.price, 10), 
+    //   available: this.state.inputItem.available 
+    // };
+    // let newMenu = {...this.state.menu};
+
+    // if(this.state.inputItem.type === 'drink') {
+    //   if(!newMenu.drinks) newMenu.drinks = [];
+    //   newMenu.drinks.push(newItem);
+    // } else {
+    //   if(!newMenu.dishes) newMenu.dishes = [];
+    //   newMenu.dishes.push(newItem);
+    // }
+
+    // this.setState({ 
+    //   menu: newMenu, 
+    //   inputItem: { 
+    //     type: '',
+    //     name: '', 
+    //     price: '', 
+    //     available: true, 
+    //   } 
+    // });
   };
 
   saveEditItem = (event, idx) => {
+    // IMMUTABLE SAVE EDIT ITEM
     event.preventDefault();
     let newItem = { 
       name: this.state.itemEdit.newName, 
       price: parseInt(this.state.itemEdit.newPrice, 10), 
       available: this.state.itemEdit.available, 
     };
-    let newMenu = {...this.state.menu};
+    let newMenu = {
+      drinks: [...this.state.menu.drinks],
+      dishes: [...this.state.menu.dishes],
+    };
+
     newMenu[this.state.itemEdit.type][idx] = newItem;
 
     this.setState({ 
@@ -108,6 +146,26 @@ class MenuManager extends Component {
         available: '',
       }
     });
+
+    // event.preventDefault();
+    // let newItem = { 
+    //   name: this.state.itemEdit.newName, 
+    //   price: parseInt(this.state.itemEdit.newPrice, 10), 
+    //   available: this.state.itemEdit.available, 
+    // };
+    // let newMenu = {...this.state.menu};
+    // newMenu[this.state.itemEdit.type][idx] = newItem;
+
+    // this.setState({ 
+    //   menu: newMenu,  
+    //   itemEdit: {
+    //     type: '',
+    //     current: '',
+    //     newName: '',
+    //     newPrice: '',
+    //     available: '',
+    //   }
+    // });
   };
 
   editItem = (item, type) => {
@@ -123,9 +181,12 @@ class MenuManager extends Component {
   };
 
   deleteItem = (index, type) => {
-    let newMenu = {...this.state.menu};
+    // IMMUTABLE DELETE ITEM
+    let newMenu = {
+      drinks: [...this.state.menu.drinks],
+      dishes: [...this.state.menu.dishes],
+    };
     newMenu[type].splice(index, 1);
-
     if(newMenu[type].length === 0) newMenu[type] = 0;
 
     this.setState({ 
@@ -138,6 +199,22 @@ class MenuManager extends Component {
         available: '',
       }
     });
+
+    // let newMenu = {...this.state.menu};
+    // newMenu[type].splice(index, 1);
+
+    // if(newMenu[type].length === 0) newMenu[type] = 0;
+
+    // this.setState({ 
+    //   menu: newMenu,  
+    //   itemEdit: {
+    //     type: '',
+    //     current: '',
+    //     newName: '',
+    //     newPrice: '',
+    //     available: '',
+    //   }
+    // });
   };
 
   cancelEdit = () => {

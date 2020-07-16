@@ -7,6 +7,7 @@ class Menu extends Component {
     super(props);
     this.state = {
       dataFetched: false,
+      orderSent: false,
       error: false,
       menu: { drinks: 0, dishes: 0 },
       table: '',
@@ -29,7 +30,6 @@ class Menu extends Component {
     // VER SI SE PUEDE PASAR LOS VALIDADORES DE ORDEN A OTRA FUNCION Y NO EN EL MONTADO
     this.orderIsValid(this.props.match.params.uid);
     this.tableIsValid(this.props.match.params.uid);
-    console.dir(this.state);
   }
 
   componentWillUnmount() {
@@ -85,6 +85,7 @@ class Menu extends Component {
           }
         }
       }
+      if(fetchedOrders.current === 0) { fetchedOrders.current = [] };
       this.setState({ orderIsValid, fetchedOrders });
     })
   }
@@ -100,11 +101,16 @@ class Menu extends Component {
       return;
     }
 
-    console.log('final block');
-
     let newOrders = {...this.state.fetchedOrders};
-    let order = {...this.state.order};
-    // first if order is empty and set empty categories to 0;
+    let order = {
+      ...this.state.order,
+      items: {
+        dishes: [...this.state.order.items.dishes],
+        drinks: [...this.state.order.items.drinks],
+      }
+    };
+
+
     if(order.items.dishes.length === 0) {
       order.items.dishes = 0;
     }
@@ -114,25 +120,27 @@ class Menu extends Component {
     }
 
     newOrders.current.push(order);
-    console.dir(newOrders);
-    //this.props.firebase.userOrders(uid).set(newOrders);
+    this.props.firebase.userOrders(uid).set(newOrders);
+    this.setState({ orderSent: true })
   }
 
   itemExistsInOrder = (name, type) => {
-    // inmutable
     let exists = this.state.order.items[type].find(item => item.name === name);
     return exists === undefined ? false : true;
   }
 
   addItem = (item, type) => {
     if(this.itemExistsInOrder(item.name, type)) return;
-    let newOrder = {...this.state.order};
-    let newCost = newOrder.cost + this.getItemCost(item.name, type);
-    let orderItem = { name: item.name, qty: 1 };
-    let newItems = [...this.state.order.items[type]];
-    newItems.push(orderItem);
-    newOrder.items[type] = newItems;
-    newOrder.cost = newCost;
+    let newOrder = {
+      ...this.state.order,
+      items: {
+        dishes: [...this.state.order.items.dishes],
+        drinks: [...this.state.order.items.drinks],
+      }
+    };
+
+    newOrder.cost = newOrder.cost + this.getItemCost(item.name, type);
+    newOrder.items[type].push({ name: item.name, qty: 1 });
     this.setState({ order: newOrder });
   }
 
@@ -141,16 +149,28 @@ class Menu extends Component {
   };
 
   deleteItem = (item, type) => {
-    let newOrders = {...this.state.order};
-    newOrders.items[type] = newOrders.items[type].filter(el => el.name !== item.name);
+    let newOrder = {
+      ...this.state.order,
+      items: { 
+        dishes: [...this.state.order.items.dishes], 
+        drinks: [...this.state.order.items.drinks] ,
+      }
+    }
+    newOrder.items[type] = newOrder.items[type].filter(el => el.name !== item.name);
     let itemCost = this.getItemCost(item.name, type) * item.qty;
-    newOrders.cost = newOrders.cost - itemCost;
-    this.setState({ order: newOrders });
+    newOrder.cost = newOrder.cost - itemCost;
+    this.setState({ order: newOrder });
   }
 
   upgradeItemQty = (name, type, qty) => {  
-    let newOrder = {...this.state.order};
-    let itemIndex = newOrder.items[type].findIndex(el => el.name == name);
+    let newOrder = { 
+      ...this.state.order,
+      items: {
+        dishes: [...this.state.order.items.dishes],
+        drinks: [...this.state.order.items.drinks],
+      } 
+    };
+    let itemIndex = newOrder.items[type].findIndex(el => el.name === name);
     if(newOrder.items[type][itemIndex].qty === 1 && qty === -1) return;
     newOrder.items[type][itemIndex].qty = newOrder.items[type][itemIndex].qty + qty;
     let itemCost = this.getItemCost(name, type);
@@ -164,7 +184,7 @@ class Menu extends Component {
 
   render() {
     const orderIsEmpty = this.state.order.items.dishes.length === 0 && this.state.order.items.drinks.length === 0;
-    const { dataFetched, order } = this.state;
+    const { dataFetched, order, orderSent } = this.state;
     const { drinks, dishes } = this.state.menu;
     const drinksIsEmpty = (drinks.length === 0 || drinks === 0 ) ? true : false;
     const dishesIsEmpty = (dishes.length === 0 || dishes === 0 ) ? true : false;
@@ -173,13 +193,9 @@ class Menu extends Component {
 
     return (
       <div className="clientMenu"> 
-        {!dataFetched ? (
-          <>
-            <h1>Menu</h1>
-          </>
-        )
-          :
-        (
+        {!dataFetched && <h1>Menu</h1>}
+
+        {!orderSent && (
           <>
             <h2 onClick={() => console.log(this.state)}>Table {this.state.table}</h2>
             <div className="menu">
@@ -271,6 +287,13 @@ class Menu extends Component {
           </>
         )}
 
+        {orderSent && (
+          <>
+            <h2>ORDER SENT!</h2>
+            <p>Your total is: {order.cost}</p>
+          </>
+        )}
+
         {this.state.error && <p>{this.state.error}</p>}
       </div>
     );
@@ -278,11 +301,3 @@ class Menu extends Component {
 }
 
 export default withFirebase(Menu);
-
-
-
-// FLAN cant 1, (con numeros para aumentar o disminuir cantidad)      eliminar
-// si se da clic a lo mismo en el menu no pasa nada 
-
-
-// cuando se agrega algo abajo sale el total de la orden

@@ -11,7 +11,7 @@ class OrdersManager extends Component {
   }
 
   componentDidMount() {
-    this.setState({ orders: this.props.dbOrders })
+    this.setState({ orders: this.props.dbOrders });
   }
 
   componentDidUpdate(prevProps) {
@@ -29,7 +29,10 @@ class OrdersManager extends Component {
   }
 
   orderReady = (index) => {
-    let newOrders = {...this.state.orders}
+    // IMMUTABLE
+    let current = [...this.state.orders.current];
+    let past = this.state.orders.past === 0 ? [] : [...this.state.orders.past];
+    let newOrders = { current, past };
     let selectedOrder = newOrders.current[index];
     selectedOrder.ready = true;
     newOrders.current = newOrders.current.filter((el, idx) => idx !== index);
@@ -38,11 +41,24 @@ class OrdersManager extends Component {
     if(!newOrders.past) newOrders.past = [];
     newOrders.past.push(selectedOrder);
     this.props.updateOrders(newOrders);
+
+    // let newOrders = {...this.state.orders}
+    // let selectedOrder = newOrders.current[index];
+    // selectedOrder.ready = true;
+    // newOrders.current = newOrders.current.filter((el, idx) => idx !== index);
+
+    // if(newOrders.current.length === 0) newOrders.current = 0;
+    // if(!newOrders.past) newOrders.past = [];
+    // newOrders.past.push(selectedOrder);
+    // this.props.updateOrders(newOrders);
     // selecting last order database se updetea sin el apartado de current !!
   }
 
   resetOrder= (index) => {
-    let newOrders = {...this.state.orders};
+    // IMMUTABLE
+    let current = this.state.orders.current === 0 ? [] : [...this.state.orders.current];
+    let past = [...this.state.orders.past];
+    let newOrders = { current, past }
     let selectedOrder = newOrders.past[index];
     selectedOrder.ready = false;
     newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
@@ -51,15 +67,20 @@ class OrdersManager extends Component {
     if(!newOrders.current) newOrders.current = [];
     newOrders.current.push(selectedOrder);
     this.props.updateOrders(newOrders);
+
+
+    // let newOrders = {...this.state.orders};
+    // let selectedOrder = newOrders.past[index];
+    // selectedOrder.ready = false;
+    // newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
+
+    // if(newOrders.past.length === 0) newOrders.past = 0;
+    // if(!newOrders.current) newOrders.current = [];
+    // newOrders.current.push(selectedOrder);
+    // this.props.updateOrders(newOrders);
   }
 
-  itemsAreValid = (items) => {
-    if(items === 0) {
-      return false;
-    }
-
-    return true;
-  };
+  itemsAreValid = (items) => items === 0 ? false : true;
 
   render() {
     const currentOrdersValid = this.state.orders.current === 0 ? false : true;

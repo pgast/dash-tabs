@@ -40,6 +40,12 @@ class Dashboard extends Component {
 
     // fetch orders with user uid
     this.props.firebase.userOrders(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
+      let orders = snapshot.val();
+      if(orders.current == 0) { orders.current = [] };
+      if(orders.past == 0) { 
+        console.log('shit');
+        orders.past = 'shit' 
+      };
       this.setState({ orders: snapshot.val() });
     })
   }
