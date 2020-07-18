@@ -76,7 +76,6 @@ class Dashboard extends Component {
     this.props.firebase.userTables(this.state.user.uid).set(newTables);
   }
 
-  // UPDATE ORDERS 
   updateOrders = (newOrders) => {
     this.props.firebase.userOrders(this.state.user.uid).set(newOrders);
   }

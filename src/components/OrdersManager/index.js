@@ -29,7 +29,6 @@ class OrdersManager extends Component {
   }
 
   orderReady = (index) => {
-    // IMMUTABLE
     let current = [...this.state.orders.current];
     let past = this.state.orders.past === 0 ? [] : [...this.state.orders.past];
     let newOrders = { current, past };
@@ -42,43 +41,27 @@ class OrdersManager extends Component {
     if(!newOrders.past) newOrders.past = [];
     newOrders.past.push(selectedOrder);
     this.props.updateOrders(newOrders);
-
-    // let newOrders = {...this.state.orders}
-    // let selectedOrder = newOrders.current[index];
-    // selectedOrder.ready = true;
-    // newOrders.current = newOrders.current.filter((el, idx) => idx !== index);
-
-    // if(newOrders.current.length === 0) newOrders.current = 0;
-    // if(!newOrders.past) newOrders.past = [];
-    // newOrders.past.push(selectedOrder);
-    // this.props.updateOrders(newOrders);
-    // selecting last order database se updetea sin el apartado de current !!
   }
 
   resetOrder= (index) => {
-    // IMMUTABLE
     let current = this.state.orders.current === 0 ? [] : [...this.state.orders.current];
     let past = [...this.state.orders.past];
     let newOrders = { current, past }
     let selectedOrder = newOrders.past[index];
-    selectedOrder.ready = false;
-    newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
 
-    if(newOrders.past.length === 0) newOrders.past = 0;
-    if(!newOrders.current) newOrders.current = [];
-    newOrders.current.push(selectedOrder);
-    this.props.updateOrders(newOrders);
+    let tableNum = past[index].table;
+    let numIsInCurrent = current.find(el => el.table === tableNum) === undefined ? false : true;
 
-
-    // let newOrders = {...this.state.orders};
-    // let selectedOrder = newOrders.past[index];
-    // selectedOrder.ready = false;
-    // newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
-
-    // if(newOrders.past.length === 0) newOrders.past = 0;
-    // if(!newOrders.current) newOrders.current = [];
-    // newOrders.current.push(selectedOrder);
-    // this.props.updateOrders(newOrders);
+    if(numIsInCurrent) {
+      return;
+    } else {
+      selectedOrder.ready = false;
+      newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
+      if(newOrders.past.length === 0) newOrders.past = 0;
+      if(!newOrders.current) newOrders.current = [];
+      newOrders.current.push(selectedOrder);
+      this.props.updateOrders(newOrders);
+    }
   }
 
   itemsAreValid = (items) => items === 0 ? false : true;
@@ -90,8 +73,18 @@ class OrdersManager extends Component {
   }
 
   getOrderTime = (start, end) => {
-    return ((end-start)/1000)/60;
+    let minutes = ((end-start)/1000)/60;
+    minutes = Math.round(minutes * 100) / 100;
+    return `${minutes} ${minutes < 10 ? 'minute':'minutes'}`;
   }
+
+  deleteOrder = (index, type) => {
+    let current = this.state.orders.current === 0 ? [] : [...this.state.orders.current];
+    let past = this.state.orders.past === 0 ? [] : [...this.state.orders.past];
+    let newOrders = { current, past }
+    newOrders[type].splice(index, 1);
+    this.props.updateOrders(newOrders);
+  };
 
   render() {
     const currentOrdersValid = this.state.orders.current === 0 ? false : true;
@@ -153,6 +146,7 @@ class OrdersManager extends Component {
                         <>
                           <button onClick={() => this.toggleItems(idx)}>Show Items</button>
                           <button onClick={() => this.orderReady(idx)}>Order Completed</button>
+                          <button onClick={() => this.deleteOrder(idx, 'current')}>DELETE ORDER</button>
                         </>
                       }
                     </div>
@@ -177,6 +171,7 @@ class OrdersManager extends Component {
                       <p>Table: {el.table}</p>
                       <p>Order start: {this.getDate(el.start)}</p>
                       <p>Order end: {this.getDate(el.end)}</p>
+                      <p>Order completion in: {this.getOrderTime(el.start, el.end)}</p>
                     </div>
                     <div className="items">
                       {
@@ -214,6 +209,7 @@ class OrdersManager extends Component {
                           <>
                             <button onClick={() => this.resetOrder(idx)}>Reset Order</button>
                             <button onClick={() => this.toggleItems(idx)}>Show Items</button>
+                            <button onClick={() => this.deleteOrder(idx, 'past')}>DELETE ORDER</button>
                           </>
                         }
                     </div>

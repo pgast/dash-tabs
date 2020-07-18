@@ -36,6 +36,7 @@ class TablesManager extends Component {
     return (number <= 0) || (number === '');
   };
 
+  // REVISAR PORQUE FUNCIONA ESTO
   tableIsDuplicate = (newNumber, currentIdx=null) => {
     if(currentIdx !== null) {
       let newTables = this.state.tables.filter((el, idx) => idx !== currentIdx);
@@ -227,3 +228,19 @@ class TablesManager extends Component {
 }
 
 export default TablesManager;
+
+
+
+/*
+{
+  cost: 34,
+  end: 2323235224,
+  items: { dishes: [], drinks: [] },
+  ready: false,
+  start: 234234234,
+  table: "takeout"
+  order: 3
+}
+
+
+*/
