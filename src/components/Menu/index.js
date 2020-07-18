@@ -13,9 +13,7 @@ class Menu extends Component {
       table: '',
       order: {
         cost: 0,
-        end: "23:03",
         ready: false,
-        start: "12:36",
         table: '',
         items: {
           dishes: [],
@@ -107,7 +105,8 @@ class Menu extends Component {
       items: {
         dishes: [...this.state.order.items.dishes],
         drinks: [...this.state.order.items.drinks],
-      }
+      },
+      start: new Date().getTime(),
     };
 
 

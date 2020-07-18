@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 const style = {
   item: {
     border: '1px solid black',
@@ -18,8 +17,8 @@ class MenuManager extends Component {
       itemEdit: {
         type: '',
         current: '',
-        newName: '',
-        newPrice: '',
+        name: '',
+        price: '',
         available: '',
       },
       inputItem: {
@@ -61,111 +60,68 @@ class MenuManager extends Component {
   };
 
   addItem = (event) => {
-    // IMMUTABLE ADD ITEM
     event.preventDefault();
-    let newItem = { 
-      name: this.state.inputItem.name, 
-      price: parseInt(this.state.inputItem.price, 10), 
-      available: this.state.inputItem.available 
-    };
-
-    let newMenu = {
-      drinks: [...this.state.menu.drinks],
-      dishes: [...this.state.menu.dishes],
-    };
-
-    if(this.state.inputItem.type === 'drink') {
-      if(!newMenu.drinks) newMenu.drinks = [];
-      newMenu.drinks.push(newItem);
+    if(this.itemIsDuplicate(this.state.inputItem)) {
+      console.log('item is duplicate');
     } else {
-      if(!newMenu.dishes) newMenu.dishes = [];
-      newMenu.dishes.push(newItem);
+      let newItem = { 
+        name: this.state.inputItem.name, 
+        price: parseInt(this.state.inputItem.price, 10), 
+        available: this.state.inputItem.available 
+      };
+  
+      let newMenu = {
+        drinks: [...this.state.menu.drinks],
+        dishes: [...this.state.menu.dishes],
+      };
+  
+      newMenu[this.state.inputItem.type].push(newItem);
+  
+      this.setState({ 
+        menu: newMenu, 
+        inputItem: { 
+          type: '',
+          name: '', 
+          price: '', 
+          available: true, 
+        } 
+      });
     }
-
-    this.setState({ 
-      menu: newMenu, 
-      inputItem: { 
-        type: '',
-        name: '', 
-        price: '', 
-        available: true, 
-      } 
-    });
-
-
-
-    // event.preventDefault();
-    // let newItem = { 
-    //   name: this.state.inputItem.name, 
-    //   price: parseInt(this.state.inputItem.price, 10), 
-    //   available: this.state.inputItem.available 
-    // };
-    // let newMenu = {...this.state.menu};
-
-    // if(this.state.inputItem.type === 'drink') {
-    //   if(!newMenu.drinks) newMenu.drinks = [];
-    //   newMenu.drinks.push(newItem);
-    // } else {
-    //   if(!newMenu.dishes) newMenu.dishes = [];
-    //   newMenu.dishes.push(newItem);
-    // }
-
-    // this.setState({ 
-    //   menu: newMenu, 
-    //   inputItem: { 
-    //     type: '',
-    //     name: '', 
-    //     price: '', 
-    //     available: true, 
-    //   } 
-    // });
   };
 
+  itemIsDuplicate(item) {
+    let foundItem = this.state.menu[item.type].find(el => el.name.toLowerCase() === item.name.toLowerCase());
+    return foundItem === undefined ? false : true;
+  }
+
   saveEditItem = (event, idx) => {
-    // IMMUTABLE SAVE EDIT ITEM
     event.preventDefault();
-    let newItem = { 
-      name: this.state.itemEdit.newName, 
-      price: parseInt(this.state.itemEdit.newPrice, 10), 
-      available: this.state.itemEdit.available, 
+    if(this.itemIsDuplicate(this.state.itemEdit)) {
+      console.log('item is duplicate');
+    } else {
+      let newItem = { 
+        name: this.state.itemEdit.name, 
+        price: parseInt(this.state.itemEdit.price, 10), 
+        available: this.state.itemEdit.available, 
+      };
+      let newMenu = {
+        drinks: [...this.state.menu.drinks],
+        dishes: [...this.state.menu.dishes],
+      };
+  
+      newMenu[this.state.itemEdit.type][idx] = newItem;
+  
+      this.setState({ 
+        menu: newMenu,  
+        itemEdit: {
+          type: '',
+          current: '',
+          name: '',
+          price: '',
+          available: '',
+        }
+      });
     };
-    let newMenu = {
-      drinks: [...this.state.menu.drinks],
-      dishes: [...this.state.menu.dishes],
-    };
-
-    newMenu[this.state.itemEdit.type][idx] = newItem;
-
-    this.setState({ 
-      menu: newMenu,  
-      itemEdit: {
-        type: '',
-        current: '',
-        newName: '',
-        newPrice: '',
-        available: '',
-      }
-    });
-
-    // event.preventDefault();
-    // let newItem = { 
-    //   name: this.state.itemEdit.newName, 
-    //   price: parseInt(this.state.itemEdit.newPrice, 10), 
-    //   available: this.state.itemEdit.available, 
-    // };
-    // let newMenu = {...this.state.menu};
-    // newMenu[this.state.itemEdit.type][idx] = newItem;
-
-    // this.setState({ 
-    //   menu: newMenu,  
-    //   itemEdit: {
-    //     type: '',
-    //     current: '',
-    //     newName: '',
-    //     newPrice: '',
-    //     available: '',
-    //   }
-    // });
   };
 
   editItem = (item, type) => {
@@ -173,48 +129,31 @@ class MenuManager extends Component {
       itemEdit: { 
         type,
         current: item.name, 
-        newName: item.name, 
-        newPrice: item.price, 
+        name: item.name, 
+        price: item.price, 
         available: item.available,
       } 
     });
   };
 
   deleteItem = (index, type) => {
-    // IMMUTABLE DELETE ITEM
     let newMenu = {
       drinks: [...this.state.menu.drinks],
       dishes: [...this.state.menu.dishes],
     };
     newMenu[type].splice(index, 1);
-    if(newMenu[type].length === 0) newMenu[type] = 0;
+    if(newMenu[type].length === 0) newMenu[type] = [];
 
     this.setState({ 
       menu: newMenu,  
       itemEdit: {
         type: '',
         current: '',
-        newName: '',
-        newPrice: '',
+        name: '',
+        price: '',
         available: '',
       }
     });
-
-    // let newMenu = {...this.state.menu};
-    // newMenu[type].splice(index, 1);
-
-    // if(newMenu[type].length === 0) newMenu[type] = 0;
-
-    // this.setState({ 
-    //   menu: newMenu,  
-    //   itemEdit: {
-    //     type: '',
-    //     current: '',
-    //     newName: '',
-    //     newPrice: '',
-    //     available: '',
-    //   }
-    // });
   };
 
   cancelEdit = () => {
@@ -222,8 +161,8 @@ class MenuManager extends Component {
       itemEdit: {
         type: '',
         current: '',
-        newName: '',
-        newPrice: '',
+        name: '',
+        price: '',
         available: '',
       }
     })
@@ -235,8 +174,8 @@ class MenuManager extends Component {
     const { name, price, type } = this.state.inputItem;
     const isInvalid = name === '' || this.numberIsInvalid(price) || type === '';
 
-    const { newName, newPrice, current } = this.state.itemEdit;
-    const isInvalidEdit = newName === '' || this.numberIsInvalid(newPrice);
+    const { current } = this.state.itemEdit;
+    const isInvalidEdit = this.state.itemEdit.name === '' || this.numberIsInvalid(this.state.itemEdit.price);
 
     const { drinks, dishes } = this.state.menu;
 
@@ -266,15 +205,15 @@ class MenuManager extends Component {
                     <form onSubmit={(e) => this.saveEditItem(e, idx)}>
                       <input 
                         type="text"
-                        name="newName"
-                        value={newName}
+                        name="name"
+                        value={this.state.itemEdit.name}
                         placeholder="New Item Name"
                         onChange={this.onChangeEdit}
                         />
                       <input 
                         type="number"
-                        name="newPrice"
-                        value={newPrice}
+                        name="price"
+                        value={this.state.itemEdit.price}
                         placeholder="New Item Price"
                         onChange={this.onChangeEdit}
                       />
@@ -321,15 +260,15 @@ class MenuManager extends Component {
                     <form onSubmit={(e) => this.saveEditItem(e, idx)}>
                       <input 
                         type="text"
-                        name="newName"
-                        value={newName}
+                        name="name"
+                        value={this.state.itemEdit.name}
                         placeholder="New Item Name"
                         onChange={this.onChangeEdit}
                         />
                       <input 
                         type="number"
-                        name="newPrice"
-                        value={newPrice}
+                        name="price"
+                        value={this.state.itemEdit.price}
                         onChange={this.onChangeEdit}
                         placeholder="New Item Price"
                       />
@@ -378,9 +317,9 @@ class MenuManager extends Component {
             <input 
               name="type" 
               type="radio" 
-              value="drink" 
+              value="drinks" 
               onChange={this.onChange}
-              checked={type === "drink"} 
+              checked={type === "drinks"} 
               />
             <label>Bebida</label>
           </div>
@@ -388,9 +327,9 @@ class MenuManager extends Component {
             <input 
               name="type" 
               type="radio" 
-              value="dish" 
+              value="dishes" 
               onChange={this.onChange}
-              checked={type === "dish"}
+              checked={type === "dishes"}
               />
             <label>Comida</label>
           </div>
