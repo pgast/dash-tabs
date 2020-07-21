@@ -56,6 +56,8 @@ class TablesManager extends Component {
     this.state.tables.forEach(el => {
       newQrs.push({ number: el.number, qr: this.props.createQR(el.number) })
     });
+
+    newQrs.push({ number: "takeout", qr: this.props.createQR(null, true) });
     this.setState({ tablesQrCodes: newQrs, showQrs: true });
   }
 
@@ -228,19 +230,3 @@ class TablesManager extends Component {
 }
 
 export default TablesManager;
-
-
-
-/*
-{
-  cost: 34,
-  end: 2323235224,
-  items: { dishes: [], drinks: [] },
-  ready: false,
-  start: 234234234,
-  table: "takeout"
-  order: 3
-}
-
-
-*/

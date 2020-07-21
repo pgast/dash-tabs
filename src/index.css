@@ -59,6 +59,7 @@ html{
   display: flex;
   flex-direction: row;
   border: 1px solid black;
+  font-size: 0.8rem;
   justify-content: space-around;
 }
 

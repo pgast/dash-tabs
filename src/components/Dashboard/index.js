@@ -82,12 +82,11 @@ class Dashboard extends Component {
 
   toggleView = (input) => this.setState({ view: input });
 
-  createQR = (tableNum) => {
+  createQR = (tableNum, takeOut=false) => {
     const currentUrl = window.location.href;
     let qrUrl = currentUrl.split('').slice(0, currentUrl.length-9).join('');
-    qrUrl = `${qrUrl}menu/${this.state.user.uid}/${tableNum}`
+    qrUrl = `${qrUrl}menu/${this.state.user.uid}/${takeOut ? 'takeout' : tableNum}`;
     console.log(`CURRENT URL: ${currentUrl} / QRURL: ${qrUrl}`);
-
     return `https://api.qrserver.com/v1/create-qr-code/?data=${qrUrl}&amp;size=500x500`;
   }
 

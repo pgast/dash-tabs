@@ -52,16 +52,28 @@ class OrdersManager extends Component {
     let tableNum = past[index].table;
     let numIsInCurrent = current.find(el => el.table === tableNum) === undefined ? false : true;
 
-    if(numIsInCurrent) {
-      return;
-    } else {
+    if(!numIsInCurrent || tableNum === "takeout") {
       selectedOrder.ready = false;
       newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
       if(newOrders.past.length === 0) newOrders.past = 0;
       if(!newOrders.current) newOrders.current = [];
       newOrders.current.push(selectedOrder);
       this.props.updateOrders(newOrders);
+    } else {
+      return;
     }
+
+
+    // if(numIsInCurrent) {
+    //   return;
+    // } else {
+    //   selectedOrder.ready = false;
+    //   newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
+    //   if(newOrders.past.length === 0) newOrders.past = 0;
+    //   if(!newOrders.current) newOrders.current = [];
+    //   newOrders.current.push(selectedOrder);
+    //   this.props.updateOrders(newOrders);
+    // }
   }
 
   itemsAreValid = (items) => items === 0 ? false : true;
@@ -108,7 +120,7 @@ class OrdersManager extends Component {
                   <li className="orderCard" key={idx}>
                     <div className="info">
                       <p>Cost: {el.cost}</p>
-                      <p>Table: {el.table}</p>
+                      <p>{el.table === "takeout" ? `Takeout order: ${el.orderNum}` : el.table}</p>
                       <p>Order start: {this.getDate(el.start)}</p>
                     </div>
                     <div className="items">
@@ -168,7 +180,7 @@ class OrdersManager extends Component {
                   <li className="orderCard" key={idx}>
                     <div className="info">
                       <p>Cost: {el.cost}</p>
-                      <p>Table: {el.table}</p>
+                      <p>{el.table === "takeout" ? `Takeout order: ${el.orderNum}` : el.table}</p>
                       <p>Order start: {this.getDate(el.start)}</p>
                       <p>Order end: {this.getDate(el.end)}</p>
                       <p>Order completion in: {this.getOrderTime(el.start, el.end)}</p>
@@ -242,36 +254,3 @@ export default OrdersManager;
         end: 23/junio/2020 23:34 <== solo agregar hora 
       }
     */}
-
-
-
-var currentDate = new Date();
-
-// function getTime() {
-//   var currentDate = new Date();
-//   var hours = currentDate.getHours();
-//   var minutes = currentDate.getMinutes();
-  
-//   // 
-  
-// }
-
-
-
-// function timeDifference() {
-//   var currentTime = new Date();
-//   console.log(`CURRENT TIME IS ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`)
-  
-//   setTimeout(function(){ 
-//     var newTime = new Date();
-//     console.log(`time inside function is ${newTime.getHours()}:${newTime.getMinutes()}:${newTime.getSeconds()}`)
-//   }, 3000);
-  
-//   var difference = currentTime - newTime;
-//   console.log(difference);
-// }
-
-// timeDifference()
-
-
-// como salvarlo en base de datos para que despues que se le de en terminado, que se salve el tiempo entre los dos

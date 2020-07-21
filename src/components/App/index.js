@@ -23,8 +23,7 @@ const App = () => (
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
-      {/* <Route path={`${ROUTES.MENU}/:uid`} component={Menu} /> */}
-      <Route path={`${ROUTES.MENU}/:uid/:table`} component={Menu} />
+      <Route exact path={`${ROUTES.MENU}/:uid/:table`} component={Menu} />
     </div>
   </Router>
 );
