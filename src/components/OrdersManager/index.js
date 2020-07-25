@@ -62,18 +62,6 @@ class OrdersManager extends Component {
     } else {
       return;
     }
-
-
-    // if(numIsInCurrent) {
-    //   return;
-    // } else {
-    //   selectedOrder.ready = false;
-    //   newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
-    //   if(newOrders.past.length === 0) newOrders.past = 0;
-    //   if(!newOrders.current) newOrders.current = [];
-    //   newOrders.current.push(selectedOrder);
-    //   this.props.updateOrders(newOrders);
-    // }
   }
 
   itemsAreValid = (items) => items === 0 ? false : true;
@@ -97,6 +85,7 @@ class OrdersManager extends Component {
     newOrders[type].splice(index, 1);
     this.props.updateOrders(newOrders);
   };
+
 
   render() {
     const currentOrdersValid = this.state.orders.current === 0 ? false : true;
@@ -125,7 +114,7 @@ class OrdersManager extends Component {
                     </div>
                     <div className="items">
                       {
-                        this.state.showItems === idx ?
+                        this.state.showItems === idx &&
                         <>
                           {this.itemsAreValid(el.items.dishes) ?
                             <>
@@ -152,9 +141,16 @@ class OrdersManager extends Component {
                             :
                             null
                           }
+                          <div>
+                            <p>Comments</p>
+                            <p>{el.comments}</p>
+                          </div>
                           <button onClick={this.toggleItems}>Close</button>
                         </>
-                        :
+                      }
+
+
+                      {this.state.showItems !== idx && 
                         <>
                           <button onClick={() => this.toggleItems(idx)}>Show Items</button>
                           <button onClick={() => this.orderReady(idx)}>Order Completed</button>
@@ -214,7 +210,10 @@ class OrdersManager extends Component {
                               :
                               null
                             }
-
+                             <div>
+                              <p>Comments</p>
+                              <p>{el.comments}</p>
+                            </div>
                             <button onClick={this.toggleItems}>Close</button>
                           </>
                           :

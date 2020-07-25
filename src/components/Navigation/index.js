@@ -20,8 +20,9 @@ const Navigation = () => (
 const NavigationAuth = ({ authUser }) => (
   <div className="navBar">
     <Link to={ROUTES.HOME}>Home</Link>
-    <Link to={ROUTES.ACCOUNT}>Account</Link>
+    {authUser.username !== "Demo" && <Link to={ROUTES.ACCOUNT}>Account</Link>}
     <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
+    <h3 onClick={() => console.log(authUser)}>Log State</h3>
     <SignOutButton />
   </div>
 );
@@ -30,6 +31,7 @@ const NavigationNonAuth = () => (
   <div className="navBar">
     <Link to={ROUTES.HOME}>Home</Link>
     <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+    <h3 onClick={() => console.log()}>Log url params</h3>
   </div>
 );
 

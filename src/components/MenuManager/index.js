@@ -1,14 +1,5 @@
 import React, { Component } from "react";
 
-const style = {
-  item: {
-    border: '1px solid black',
-    padding: '8px',
-    margin: '1rem',
-    display: 'flex',
-  }
-}
-
 class MenuManager extends Component {
   constructor(props) {
     super(props);
@@ -20,11 +11,13 @@ class MenuManager extends Component {
         name: '',
         price: '',
         available: '',
+        description: '',
       },
       inputItem: {
         type: '',
         name: '',
         price: '',
+        description: '',
         available: true,
       }
     };
@@ -67,7 +60,8 @@ class MenuManager extends Component {
       let newItem = { 
         name: this.state.inputItem.name, 
         price: parseInt(this.state.inputItem.price, 10), 
-        available: this.state.inputItem.available 
+        available: this.state.inputItem.available,
+        description: this.state.inputItem.description,
       };
   
       let newMenu = {
@@ -82,27 +76,31 @@ class MenuManager extends Component {
         inputItem: { 
           type: '',
           name: '', 
-          price: '', 
+          price: '',
+          description: '', 
           available: true, 
         } 
       });
     }
   };
 
-  itemIsDuplicate(item) {
-    let foundItem = this.state.menu[item.type].find(el => el.name.toLowerCase() === item.name.toLowerCase());
+  itemIsDuplicate(item, idx) {
+    let items = [...this.state.menu[item.type]].filter((el, index) => index !== idx);
+    let foundItem = items.find(el => el.name.toLowerCase() === item.name.toLowerCase());
     return foundItem === undefined ? false : true;
-  }
+  };
 
   saveEditItem = (event, idx) => {
     event.preventDefault();
-    if(this.itemIsDuplicate(this.state.itemEdit)) {
+
+    if(this.itemIsDuplicate(this.state.itemEdit, idx)) {
       console.log('item is duplicate');
     } else {
       let newItem = { 
         name: this.state.itemEdit.name, 
         price: parseInt(this.state.itemEdit.price, 10), 
-        available: this.state.itemEdit.available, 
+        available: this.state.itemEdit.available,
+        description: this.state.itemEdit.description,
       };
       let newMenu = {
         drinks: [...this.state.menu.drinks],
@@ -119,6 +117,7 @@ class MenuManager extends Component {
           name: '',
           price: '',
           available: '',
+          description: '',
         }
       });
     };
@@ -132,6 +131,7 @@ class MenuManager extends Component {
         name: item.name, 
         price: item.price, 
         available: item.available,
+        description: item.description,
       } 
     });
   };
@@ -152,6 +152,7 @@ class MenuManager extends Component {
         name: '',
         price: '',
         available: '',
+        description: '',
       }
     });
   };
@@ -164,6 +165,7 @@ class MenuManager extends Component {
         name: '',
         price: '',
         available: '',
+        description: '',
       }
     })
   };
@@ -171,7 +173,7 @@ class MenuManager extends Component {
   numberIsInvalid = number => number <= 0 || number === '';
 
   render() {
-    const { name, price, type } = this.state.inputItem;
+    const { name, price, type, description } = this.state.inputItem;
     const isInvalid = name === '' || this.numberIsInvalid(price) || type === '';
 
     const { current } = this.state.itemEdit;
@@ -193,48 +195,62 @@ class MenuManager extends Component {
           <ol>
             {drinks && drinks.map((el, idx) => 
               <React.Fragment key={idx}>
-                {current !== el.name ? 
+                {(current !== el.name || (current === el.name && this.state.itemEdit.type !== 'drinks')) && 
                   <li 
-                    style={style.item} 
+                    className="itemCard"
                     onClick={() => this.editItem(el, 'drinks')}
                   >
-                    {el.name} - ${el.price} - {el.available ? "AVAILABLE" : "NOT AVAILABLE"}
-                  </li>
-                  :
-                  <li style={style.item}>
-                    <form onSubmit={(e) => this.saveEditItem(e, idx)}>
-                      <input 
-                        type="text"
-                        name="name"
-                        value={this.state.itemEdit.name}
-                        placeholder="New Item Name"
-                        onChange={this.onChangeEdit}
-                        />
-                      <input 
-                        type="number"
-                        name="price"
-                        value={this.state.itemEdit.price}
-                        placeholder="New Item Price"
-                        onChange={this.onChangeEdit}
-                      />
-                      <input 
-                        name="available" 
-                        type="checkbox" 
-                        onChange={this.onChangeEdit}
-                        checked={this.state.itemEdit.available} 
-                        />
-                      <label>Is item available?</label>
-                      <button disabled={isInvalidEdit} type="submit">
-                        Save Changes
-                      </button>
-                    </form>
-                    <button onClick={() => this.deleteItem(idx, 'drinks')}>
-                      Delete Item
-                    </button>
-                    <button onClick={this.cancelEdit}>
-                      Cancel
-                    </button>
-                  </li>
+                    {el.name} - ${el.price} - {el.available ? "AVAILABLE" : "NOT AVAILABLE"} - {el.description}
+                  </li>  
+                }
+
+                {(current === el.name && this.state.itemEdit.type === 'drinks') &&
+                   <li className="itemCard_exp">
+                   <form onSubmit={(e) => this.saveEditItem(e, idx)}>
+                     <input 
+                       type="text"
+                       name="name"
+                       value={this.state.itemEdit.name}
+                       placeholder="New Item Name"
+                       onChange={this.onChangeEdit}
+                       />
+                     <input 
+                       type="number"
+                       name="price"
+                       value={this.state.itemEdit.price}
+                       placeholder="New Item Price"
+                       onChange={this.onChangeEdit}
+                     />
+                     <input 
+                       type="text"
+                       name="description"
+                       value={this.state.itemEdit.description}
+                       placeholder="New Description"
+                       onChange={this.onChangeEdit}
+                     />
+                     <div>
+                       <input 
+                         name="available" 
+                         type="checkbox" 
+                         onChange={this.onChangeEdit}
+                         checked={this.state.itemEdit.available} 
+                         />
+                       <label>Is item available?</label>
+                     </div>
+                     <button disabled={isInvalidEdit} type="submit">
+                       Save Changes
+                     </button>
+                   </form>
+
+                   <div>
+                     <button onClick={() => this.deleteItem(idx, 'drinks')}>
+                       Delete Item
+                     </button>
+                     <button onClick={this.cancelEdit}>
+                       Cancel
+                     </button>
+                   </div>
+                 </li>
                 }
               </ React.Fragment>
             )}
@@ -248,15 +264,17 @@ class MenuManager extends Component {
           <ol>
             {dishes && dishes.map((el, idx) => 
               <React.Fragment key={idx}>
-                {current !== el.name ?
+                {(current !== el.name || (current === el.name && this.state.itemEdit.type !== 'dishes')) &&
                   <li 
-                    style={style.item} 
+                    className="itemCard"
                     onClick={() => this.editItem(el, 'dishes')}
                   >
-                    {el.name} - ${el.price} - {el.available ? "AVAILABLE" : "NOT AVAILABLE"}
+                    {el.name} - ${el.price} - {el.available ? "AVAILABLE" : "NOT AVAILABLE"} - {el.description}
                   </li>
-                  :
-                  <li style={style.item}>
+                }
+
+                {(current === el.name && this.state.itemEdit.type === 'dishes') &&
+                  <li className="itemCard_exp">
                     <form onSubmit={(e) => this.saveEditItem(e, idx)}>
                       <input 
                         type="text"
@@ -273,22 +291,34 @@ class MenuManager extends Component {
                         placeholder="New Item Price"
                       />
                       <input 
-                        name="available" 
-                        type="checkbox" 
+                        type="text"
+                        name="description"
+                        value={this.state.itemEdit.description}
                         onChange={this.onChangeEdit}
-                        checked={this.state.itemEdit.available} 
-                        />
-                      <label>Is item available?</label>
+                        placeholder="New Description"
+                      />
+                      <div>
+                        <input 
+                          name="available" 
+                          type="checkbox" 
+                          onChange={this.onChangeEdit}
+                          checked={this.state.itemEdit.available} 
+                          />
+                        <label>Is item available?</label>
+                      </div>
                       <button disabled={isInvalidEdit} type="submit">
                         Save Changes
                       </button>
                     </form>
+
+                    <div>
                       <button onClick={() => this.deleteItem(idx, 'dishes')}>
                         Delete Item
                       </button>
                       <button onClick={this.cancelEdit}>
                         Cancel
                       </button>
+                    </div>
                   </li>
                 }
               </React.Fragment>  
@@ -311,6 +341,13 @@ class MenuManager extends Component {
             type="number"
             value={price}
             placeholder="price"
+            onChange={this.onChange}
+          />
+          <input 
+            name="description"
+            type="text"
+            value={description}
+            placeholder="Item Description"
             onChange={this.onChange}
           />
           <div>

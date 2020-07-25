@@ -100,7 +100,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <div className="dashboard_header">
           <h3>Dashboard</h3>
-          <h5 onClick={() => console.log(this.state)}>Log state</h5>
+          <h5 onClick={() => console.log(this.props.match.params)}>Log state</h5>
           <p>Dashboard is accessible by every signed in admin user</p>
           <div className="viewToggler">
             <h4 onClick={() => this.toggleView('orders')}>ORDERS</h4>

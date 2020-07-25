@@ -133,4 +133,30 @@ html{
   margin: 2rem;
 }
 
+.itemCard {
+  border: 1px solid black;
+  padding: 8px;
+  margin: 1rem;
+  display: flex;
+}
+
+.itemCard_exp {
+  border: 2px solid black;
+  padding: 8px;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemCard_exp form {
+  display: flex;
+  flex-direction: column;
+  width: 22rem;
+  align-self: center;
+}
+
+.itemCard_exp div {
+  text-align: center;
+}
+
 /* DEBUG AND PRODUCTION STYLING */

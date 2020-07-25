@@ -11,6 +11,11 @@ const withAuthorization = condition => Component => {
     componentDidMount() {
       this.listener = this.props.firebase.onAuthUserListener(
         authUser => {
+          // demo version validation
+          if(authUser.uid === process.env.REACT_APP_DEMO_UID) {
+            this.props.history.push(ROUTES.HOME);
+          }
+
           if (!condition(authUser)) {
             this.props.history.push(ROUTES.SIGN_IN);
           }

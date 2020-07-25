@@ -19,6 +19,7 @@ class TablesManager extends Component {
       showQrs: false,
       tablesQrCodes: null,
       error: { exists: false },
+      displayQr: null,
     }
   }
 
@@ -61,6 +62,11 @@ class TablesManager extends Component {
     this.setState({ tablesQrCodes: newQrs, showQrs: true });
   }
 
+  generateSingleQr = (table, e, takeout=false) => {
+    e.preventDefault();
+    this.setState({ displayQr: this.props.createQR(table.number, takeout) });
+  };
+
   editTable = (tableIdx) => {
     let newTableEdit = { 
       current: tableIdx,
@@ -68,7 +74,7 @@ class TablesManager extends Component {
       waitingOrder: this.state.tables[tableIdx].waitingOrder,
       newDescription: this.state.tables[tableIdx].description,
      }
-    this.setState({ tableEdit: newTableEdit })
+    this.setState({ tableEdit: newTableEdit, displayQr: null })
   };
 
   resetTableEdit = () => {
@@ -78,7 +84,7 @@ class TablesManager extends Component {
       newDescription: '',
       waitingOrder: false,
     }
-    this.setState({ tableEdit: newTableEdit });
+    this.setState({ tableEdit: newTableEdit, displayQr: null });
   }
 
   deleteTable = (deleteIndex) => {
@@ -171,8 +177,16 @@ class TablesManager extends Component {
                         placeholder="New table description"
                         onChange={(e) => this.setTableEdit("newDescription", e.target.value)}
                       />
+
+                      {this.state.displayQr !== null && 
+                        <>
+                        <h5>Table number: {el.number}</h5>
+                        <img src={this.state.displayQr} alt="" title="" />
+                        </>
+                      }
+
                       <button disabled={editIsInvalid} type="submit">Save</button>
-                      <button>Get Table QR Code</button>
+                      <button onClick={(e) => this.generateSingleQr(el.number, e)}>Get Table QR Code</button>
                       <button onClick={() => this.deleteTable(idx)}>Delete Item</button>
                       <button onClick={this.resetTableEdit}>Cancel Edit</button>
                     </form>
@@ -183,6 +197,16 @@ class TablesManager extends Component {
           </ol>
         }
     
+        <hr />
+        <div>
+          <button onClick={(e) => this.generateSingleQr({number: null}, e, true)}>Get Takeout QR</button>
+          {(this.state.displayQr !== null && this.state.tableEdit.current === '') &&
+            <>
+              <h5>Takeout</h5>
+              <img src={this.state.displayQr} alt="" title="" />
+            </>
+          }
+        </div>
         <hr />
     
         <form onSubmit={(e) => this.addTable(e)}>

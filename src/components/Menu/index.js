@@ -220,7 +220,7 @@ class Menu extends Component {
 
         {!orderSent && (
           <>
-            <h2 onClick={() => console.log(this.state)}>Table {this.state.table}</h2>
+            <h2 onClick={() => console.log(this.props.match.params)}>Table {this.state.table}</h2>
             <div className="menu">
               <div>
                 <h4 onClick={() => console.log(this.state)}>Bebidas</h4> 
@@ -229,7 +229,10 @@ class Menu extends Component {
                 :
                   <ol>
                     {drinks && drinks.map((item, idx) =>
-                      <li key={idx} onClick={() => this.addItem(item, 'drinks')}>{item.name} - ${item.price}</li>
+                      <li key={idx} onClick={() => this.addItem(item, 'drinks')}>
+                        <p>{item.name} - ${item.price}</p>
+                        <p>{item.description}</p>
+                      </li>
                     )}
                   </ol>
                 }
@@ -241,7 +244,10 @@ class Menu extends Component {
                 :
                   <ol>
                     {dishes && dishes.map((item, idx) => 
-                      <li key={idx} onClick={() => this.addItem(item, 'dishes')}>{item.name} - ${item.price}</li>        
+                      <li key={idx} onClick={() => this.addItem(item, 'dishes')}>
+                        <p>{item.name} - ${item.price}</p>
+                        <p>{item.description}</p>
+                      </li>        
                     )}
                   </ol>
                 }
