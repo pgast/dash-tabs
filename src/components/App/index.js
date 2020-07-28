@@ -12,6 +12,7 @@ import PasswordForgetPage from '../PasswordForget';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
+import { defaultProps } from 'recompose';
 
 const App = () => (
   <Router>

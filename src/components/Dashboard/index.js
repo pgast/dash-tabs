@@ -43,7 +43,7 @@ class Dashboard extends Component {
       let orders = snapshot.val();
       if(orders.current == 0) { orders.current = [] };
       if(orders.past == 0) { 
-        console.log('shit');
+        console.log('[DASHBOARD] orders past is 0');
         orders.past = 'shit' 
       };
       this.setState({ orders: snapshot.val() });
@@ -100,7 +100,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <div className="dashboard_header">
           <h3>Dashboard</h3>
-          <h5 onClick={() => console.log(this.props.match.params)}>Log state</h5>
+          <h5 onClick={() => console.log(this.props.history)}>Log state</h5>
           <p>Dashboard is accessible by every signed in admin user</p>
           <div className="viewToggler">
             <h4 onClick={() => this.toggleView('orders')}>ORDERS</h4>

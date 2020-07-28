@@ -1,17 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import * as ROUTES from '../../constants/routes';
 import { defaultProps } from 'recompose';
 import { withFirebase } from '../Firebase';
 
-const HomePage = ({ firebase, props }) => {
+// const HomePage = (props) => {
+const HomePage = ({firebase, history}) => {
+
   const launchDemo = () => {
     // demo client menu url
     const clientMenuUrl = `${window.location.href}menu/${process.env.REACT_APP_DEMO_UID}/takeout`;
     // sign out
     firebase.doSignOut();
     // sign in con demo account
-    firebase.doSignInWithEmailAndPassword(process.env.REACT_APP_DEMO_EMAIL, process.env.REACT_APP_DEMO_PWD);
+
+    firebase.doSignInWithEmailAndPassword(process.env.REACT_APP_DEMO_EMAIL, process.env.REACT_APP_DEMO_PWD)
+    .then(() => {
+      history.push(ROUTES.DASHBOARD);
+    });
     // open new tab with menu
     window.open(clientMenuUrl, "_blank") //to open new page
   };
