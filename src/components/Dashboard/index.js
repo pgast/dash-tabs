@@ -22,7 +22,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
- 
+    
     // fetch current user info
     this.props.firebase.user(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
       const userObject = snapshot.val();
@@ -52,9 +52,21 @@ class Dashboard extends Component {
 
   componentWillUnmount() {
     this.props.firebase.users().off();
+
+    // como evitar que un usuario qu
+    // SOLO TRIGGEREAR ESTE RESETEO SI ESTA EN MODO DEMO
+    // resetear database de demo version con valores iniciales
+    // orders
+    // updateOrdersDb con la copia de orders
+
+    // tables
+    // updateTablesDb con la copia de tables
+
+    // menu
+    // updateMenuDb con la copia de menu
   }
 
-  updateDb = (newMenu) => {
+  updateMenuDb = (newMenu) => {
     // REVISAR QUE SEAN SIEMPRE ARRAYS CON ITEMS O SOLO 0 
     if(newMenu.drinks.length === 0) newMenu.drinks = 0;
     if(newMenu.dishes.length === 0) newMenu.dishes = 0;
@@ -76,7 +88,7 @@ class Dashboard extends Component {
     this.props.firebase.userTables(this.state.user.uid).set(newTables);
   }
 
-  updateOrders = (newOrders) => {
+  updateOrdersDb = (newOrders) => {
     this.props.firebase.userOrders(this.state.user.uid).set(newOrders);
   }
 
@@ -109,9 +121,9 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        {this.state.view === "orders" && <OrdersManager dbOrders={this.state.orders} updateOrders={this.updateOrders}/>}
+        {this.state.view === "orders" && <OrdersManager dbOrders={this.state.orders} updateOrdersDb={this.updateOrdersDb}/>}
         {this.state.view === "tables" && <TablesManager createQR={this.createQR} dbTables={this.state.user.tables} updateTablesDb={this.updateTablesDb}/>}
-        {this.state.view === "menu" && <MenuManager menu={menu} updateDb={this.updateDb} />}
+        {this.state.view === "menu" && <MenuManager menu={menu} updateMenuDb={this.updateMenuDb} />}
 
         {loading && <div>Loading ...</div>}
       </div>

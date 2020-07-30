@@ -5,7 +5,6 @@ import * as ROUTES from '../../constants/routes';
 import { defaultProps } from 'recompose';
 import { withFirebase } from '../Firebase';
 
-// const HomePage = (props) => {
 const HomePage = ({firebase, history}) => {
 
   const launchDemo = () => {
@@ -15,19 +14,28 @@ const HomePage = ({firebase, history}) => {
     firebase.doSignOut();
     // sign in con demo account
 
-    firebase.doSignInWithEmailAndPassword(process.env.REACT_APP_DEMO_EMAIL, process.env.REACT_APP_DEMO_PWD)
-    .then(() => {
-      history.push(ROUTES.DASHBOARD);
-    });
+    // firebase.doSignInWithEmailAndPassword(process.env.REACT_APP_DEMO_EMAIL, process.env.REACT_APP_DEMO_PWD)
+    // .then(() => {
+    //   history.push(ROUTES.DASHBOARD);
+    // });
+
+    // sign In anonymously
+    // create 
+
+    firebase.doSignInAnonymously()
+      .then(() => {
+        console.log(firebase.getCurrentUser());
+      });
+
     // open new tab with menu
-    window.open(clientMenuUrl, "_blank") //to open new page
+    // window.open(clientMenuUrl, "_blank") //to open new page
   };
 
 
   return (
     <div>
       <h1>Home Page</h1>
-      <p>Landing and home page</p>
+      <p onClick={() => console.log([window.location.href.length, window.location.href])}>Log root length</p>
 
       <Link to={ROUTES.SIGN_UP}>CREATE ACCOUNT</Link>
 

@@ -40,7 +40,7 @@ class OrdersManager extends Component {
     if(newOrders.current.length === 0) newOrders.current = 0;
     if(!newOrders.past) newOrders.past = [];
     newOrders.past.push(selectedOrder);
-    this.props.updateOrders(newOrders);
+    this.props.updateOrdersDb(newOrders);
   }
 
   resetOrder= (index) => {
@@ -58,7 +58,7 @@ class OrdersManager extends Component {
       if(newOrders.past.length === 0) newOrders.past = 0;
       if(!newOrders.current) newOrders.current = [];
       newOrders.current.push(selectedOrder);
-      this.props.updateOrders(newOrders);
+      this.props.updateOrdersDb(newOrders);
     } else {
       return;
     }
@@ -83,7 +83,7 @@ class OrdersManager extends Component {
     let past = this.state.orders.past === 0 ? [] : [...this.state.orders.past];
     let newOrders = { current, past }
     newOrders[type].splice(index, 1);
-    this.props.updateOrders(newOrders);
+    this.props.updateOrdersDb(newOrders);
   };
 
 

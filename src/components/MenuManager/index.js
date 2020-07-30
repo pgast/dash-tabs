@@ -375,7 +375,7 @@ class MenuManager extends Component {
 
         <hr/>
         {/* GUARDAR CAMBIOS, SE SUBE NUEVA VERSION DE MENU A DATABASE (?mejor manera de hacerlo) */}
-        <div onClick={() => this.props.updateDb(this.state.menu)} style={{ background: 'black', color: 'white' }}>
+        <div onClick={() => this.props.updateMenuDb(this.state.menu)} style={{ background: 'black', color: 'white' }}>
           <h3>SAVE CHANGES AND UPDATE</h3>
         </div>
       </>

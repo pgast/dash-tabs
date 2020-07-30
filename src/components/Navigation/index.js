@@ -4,35 +4,38 @@ import { Link } from 'react-router-dom';
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
+import { withRouter } from 'react-router-dom';
 
-const Navigation = () => (
-  <AuthUserContext.Consumer>
-      {authUser =>
-        authUser ? (
-          <NavigationAuth authUser={authUser} />
-        ) : (
-          <NavigationNonAuth />
-        )
-      }
-  </AuthUserContext.Consumer>
-);
+const Navigation = (props) => {
+  const displayingMenu = props.location.pathname.slice(1,5) === "menu" ? true : false;
 
-const NavigationAuth = ({ authUser }) => (
+  return (
+    <AuthUserContext.Consumer>
+        {authUser =>
+          authUser ? (
+            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} />
+          ) : (
+            <NavigationNonAuth displayingMenu={displayingMenu} />
+          )
+        }
+    </AuthUserContext.Consumer>
+  );
+};
+
+const NavigationAuth = ({ authUser, displayingMenu }) => (
   <div className="navBar">
     <Link to={ROUTES.HOME}>Home</Link>
-    {authUser.username !== "Demo" && <Link to={ROUTES.ACCOUNT}>Account</Link>}
-    <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
-    <h3 onClick={() => console.log(authUser)}>Log State</h3>
-    <SignOutButton />
+    {(authUser.username !== "Demo" && !displayingMenu) && <Link to={ROUTES.ACCOUNT}>Account</Link>}
+    {!displayingMenu && <Link to={ROUTES.DASHBOARD}>Dashboard</Link>}
+    {!displayingMenu && <SignOutButton />}
   </div>
 );
 
-const NavigationNonAuth = () => (
+const NavigationNonAuth = ({ displayingMenu }) => (
   <div className="navBar">
     <Link to={ROUTES.HOME}>Home</Link>
-    <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    <h3 onClick={() => console.log()}>Log url params</h3>
+    {!displayingMenu && <Link to={ROUTES.SIGN_IN}>Sign In</Link>}
   </div>
 );
 
-export default Navigation;
+export default withRouter(Navigation);

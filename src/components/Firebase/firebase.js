@@ -57,9 +57,13 @@ class Firebase {
       }
     });
 
+  doSignInAnonymously = () =>
+    this.auth.signInAnonymously();
+
 
   // HACER ASYNC FUNCTION SI NO FUNCIONA
   getCurrentUserUid = () => this.auth.currentUser.uid;
+  getCurrentUser = () => this.auth.currentUser;
 
   // *** User API ***
   userOrders = uid => this.db.ref(`orders/${uid}`);
