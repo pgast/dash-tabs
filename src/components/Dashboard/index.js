@@ -22,13 +22,16 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    
     // fetch current user info
     this.props.firebase.user(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
       const userObject = snapshot.val();
       userObject.uid = this.props.firebase.getCurrentUserUid();
 
-      this.setState({ user: userObject, loading: false });
+      this.setState({ 
+        user: userObject, 
+        loading: false,  
+        userIsAnonymous: this.props.firebase.getCurrentUser().isAnonymous ? true : false, 
+      });
     })
 
 
@@ -48,9 +51,21 @@ class Dashboard extends Component {
       };
       this.setState({ orders: snapshot.val() });
     })
+
   }
 
-  componentWillUnmount() {
+  cleanupDb = () => {
+    if(this.state.userIsAnonymous) {
+      // delete nodes in database
+      this.props.firebase.user(this.props.firebase.getCurrentUserUid()).remove();
+      // sign out
+    };
+  };
+
+  componentWillUnmount() {    
+    // this.cleanupDb();
+
+
     this.props.firebase.users().off();
 
     // como evitar que un usuario qu

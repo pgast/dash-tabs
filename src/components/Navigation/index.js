@@ -25,9 +25,10 @@ const Navigation = (props) => {
 const NavigationAuth = ({ authUser, displayingMenu }) => (
   <div className="navBar">
     <Link to={ROUTES.HOME}>Home</Link>
-    {(authUser.username !== "Demo" && !displayingMenu) && <Link to={ROUTES.ACCOUNT}>Account</Link>}
+    {(!authUser.isAnonymous && !displayingMenu) && <Link to={ROUTES.ACCOUNT}>Account</Link>}
     {!displayingMenu && <Link to={ROUTES.DASHBOARD}>Dashboard</Link>}
-    {!displayingMenu && <SignOutButton />}
+    {!displayingMenu && <SignOutButton authUser={authUser.isAnonymous} />}
+    <p onClick={() => console.log(authUser)}>Log</p>
   </div>
 );
 

@@ -1,65 +1,68 @@
-export const demoOrders = {
-  current: [],
+export const ORDERS = {
+  current: 0,
   past: [
     {
       cost: 35,
-      end: '',
+      end: 1595549951683,
       items: {
-        dishes: [{ name: 'name', qty: 2 }, { name: 'ne', qty: 25 }],
-        drinks: [{ name: 'coke', qty: 3 }, { name: 'water', qty: 3 }],
+        dishes: [{ name: 'Panini', qty: 2 }, { name: 'Pie', qty: 1 }],
+        drinks: [{ name: 'Tea', qty: 3 }, { name: 'Cappuccino', qty: 3 }],
       },
       ready: true,
-      start: '',
-      table: 34
+      start: 1595291225998,
+      table: 34,
     }
   ],
 };
 
-export const demoMenu = {
+export const MENU = {
   dishes: [
     { 
+      price: 56,
+      name: "Panini",
       available: true, 
-      description: "desc",
-      name: "name",
-      price: 33,
+      description: "Choose between ham, chicken or vegetarian",
     },
     { 
-      available: true, 
-      description: "desc",
-      name: "name",
       price: 33,
+      available: true, 
+      name: "Croissant",
+      description: "Chocolate filled or plain",
     },
     { 
+      price: 42,
+      name: "Pie",
       available: true, 
-      description: "desc",
-      name: "name",
-      price: 33,
+      description: "Apple, Cheese, Lemon or Plum",
     },
   ],
   drinks: [
     {
+      price: 14.5,
       available: true,
-      description: 'sfsd',
-      name: 'sdf',
-      price: 23
+      name: 'Cappuccino',
+      description: 'Freshly brewed every morning',
     },
     {
+      price: 23,
+      name: 'Fruit Smoothie',
       available: true,
-      description: 'sfsd',
-      name: 'sdf',
-      price: 23
+      description: 'Banana, strawberry, mango.',
     },
     {
+      price: 12,
+      name: 'Tea',
       available: true,
-      description: 'sfsd',
-      name: 'sdf',
-      price: 23
+      description: 'Assortment of chai, camomille, lemon, etc',
     },
   ],
 };
 
-export const demoUser = {
+export const USER = {
   email: "DemoSession",
-  tables: '',
+  tables: [
+    { description: "By the door", number: 12 },
+    { description: "Large table", number: 3 },
+  ],
   username: 'DemoSession', 
 };

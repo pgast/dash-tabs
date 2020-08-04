@@ -27,7 +27,17 @@ class Firebase {
   doSignInWithEmailAndPassword = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  doSignOut = () => this.auth.signOut();
+  // doSignOut = () => this.auth.signOut();
+  doSignOut = (anonymous=false) => {
+    if(anonymous) {
+      // delete everything from database
+      this.user(this.getCurrentUserUid()).remove();
+      console.log('anonymous');
+    };
+
+    // sign out
+    this.auth.signOut();
+  }
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
@@ -42,14 +52,13 @@ class Firebase {
           .once('value')
           .then(snapshot => {
             const dbUser = snapshot.val();
-            
             // merge auth and db user
             authUser = {
               uid: authUser.uid,
               email: authUser.email,
+              isAnonymous: authUser.isAnonymous,
               ...dbUser,
             };
-
             next(authUser);
           });
       } else {
@@ -71,6 +80,6 @@ class Firebase {
   userTables = uid => this.db.ref(`users/${uid}/tables`);
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref('users');
-}
+};
 
 export default Firebase;

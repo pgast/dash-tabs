@@ -1,49 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
+import * as DEMODATA from '../../constants/demoData';
 import { defaultProps } from 'recompose';
 import { withFirebase } from '../Firebase';
 
-const HomePage = ({firebase, history}) => {
+class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  };
+// const HomePage = ({firebase, history}) => {
 
-  const launchDemo = () => {
-    // demo client menu url
-    const clientMenuUrl = `${window.location.href}menu/${process.env.REACT_APP_DEMO_UID}/takeout`;
+  launchDemo = () => {
     // sign out
-    firebase.doSignOut();
-    // sign in con demo account
-
-    // firebase.doSignInWithEmailAndPassword(process.env.REACT_APP_DEMO_EMAIL, process.env.REACT_APP_DEMO_PWD)
-    // .then(() => {
-    //   history.push(ROUTES.DASHBOARD);
-    // });
+    this.props.firebase.doSignOut();
 
     // sign In anonymously
-    // create 
-
-    firebase.doSignInAnonymously()
+    this.props.firebase.doSignInAnonymously()
       .then(() => {
-        console.log(firebase.getCurrentUser());
+        this.props.firebase.userOrders(this.props.firebase.getCurrentUserUid()).set(DEMODATA.ORDERS);
+        this.props.firebase.userMenu(this.props.firebase.getCurrentUserUid()).set(DEMODATA.MENU);
+        this.props.firebase.user(this.props.firebase.getCurrentUserUid()).set(DEMODATA.USER);
+        let clientMenuUrl = `${window.location.href}menu/${this.props.firebase.getCurrentUserUid()}/takeout`;
+        this.props.history.push(ROUTES.DASHBOARD);
+        window.open(clientMenuUrl, "_blank") //to open new page
       });
 
-    // open new tab with menu
-    // window.open(clientMenuUrl, "_blank") //to open new page
   };
 
-
-  return (
-    <div>
-      <h1>Home Page</h1>
-      <p onClick={() => console.log([window.location.href.length, window.location.href])}>Log root length</p>
-
-      <Link to={ROUTES.SIGN_UP}>CREATE ACCOUNT</Link>
-
-      <h3 onClick={() => launchDemo()}>TRY IT</h3>
-      {/*  sign out de lo que esten ahorita y sign in con cuenta de demo 
-      que envie a dashboard y abra otra pestana como takeout */}
-    </div>
-  )
+  render() {
+    return (
+      <div>
+        <h1 onClick={() => console.log(this.props.firebase.getCurrentUserUid())}>Home Page</h1>
+  
+        <Link to={ROUTES.SIGN_UP}>CREATE ACCOUNT</Link>
+  
+        <h3 onClick={() => this.launchDemo()}>TRY IT</h3>
+        {/*  sign out de lo que esten ahorita y sign in con cuenta de demo 
+        que envie a dashboard y abra otra pestana como takeout */}
+      </div>
+    );
+  };
 };
 
 export default withFirebase(HomePage);
