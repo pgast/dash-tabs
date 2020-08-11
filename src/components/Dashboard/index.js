@@ -24,9 +24,12 @@ class Dashboard extends Component {
     this.setState({ loading: true });
     // fetch current user info
     this.props.firebase.user(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
+      console.log('[TRIGGER ON FUNCTION USER]');
       const userObject = snapshot.val();
-      userObject.uid = this.props.firebase.getCurrentUserUid();
 
+      // CHECK FOR DEMO USER LOGGOUT PREVENT CRASH
+      if(this.props.firebase.getCurrentUser() === null || this.props.firebase.getCurrentUserUid() === null || userObject === null) return;
+      userObject.uid = this.props.firebase.getCurrentUserUid();
       this.setState({ 
         user: userObject, 
         loading: false,  
@@ -37,13 +40,19 @@ class Dashboard extends Component {
 
     // fetch menu with user uid
     this.props.firebase.userMenu(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
+      console.log('[TRIGGER ON LISTENER MENU]')
       this.setState({ menu: snapshot.val() });
     });
 
 
     // fetch orders with user uid
     this.props.firebase.userOrders(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
+      console.log('[TRIGGER ON LISTENER ORDERS]');
+
       let orders = snapshot.val();
+
+      // CHECK FOR DEMO USER LOGOUT PREVENT CRASH
+      if(orders === null) return;
       if(orders.current == 0) { orders.current = [] };
       if(orders.past == 0) { 
         console.log('[DASHBOARD] orders past is 0');
@@ -51,34 +60,10 @@ class Dashboard extends Component {
       };
       this.setState({ orders: snapshot.val() });
     })
-
   }
 
-  cleanupDb = () => {
-    if(this.state.userIsAnonymous) {
-      // delete nodes in database
-      this.props.firebase.user(this.props.firebase.getCurrentUserUid()).remove();
-      // sign out
-    };
-  };
-
-  componentWillUnmount() {    
-    // this.cleanupDb();
-
-
+  componentWillUnmount() {       
     this.props.firebase.users().off();
-
-    // como evitar que un usuario qu
-    // SOLO TRIGGEREAR ESTE RESETEO SI ESTA EN MODO DEMO
-    // resetear database de demo version con valores iniciales
-    // orders
-    // updateOrdersDb con la copia de orders
-
-    // tables
-    // updateTablesDb con la copia de tables
-
-    // menu
-    // updateMenuDb con la copia de menu
   }
 
   updateMenuDb = (newMenu) => {
@@ -127,7 +112,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <div className="dashboard_header">
           <h3>Dashboard</h3>
-          <h5 onClick={() => console.log(this.props.history)}>Log state</h5>
+          <h5 onClick={() => console.log(this.props.firebase.getCurrentUser())}>Log current user</h5>
           <p>Dashboard is accessible by every signed in admin user</p>
           <div className="viewToggler">
             <h4 onClick={() => this.toggleView('orders')}>ORDERS</h4>

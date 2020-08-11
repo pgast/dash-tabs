@@ -27,17 +27,7 @@ class Firebase {
   doSignInWithEmailAndPassword = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  // doSignOut = () => this.auth.signOut();
-  doSignOut = (anonymous=false) => {
-    if(anonymous) {
-      // delete everything from database
-      this.user(this.getCurrentUserUid()).remove();
-      console.log('anonymous');
-    };
-
-    // sign out
-    this.auth.signOut();
-  }
+  doSignOut = () => this.auth.signOut();
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
@@ -68,6 +58,16 @@ class Firebase {
 
   doSignInAnonymously = () =>
     this.auth.signInAnonymously();
+
+  // *** Cleanup DB ***
+  cleanupDb = () => {
+    console.log(this.db.ref(`orders/`).once('value', snapshot => snapshot.val()));
+  }
+
+  // restarle a current timestamp el timestamp de base de datos
+// si la diferencia es mayor a 900 000 = 15 min
+// borrar ese nodo de base de datos
+
 
 
   // HACER ASYNC FUNCTION SI NO FUNCIONA

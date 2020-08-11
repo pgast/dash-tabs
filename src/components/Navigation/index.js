@@ -6,14 +6,19 @@ import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import { withRouter } from 'react-router-dom';
 
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
+
 const Navigation = (props) => {
   const displayingMenu = props.location.pathname.slice(1,5) === "menu" ? true : false;
+  const history = props.history;
 
   return (
     <AuthUserContext.Consumer>
         {authUser =>
           authUser ? (
-            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} />
+            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} history={history} firebase={props.firebase}/>
           ) : (
             <NavigationNonAuth displayingMenu={displayingMenu} />
           )
@@ -22,13 +27,13 @@ const Navigation = (props) => {
   );
 };
 
-const NavigationAuth = ({ authUser, displayingMenu }) => (
+const NavigationAuth = ({ authUser, displayingMenu, history, firebase }) => (
   <div className="navBar">
     <Link to={ROUTES.HOME}>Home</Link>
     {(!authUser.isAnonymous && !displayingMenu) && <Link to={ROUTES.ACCOUNT}>Account</Link>}
     {!displayingMenu && <Link to={ROUTES.DASHBOARD}>Dashboard</Link>}
-    {!displayingMenu && <SignOutButton authUser={authUser.isAnonymous} />}
-    <p onClick={() => console.log(authUser)}>Log</p>
+    {!displayingMenu && <SignOutButton userIsAnonymous={authUser.isAnonymous} history={history} />}
+    <p onClick={() => firebase.cleanupDb()}>Log DB</p>
   </div>
 );
 
@@ -39,4 +44,9 @@ const NavigationNonAuth = ({ displayingMenu }) => (
   </div>
 );
 
-export default withRouter(Navigation);
+// export default withRouter(Navigation);
+
+export default compose(
+  withRouter,
+  withFirebase,
+)(Navigation);

@@ -16,7 +16,7 @@ const withAuthorization = condition => Component => {
         authUser => {
           // demo version validation
           // if user uid is the one of the demo and url is account
-          if(authUser.uid === process.env.REACT_APP_DEMO_UID && visitingAccount) {
+          if(authUser.isAnonymous && visitingAccount) {
             this.props.history.push(ROUTES.HOME);
           }
 
