@@ -237,19 +237,3 @@ class OrdersManager extends Component {
 }
 
 export default OrdersManager;
-
-
-
-    {/* ORDEN
-      {
-        items: { 
-          drinks: [{ item: 'corona', qty: 23 }], 
-          dishes: [{ item: 'burger', qty: 1, notes: 'no sauce' }] 
-        },
-        cost: 452,  <== que hacer aqui si se modifica la orden, vuelve a hacerse costeo?
-        table: 45 / "takeout"
-        ready: "ongoing" / "ready" 
-        start: 23/junio/2020 23:12 <== solo agregar hora
-        end: 23/junio/2020 23:34 <== solo agregar hora 
-      }
-    */}

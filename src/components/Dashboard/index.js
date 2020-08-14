@@ -24,7 +24,6 @@ class Dashboard extends Component {
     this.setState({ loading: true });
     // fetch current user info
     this.props.firebase.user(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
-      console.log('[TRIGGER ON FUNCTION USER]');
       const userObject = snapshot.val();
 
       // CHECK FOR DEMO USER LOGGOUT PREVENT CRASH
@@ -40,15 +39,12 @@ class Dashboard extends Component {
 
     // fetch menu with user uid
     this.props.firebase.userMenu(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
-      console.log('[TRIGGER ON LISTENER MENU]')
       this.setState({ menu: snapshot.val() });
     });
 
 
     // fetch orders with user uid
     this.props.firebase.userOrders(this.props.firebase.getCurrentUserUid()).on('value', snapshot => {
-      console.log('[TRIGGER ON LISTENER ORDERS]');
-
       let orders = snapshot.val();
 
       // CHECK FOR DEMO USER LOGOUT PREVENT CRASH
@@ -56,7 +52,7 @@ class Dashboard extends Component {
       if(orders.current == 0) { orders.current = [] };
       if(orders.past == 0) { 
         console.log('[DASHBOARD] orders past is 0');
-        orders.past = 'shit' 
+        orders.past = 'ooo' 
       };
       this.setState({ orders: snapshot.val() });
     })

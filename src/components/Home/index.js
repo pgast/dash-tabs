@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
 import * as DEMODATA from '../../constants/demoData';
-import { defaultProps } from 'recompose';
 import { withFirebase } from '../Firebase';
 
 class HomePage extends Component {

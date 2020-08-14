@@ -33,7 +33,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history, firebase }) => (
     {(!authUser.isAnonymous && !displayingMenu) && <Link to={ROUTES.ACCOUNT}>Account</Link>}
     {!displayingMenu && <Link to={ROUTES.DASHBOARD}>Dashboard</Link>}
     {!displayingMenu && <SignOutButton userIsAnonymous={authUser.isAnonymous} history={history} />}
-    <p onClick={() => firebase.cleanupDb()}>Log DB</p>
+    <p onClick={() => firebase.demoCleanupDb()}>Log DB</p>
   </div>
 );
 

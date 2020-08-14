@@ -1,4 +1,5 @@
 export const ORDERS = {
+  timestamp: new Date().getTime(),
   current: 0,
   past: [
     {
@@ -16,6 +17,7 @@ export const ORDERS = {
 };
 
 export const MENU = {
+  timestamp: new Date().getTime(),
   dishes: [
     { 
       price: 56,
@@ -59,6 +61,7 @@ export const MENU = {
 };
 
 export const USER = {
+  timestamp: new Date().getTime(),
   email: "DemoSession",
   tables: [
     { description: "By the door", number: 12 },

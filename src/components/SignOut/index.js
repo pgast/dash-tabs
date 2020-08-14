@@ -8,7 +8,6 @@ const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
     firebase.users().off();
     firebase.userOrders().off();
     firebase.userMenu().off();
-    console.log('1')
     return Promise.resolve();
   };
 
@@ -16,7 +15,6 @@ const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
     firebase.user(uid).remove();
     firebase.userMenu(uid).remove();
     firebase.userOrders(uid).remove();
-    console.log('2');
     return Promise.resolve();
   }
 
@@ -28,7 +26,6 @@ const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
           deleteAnonDb(anonUid);
         })
         .then(() => {
-          console.log('3');
           history.push(ROUTES.HOME);
           firebase.doSignOut();
         });

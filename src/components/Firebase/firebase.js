@@ -60,15 +60,78 @@ class Firebase {
     this.auth.signInAnonymously();
 
   // *** Cleanup DB ***
-  cleanupDb = () => {
-    console.log(this.db.ref(`orders/`).once('value', snapshot => snapshot.val()));
+
+    // one cleanup function
+    // INPUTS
+    // time
+    // db ref path
+    // ref path function
+
+  // *** Cleanup Orders ***
+  cleanupDemoOrders = (time) => {
+    let keysToDelete = [];
+    this.db.ref(`orders/`).once('value').then(snapshot => { 
+      let orders = snapshot.val(); 
+      for(var key in orders) {
+        if(orders[key].hasOwnProperty('timestamp')) {
+          if(time-orders[key]["timestamp"] > 900000) { 
+            keysToDelete.push(key); 
+          }
+        }
+      };
+    }).then(() => {
+      for(let i=0; i<keysToDelete.length; i++) { 
+        this.userOrders(keysToDelete[i]).remove();
+      };
+    });
   }
 
-  // restarle a current timestamp el timestamp de base de datos
-// si la diferencia es mayor a 900 000 = 15 min
-// borrar ese nodo de base de datos
+  // *** Cleanup Menu ***
+  cleanupDemoMenus = (time) => {
+    let keysToDelete = [];
+    this.db.ref(`menus/`).once('value').then(snapshot => { 
+      let menus = snapshot.val(); 
+      for(var key in menus) {
+        if(menus[key].hasOwnProperty('timestamp')) {
+          if(time-menus[key]["timestamp"] > 900000) { 
+            keysToDelete.push(key); 
+          }
+        }
+      };
+    }).then(() => {
+      for(let i=0; i<keysToDelete.length; i++) { 
+        this.userMenu(keysToDelete[i]).remove();
+      };
+    });
+  }
+
+  // *** Cleanup Users ***
+  cleanupDemoUsers = (time) => {
+    let keysToDelete = [];
+    this.db.ref(`users/`).once('value').then(snapshot => { 
+      let users = snapshot.val(); 
+      for(var key in users) {
+        if(users[key].hasOwnProperty('timestamp')) {
+          if(time-users[key]["timestamp"] > 900000) { 
+            keysToDelete.push(key); 
+          }
+        }
+      };
+    }).then(() => {
+      for(let i=0; i<keysToDelete.length; i++) { 
+        this.user(keysToDelete[i]).remove();
+      };
+    });
+  }
 
 
+  demoCleanupDb = () => {
+    let currentTime = new Date().getTime();
+
+    // this.cleanupDemoOrders(currentTime);  
+    // this.cleanupDemoMenus(currentTime);  
+    this.cleanupDemoUsers(currentTime);
+  }
 
   // HACER ASYNC FUNCTION SI NO FUNCIONA
   getCurrentUserUid = () => this.auth.currentUser.uid;
