@@ -36,9 +36,7 @@ class OrdersManager extends Component {
     selectedOrder.ready = true;
     selectedOrder.end = new Date().getTime();
     newOrders.current = newOrders.current.filter((el, idx) => idx !== index);
-
     if(newOrders.current.length === 0) newOrders.current = 0;
-    if(!newOrders.past) newOrders.past = [];
     newOrders.past.push(selectedOrder);
     this.props.updateOrdersDb(newOrders);
   }
@@ -56,7 +54,7 @@ class OrdersManager extends Component {
       selectedOrder.ready = false;
       newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
       if(newOrders.past.length === 0) newOrders.past = 0;
-      if(!newOrders.current) newOrders.current = [];
+      // if(!newOrders.current) newOrders.current = [];
       newOrders.current.push(selectedOrder);
       this.props.updateOrdersDb(newOrders);
     } else {
@@ -79,10 +77,13 @@ class OrdersManager extends Component {
   }
 
   deleteOrder = (index, type) => {
-    let current = this.state.orders.current === 0 ? [] : [...this.state.orders.current];
-    let past = this.state.orders.past === 0 ? [] : [...this.state.orders.past];
+    let current = this.state.orders.current === 0 ? 0 : [...this.state.orders.current];
+    let past = this.state.orders.past === 0 ? 0 : [...this.state.orders.past];
     let newOrders = { current, past }
     newOrders[type].splice(index, 1);
+
+    if(newOrders.current.length === 0) newOrders.current = 0;
+    if(newOrders.past.length === 0) newOrders.past = 0;
     this.props.updateOrdersDb(newOrders);
   };
 

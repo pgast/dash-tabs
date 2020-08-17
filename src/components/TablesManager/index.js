@@ -161,7 +161,18 @@ class TablesManager extends Component {
             {tables.map((el, idx) => (
               <React.Fragment key={idx}>
                 {tableEdit.current !== idx ? 
-                  <li key={idx} onClick={() => this.editTable(idx)}>Table number {el.number} - {el.description}</li>
+                  <li key={idx}>
+                    Table number {el.number} - {el.description}
+                    <button onClick={() => this.editTable(idx)}>Edit</button>
+                    <button onClick={(e) => this.generateSingleQr(el.number, e)}>Get Table QR Code</button>
+
+                    {this.state.displayQr !== null && 
+                      <>
+                        <h5>Table number: {el.number}</h5>
+                        <img src={this.state.displayQr} alt="" title="" />
+                      </>
+                    }
+                  </li>
                 :
                   <li key={idx}>
                     <form onSubmit={(e) => this.saveEditTable(e)}>
@@ -177,16 +188,7 @@ class TablesManager extends Component {
                         placeholder="New table description"
                         onChange={(e) => this.setTableEdit("newDescription", e.target.value)}
                       />
-
-                      {this.state.displayQr !== null && 
-                        <>
-                        <h5>Table number: {el.number}</h5>
-                        <img src={this.state.displayQr} alt="" title="" />
-                        </>
-                      }
-
                       <button disabled={editIsInvalid} type="submit">Save</button>
-                      <button onClick={(e) => this.generateSingleQr(el.number, e)}>Get Table QR Code</button>
                       <button onClick={() => this.deleteTable(idx)}>Delete Item</button>
                       <button onClick={this.resetTableEdit}>Cancel Edit</button>
                     </form>

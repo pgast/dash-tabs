@@ -127,11 +127,10 @@ class Firebase {
 
   demoCleanupDb = () => {
     let currentTime = new Date().getTime();
-
-    // this.cleanupDemoOrders(currentTime);  
-    // this.cleanupDemoMenus(currentTime);  
+    this.cleanupDemoOrders(currentTime);  
+    this.cleanupDemoMenus(currentTime);  
     this.cleanupDemoUsers(currentTime);
-  }
+  };
 
   // HACER ASYNC FUNCTION SI NO FUNCIONA
   getCurrentUserUid = () => this.auth.currentUser.uid;

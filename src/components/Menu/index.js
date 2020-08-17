@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Modal from '../Modal';
 
 import { withFirebase } from '../Firebase';
 
@@ -22,6 +23,7 @@ class Menu extends Component {
         comments: '',
       },
       comments: '',
+      showModal: false,
     };
   };
 
@@ -38,6 +40,7 @@ class Menu extends Component {
     this.props.firebase.users().off();
   }
 
+  /* NO CAMBIA CURRENT NI PAST ORDERS */
   fetchMenu = (uid) => {
     this.props.firebase.userMenu(uid).on('value', snapshot => {
       if(snapshot.val() !== null) {
@@ -51,6 +54,7 @@ class Menu extends Component {
           menu: newMenu, 
           dataFetched: true, 
           order: { ...this.state.order, table },
+          // showModal: this.props.firebase.getCurrentUser().isAnonymous ? true : false,
         });
 
       } else {
@@ -88,13 +92,15 @@ class Menu extends Component {
           }
         }
       }
-      if(fetchedOrders.current === 0) { fetchedOrders.current = [] };
+      if(fetchedOrders.current === 0) fetchedOrders.current = [];
+      if(fetchedOrders.past === 0) fetchedOrders.past = [];
       this.setState({ orderIsValid, fetchedOrders });
     })
   }
 
   getTakeoutOrder = (orders) => {
     let orderNum = 0;
+
     orders.current.forEach(el => {
       if(el.table === "takeout" && el.orderNum > orderNum) orderNum = el.orderNum;
     });
@@ -130,18 +136,15 @@ class Menu extends Component {
     };
     order.comments = this.state.comments;
 
-    console.log(order);
+    if(this.state.table === "takeout") {
+      console.log('takeout block')
+      order.orderNum = this.getTakeoutOrder(newOrders);
+    } 
 
-    if(this.state.table === "takeout") order.orderNum = this.getTakeoutOrder(newOrders);
-
-    if(order.items.dishes.length === 0) {
-      order.items.dishes = 0;
-    }
-
-    if(order.items.drinks.length === 0) {
-      order.items.drinks = 0;
-    }
-
+    if(order.items.dishes.length === 0) order.items.dishes = 0;
+    if(order.items.drinks.length === 0) order.items.drinks = 0;
+    if(newOrders.past.length === 0) newOrders.past = 0;
+    
     newOrders.current.push(order);
     this.props.firebase.userOrders(uid).set(newOrders);
     this.setState({ orderSent: true })
@@ -205,6 +208,12 @@ class Menu extends Component {
     this.setState({ order: newOrder });
   }
 
+  showModal = e => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
+
   render() {
     const orderIsEmpty = this.state.order.items.dishes.length === 0 && this.state.order.items.drinks.length === 0;
     const { dataFetched, order, orderSent } = this.state;
@@ -220,7 +229,7 @@ class Menu extends Component {
 
         {!orderSent && (
           <>
-            <h2 onClick={() => console.log(this.props.match.params)}>Table {this.state.table}</h2>
+            <h2 onClick={() => console.log(this.state)}>Table {this.state.table}</h2>
             <div className="menu">
               <div>
                 <h4 onClick={() => console.log(this.state)}>Bebidas</h4> 
@@ -326,6 +335,10 @@ class Menu extends Component {
             <p>Your total is: {order.cost}</p>
           </>
         )}
+
+        <Modal onClose={this.showModal} show={this.state.showModal}>
+          Message in Modal
+        </Modal>
 
         {this.state.error && <p>{this.state.error}</p>}
       </div>

@@ -24,12 +24,20 @@ class MenuManager extends Component {
   };
 
   componentDidMount() {
-    this.setState({ menu: this.props.menu})
+    let menu = {
+      drinks: this.props.menu.drinks === 0 ? [] : this.props.menu.drinks,
+      dishes: this.props.menu.dishes === 0 ? [] : this.props.menu.dishes
+    };
+    this.setState({ menu })
   }
 
   componentDidUpdate(prevProps) {
     if(this.props.menu !== prevProps.menu) {
-      this.setState({ menu: this.props.menu });
+      let menu = {
+        drinks: this.props.menu.drinks === 0 ? [] : this.props.menu.drinks,
+        dishes: this.props.menu.dishes === 0 ? [] : this.props.menu.dishes
+      }
+      this.setState({ menu });
     }
   }
 
@@ -174,15 +182,17 @@ class MenuManager extends Component {
 
   render() {
     const { name, price, type, description } = this.state.inputItem;
-    const isInvalid = name === '' || this.numberIsInvalid(price) || type === '';
-
+    const saveChangesIsInvalid = name !== '' || price !== '' || type !== '';
     const { current } = this.state.itemEdit;
+    const addIsInvalid = (name === '' || this.numberIsInvalid(price) || type === '') || current !== '';
+
+
     const isInvalidEdit = this.state.itemEdit.name === '' || this.numberIsInvalid(this.state.itemEdit.price);
 
     const { drinks, dishes } = this.state.menu;
 
-    const drinksIsEmpty = drinks === 0 ? true : false;
-    const dishesIsEmpty = dishes === 0 ? true : false;
+    const drinksIsEmpty = drinks.length === 0 ? true : false;
+    const dishesIsEmpty = dishes.length === 0 ? true : false;
 
     return (
       <>
@@ -370,14 +380,14 @@ class MenuManager extends Component {
               />
             <label>Comida</label>
           </div>
-          <button disabled={isInvalid} type="submit">Add</button>
+          <button disabled={addIsInvalid} type="submit">Add</button>
         </form>
 
         <hr/>
         {/* GUARDAR CAMBIOS, SE SUBE NUEVA VERSION DE MENU A DATABASE (?mejor manera de hacerlo) */}
-        <div onClick={() => this.props.updateMenuDb(this.state.menu)} style={{ background: 'black', color: 'white' }}>
+        <button disabled={saveChangesIsInvalid} onClick={() => this.props.updateMenuDb(this.state.menu)} >
           <h3>SAVE CHANGES AND UPDATE</h3>
-        </div>
+        </button>
       </>
     )
   }
