@@ -68,4 +68,5 @@ export const USER = {
     { description: "Large table", number: 3 },
   ],
   username: 'DemoSession', 
+  businessName: 'YellowBird - Coffeehouse'
 };

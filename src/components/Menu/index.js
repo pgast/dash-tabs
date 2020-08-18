@@ -34,10 +34,19 @@ class Menu extends Component {
       this.tableIsValid(this.props.match.params.uid);
     }
     this.orderIsValid(this.props.match.params.uid);
+    this.fetchRestaurantName(this.props.match.params.uid);
   }
 
   componentWillUnmount() {
     this.props.firebase.users().off();
+  }
+
+  /* QUE NO EXISTA ESTA FUNCION, SE PUEDE JUNTAR CON OTRA */
+  fetchRestaurantName = (uid) => {
+    this.props.firebase.user(uid).on('value', snapshot => {
+      let businessName = snapshot.val().businessName;
+      this.setState({ businessName });
+    });
   }
 
   /* NO CAMBIA CURRENT NI PAST ORDERS */
@@ -233,6 +242,7 @@ class Menu extends Component {
 
         {!orderSent && (
           <>
+            <h1>Welcome to {this.state.businessName}</h1>
             <h2 onClick={() => console.log(this.state)}>Table {this.state.table}</h2>
             <div className="menu">
               <div>

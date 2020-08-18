@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  businessName: '',
   error: null,
 };
 
@@ -26,7 +27,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne, businessName } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -34,7 +35,7 @@ class SignUpFormBase extends Component {
       .then(authUser => {
         this.props.firebase.user(authUser.user.uid)
         // agregar en tables el takeout point y generarlo cuando se cree usuario
-        .set({ username, email, tables: 0 })
+        .set({ username, email, tables: 0, businessName })
         
         .then(() => {
           this.props.firebase.userMenu(authUser.user.uid)
@@ -71,12 +72,14 @@ class SignUpFormBase extends Component {
       passwordOne,
       passwordTwo,
       error,
+      businessName
     } = this.state;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
+      businessName === '' ||
       username === '';
 
     return (
@@ -108,6 +111,13 @@ class SignUpFormBase extends Component {
           value={passwordTwo}
           onChange={this.onChange}
           placeholder="Confirm Password"
+        />
+        <input
+          type="text"
+          name="businessName"
+          value={businessName}
+          onChange={this.onChange}
+          placeholder="Add restaurant name"
         />
         <button disabled={isInvalid} type="submit">
           Sign Up
