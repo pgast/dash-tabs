@@ -49,13 +49,16 @@ class Menu extends Component {
         if(snapshot.val().drinks !== 0) newMenu.drinks = snapshot.val().drinks.filter(el => el.available);
         let table = this.props.match.params.table === "takeout" ? "takeout" : Number(this.props.match.params.table);
 
+        let currentUser = this.props.firebase.getCurrentUser();
+
         this.setState({ 
           table,
           menu: newMenu, 
           dataFetched: true, 
           order: { ...this.state.order, table },
-          // showModal: this.props.firebase.getCurrentUser().isAnonymous ? true : false,
+          showModal: currentUser === null ? false : currentUser.isAnonymous,
         });
+
 
       } else {
         this.setState({ error: 'data not found' });
@@ -135,6 +138,7 @@ class Menu extends Component {
       start: new Date().getTime(),
     };
     order.comments = this.state.comments;
+
 
     if(this.state.table === "takeout") {
       console.log('takeout block')
