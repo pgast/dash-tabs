@@ -19,7 +19,10 @@ class TablesManager extends Component {
       showQrs: false,
       tablesQrCodes: null,
       error: { exists: false },
-      displayQr: null,
+      displayQr: {
+        src: null,
+        current: null
+      }
     }
   }
 
@@ -62,9 +65,14 @@ class TablesManager extends Component {
     this.setState({ tablesQrCodes: newQrs, showQrs: true });
   }
 
-  generateSingleQr = (table, e, takeout=false) => {
+  generateSingleQr = (tableNumber, e, index, takeout=false) => {
     e.preventDefault();
-    this.setState({ displayQr: this.props.createQR(table.number, takeout) });
+    this.setState({
+      displayQr: {
+        src: this.props.createQR(tableNumber, takeout),
+        current: index
+      }
+    })
   };
 
   editTable = (tableIdx) => {
@@ -74,7 +82,7 @@ class TablesManager extends Component {
       waitingOrder: this.state.tables[tableIdx].waitingOrder,
       newDescription: this.state.tables[tableIdx].description,
      }
-    this.setState({ tableEdit: newTableEdit, displayQr: null })
+    this.setState({ tableEdit: newTableEdit, displayQr: { src: null, current: null } })
   };
 
   resetTableEdit = () => {
@@ -84,7 +92,7 @@ class TablesManager extends Component {
       newDescription: '',
       waitingOrder: false,
     }
-    this.setState({ tableEdit: newTableEdit, displayQr: null });
+    this.setState({ tableEdit: newTableEdit, displayQr: { src: null, current: null } });
   }
 
   deleteTable = (deleteIndex) => {
@@ -164,12 +172,12 @@ class TablesManager extends Component {
                   <li key={idx}>
                     Table number {el.number} - {el.description}
                     <button onClick={() => this.editTable(idx)}>Edit</button>
-                    <button onClick={(e) => this.generateSingleQr(el.number, e)}>Get Table QR Code</button>
+                    <button onClick={(e) => this.generateSingleQr(el.number, e, idx)}>Get Table QR Code</button>
 
-                    {this.state.displayQr !== null && 
+                    {(this.state.displayQr.src !== null && this.state.displayQr.current === idx) && 
                       <>
                         <h5>Table number: {el.number}</h5>
-                        <img src={this.state.displayQr} alt="" title="" />
+                        <img src={this.state.displayQr.src} alt="" title="" />
                       </>
                     }
                   </li>
@@ -201,11 +209,11 @@ class TablesManager extends Component {
     
         <hr />
         <div>
-          <button onClick={(e) => this.generateSingleQr({number: null}, e, true)}>Get Takeout QR</button>
-          {(this.state.displayQr !== null && this.state.tableEdit.current === '') &&
+          <button onClick={(e) => this.generateSingleQr(null, e, 'takeout', true)}>Get Takeout QR</button>
+          {(this.state.displayQr.src !== null && this.state.displayQr.current === 'takeout') &&
             <>
               <h5>Takeout</h5>
-              <img src={this.state.displayQr} alt="" title="" />
+              <img src={this.state.displayQr.src} alt="" title="" />
             </>
           }
         </div>
