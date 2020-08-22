@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MenuView from './menuView';
+import Modal from '../Modal';
 
 import { withFirebase } from '../Firebase';
 
@@ -124,7 +124,7 @@ class Menu extends Component {
     return orderNum + 1;
   }
 
-  sendOrder = () => {
+  sendOrder = (uid) => {
     if(this.state.table !== "takeout") {
       if(this.state.tableIsValid === false) {
         this.setState({ error: "Check table number" });
@@ -150,6 +150,7 @@ class Menu extends Component {
 
 
     if(this.state.table === "takeout") {
+      console.log('takeout block')
       order.orderNum = this.getTakeoutOrder(newOrders);
     } 
 
@@ -158,7 +159,7 @@ class Menu extends Component {
     if(newOrders.past.length === 0) newOrders.past = 0;
     
     newOrders.current.push(order);
-    this.props.firebase.userOrders(this.props.match.params.uid).set(newOrders);
+    this.props.firebase.userOrders(uid).set(newOrders);
     this.setState({ orderSent: true })
   }
 
@@ -220,59 +221,141 @@ class Menu extends Component {
     this.setState({ order: newOrder });
   }
 
-  toggleModal = e => {
+  showModal = e => {
     this.setState({
       showModal: !this.state.showModal
     });
   };
 
-  handleFormInput = input => {
-    this.setState({
-      comments: input
-    });
-  };
-
   render() {
-    const {
-      menu,
-      table,
-      error,
-      order,
-      showModal,
-      orderSent,
-      dataFetched,
-      businessName,
-    } = this.state;
-
-    const orderIsEmpty = order.items.dishes.length === 0 && order.items.drinks.length === 0;
-    const drinksIsEmpty = (menu.drinks.length === 0 || menu.drinks === 0 ) ? true : false;
-    const dishesIsEmpty = (menu.dishes.length === 0 || menu.dishes === 0 ) ? true : false;
+    const orderIsEmpty = this.state.order.items.dishes.length === 0 && this.state.order.items.drinks.length === 0;
+    const { dataFetched, order, orderSent } = this.state;
+    const { drinks, dishes } = this.state.menu;
+    const drinksIsEmpty = (drinks.length === 0 || drinks === 0 ) ? true : false;
+    const dishesIsEmpty = (dishes.length === 0 || dishes === 0 ) ? true : false;
     const orderDrinksIsEmpty = order.items.drinks.length === 0 ? true : false;
     const orderDishesIsEmpty = order.items.dishes.length === 0 ? true : false;
 
     return (
-      <MenuView 
-        error={error}
-        table={table}
-        drinks={menu.drinks}
-        dishes={menu.dishes}
-        orderSent={orderSent}
-        showModal={showModal}
-        addItem={this.addItem}
-        order={this.state.order}
-        dataFetched={dataFetched}
-        sendOrder={this.sendOrder}
-        orderIsEmpty={orderIsEmpty}
-        businessName={businessName}
-        deleteItem={this.deleteItem}
-        drinksIsEmpty={drinksIsEmpty}
-        dishesIsEmpty={dishesIsEmpty}
-        toggleModal={this.toggleModal}
-        upgradeItemQty={this.upgradeItemQty}
-        handleFormInput={this.handleFormInput}
-        orderDishesIsEmpty={orderDishesIsEmpty}
-        orderDrinksIsEmpty={orderDrinksIsEmpty}
-      />
+      <div className="clientMenu"> 
+        {!dataFetched && <h1>Menu</h1>}
+
+        {!orderSent && (
+          <>
+            <h1>Welcome to {this.state.businessName}</h1>
+            <h2 onClick={() => console.log(this.state)}>Table {this.state.table}</h2>
+            <div className="menu">
+              <div>
+                <h4 onClick={() => console.log(this.state)}>Bebidas</h4> 
+                {drinksIsEmpty ? 
+                  <h3>No hay bebidas registradas</h3>
+                :
+                  <ol>
+                    {drinks && drinks.map((item, idx) =>
+                      <li key={idx} onClick={() => this.addItem(item, 'drinks')}>
+                        <p>{item.name} - ${item.price}</p>
+                        <p>{item.description}</p>
+                      </li>
+                    )}
+                  </ol>
+                }
+              </div>
+              <div>
+                <h4>Comidas</h4>
+                {dishesIsEmpty ? 
+                  <h3>No hay comidas registradas</h3>
+                :
+                  <ol>
+                    {dishes && dishes.map((item, idx) => 
+                      <li key={idx} onClick={() => this.addItem(item, 'dishes')}>
+                        <p>{item.name} - ${item.price}</p>
+                        <p>{item.description}</p>
+                      </li>        
+                    )}
+                  </ol>
+                }
+              </div>
+            </div>
+
+            <div className="clientMenu_orderForm">
+              <div>
+                <div>
+                  {!orderDrinksIsEmpty && (
+                    <>
+                      <h4>Drinks</h4>
+                      <ul>
+                        {order.items.drinks.map((item, idx) => 
+                          <li key={idx}>
+                            <div>
+                              {item.name} - x {item.qty}
+                            </div>
+                            <div id="itemQty">
+                              <div>
+                                <button onClick={() => this.upgradeItemQty(item.name, 'drinks', 1)}>+</button>
+                              </div>
+                              <div>
+                                <button onClick={() => this.upgradeItemQty(item.name, 'drinks', -1)}>-</button>
+                              </div>
+                            </div>
+                            <button onClick={() => this.deleteItem(item, 'drinks')}>X</button>
+                          </li>
+                        )}
+                      </ul>
+                    </>
+                  )}
+                </div>
+                <div>
+                  {!orderDishesIsEmpty && (
+                    <>
+                      <h4>Dishes</h4>
+                      <ul>
+                        {order.items.dishes.map((item, idx) => 
+                          <li key={idx}>
+                            <div>
+                              {item.name} - x {item.qty}
+                            </div>
+                            <div id="itemQty">
+                              <div>
+                                <button onClick={() => this.upgradeItemQty(item.name, 'dishes', 1)}>+</button>
+                              </div>
+                              <div>
+                                <button onClick={() => this.upgradeItemQty(item.name, 'dishes', -1)}>-</button>
+                              </div>
+                            </div>
+                            <button onClick={() => this.deleteItem(item, 'dishes')}>X</button>
+                          </li>
+                        )}
+                      </ul>
+                    </>
+                  )}
+                </div>
+              </div>
+              <hr />
+              <div>
+                <div>
+                  <label>Extra instructions or request</label>
+                  <textarea rows="4" cols="50" form="usrform"  onChange={(e) => this.setState({ comments: e.target.value  })}/>
+                </div>
+                <h3>Order cost: ${this.state.order.cost}</h3>
+                <button disabled={orderIsEmpty} onClick={() => this.sendOrder(this.props.match.params.uid)}>TEST ORDER</button>
+              </div>
+            </div>
+          </>
+        )}
+
+        {orderSent && (
+          <>
+            <h2>ORDER SENT!</h2>
+            <p>Your total is: {order.cost}</p>
+          </>
+        )}
+
+        <Modal onClose={this.showModal} show={this.state.showModal}>
+          Message in Modal
+        </Modal>
+
+        {this.state.error && <p>{this.state.error}</p>}
+      </div>
     );
   }
 }

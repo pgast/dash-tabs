@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PasswordChangeView from './passwordChangeView';
 
 import { withFirebase } from '../Firebase';
 
@@ -41,14 +40,30 @@ class PasswordChangeForm extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return (
-      <PasswordChangeView 
-        isInvalid={isInvalid}
-        error={this.state.error}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-        passwordOne={passwordOne}
-        passwordTwo={passwordTwo}
-      />
+      <>
+        <h3>Password Change Form</h3>
+        <p>Cambiar contrasena pero ya desde dentro de app</p>
+        <form onSubmit={this.onSubmit}>
+          <input
+            type="password"
+            name="passwordOne"
+            value={passwordOne}
+            onChange={this.onChange}
+            placeholder="New Password"
+          />
+          <input
+            type="password"
+            name="passwordTwo"
+            value={passwordTwo}
+            onChange={this.onChange}
+            placeholder="Confirm New Password"
+          />
+          <button disabled={isInvalid} type="submit">
+            Reset My Password
+          </button>
+          {error && <p>{error.message}</p>}
+        </form>
+      </>
     );
   }
 }

@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import { AuthUserContext, withAuthorization } from '../Session';
-import AccountView from './accountView';
+import PasswordChangeForm from '../PasswordChange';
 
 const AccountPage = (props) => {
   const [newBusinessName, setNewBusinessName] = useState('');
@@ -21,12 +21,18 @@ const AccountPage = (props) => {
   return (
     <AuthUserContext.Consumer>
       {authUser => (
-        <AccountView 
-          authUser={authUser} 
-          newBusinessName={newBusinessName} 
-          setNewBusinessName={setNewBusinessName} 
-          updateBusinessName={updateBusinessName}
-        />
+        <div>
+          <h1>Account: {authUser.email}</h1>
+          <PasswordChangeForm />
+          <label>Set new business name</label>
+          <input 
+            type="text"
+            placeholder="New business name"
+            value={newBusinessName}
+            onChange={e => setNewBusinessName(e.target.value)}
+          />
+          <button disabled={newBusinessName === '' ? true : false} onClick={() => updateBusinessName(newBusinessName)}>Upgrade business name</button>
+        </div>
       )}
     </AuthUserContext.Consumer>
   )

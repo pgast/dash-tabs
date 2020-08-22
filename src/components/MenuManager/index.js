@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import MenuManagerView from './menuManagerView';
+
 class MenuManager extends Component {
   constructor(props) {
     super(props);
@@ -180,218 +182,36 @@ class MenuManager extends Component {
 
   numberIsInvalid = number => number <= 0 || number === '';
 
-  render() {
-    const { name, price, type, description } = this.state.inputItem;
+  render() {    
+    const { name, price, type } = this.state.inputItem;
     const saveChangesIsInvalid = name !== '' || price !== '' || type !== '';
-    const { current } = this.state.itemEdit;
-    const addIsInvalid = (name === '' || this.numberIsInvalid(price) || type === '') || current !== '';
-
-
+    const addIsInvalid = (name === '' || this.numberIsInvalid(price) || type === '') || this.state.itemEdit.current !== '';
     const isInvalidEdit = this.state.itemEdit.name === '' || this.numberIsInvalid(this.state.itemEdit.price);
-
-    const { drinks, dishes } = this.state.menu;
-
-    const drinksIsEmpty = drinks.length === 0 ? true : false;
-    const dishesIsEmpty = dishes.length === 0 ? true : false;
+    const drinksIsEmpty = this.state.menu.drinks.length === 0 ? true : false;
+    const dishesIsEmpty = this.state.menu.dishes.length === 0 ? true : false;
 
     return (
-      <>
-        <h3 onClick={() => console.log(this.state)}>Dashboard Menu</h3>
-        <h4>Bebidas</h4>
-
-        {drinksIsEmpty ? 
-          <h3>NO HAY BEBIDAS REGISTRADAS</h3>
-        :
-          <ol>
-            {drinks && drinks.map((el, idx) => 
-              <React.Fragment key={idx}>
-                {(current !== el.name || (current === el.name && this.state.itemEdit.type !== 'drinks')) && 
-                  <li 
-                    className="itemCard"
-                    onClick={() => this.editItem(el, 'drinks')}
-                  >
-                    {el.name} - ${el.price} - {el.available ? "AVAILABLE" : "NOT AVAILABLE"} - {el.description}
-                  </li>  
-                }
-
-                {(current === el.name && this.state.itemEdit.type === 'drinks') &&
-                   <li className="itemCard_exp">
-                   <form onSubmit={(e) => this.saveEditItem(e, idx)}>
-                     <input 
-                       type="text"
-                       name="name"
-                       value={this.state.itemEdit.name}
-                       placeholder="New Item Name"
-                       onChange={this.onChangeEdit}
-                       />
-                     <input 
-                       type="number"
-                       name="price"
-                       value={this.state.itemEdit.price}
-                       placeholder="New Item Price"
-                       onChange={this.onChangeEdit}
-                     />
-                     <input 
-                       type="text"
-                       name="description"
-                       value={this.state.itemEdit.description}
-                       placeholder="New Description"
-                       onChange={this.onChangeEdit}
-                     />
-                     <div>
-                       <input 
-                         name="available" 
-                         type="checkbox" 
-                         onChange={this.onChangeEdit}
-                         checked={this.state.itemEdit.available} 
-                         />
-                       <label>Is item available?</label>
-                     </div>
-                     <button disabled={isInvalidEdit} type="submit">
-                       Save Changes
-                     </button>
-                   </form>
-
-                   <div>
-                     <button onClick={() => this.deleteItem(idx, 'drinks')}>
-                       Delete Item
-                     </button>
-                     <button onClick={this.cancelEdit}>
-                       Cancel
-                     </button>
-                   </div>
-                 </li>
-                }
-              </ React.Fragment>
-            )}
-          </ol>
-        }
-
-        <h4>Comidas</h4>
-        {dishesIsEmpty ?
-          <h3>NO HAY COMIDAS REGISTRADAS</h3>
-        :
-          <ol>
-            {dishes && dishes.map((el, idx) => 
-              <React.Fragment key={idx}>
-                {(current !== el.name || (current === el.name && this.state.itemEdit.type !== 'dishes')) &&
-                  <li 
-                    className="itemCard"
-                    onClick={() => this.editItem(el, 'dishes')}
-                  >
-                    {el.name} - ${el.price} - {el.available ? "AVAILABLE" : "NOT AVAILABLE"} - {el.description}
-                  </li>
-                }
-
-                {(current === el.name && this.state.itemEdit.type === 'dishes') &&
-                  <li className="itemCard_exp">
-                    <form onSubmit={(e) => this.saveEditItem(e, idx)}>
-                      <input 
-                        type="text"
-                        name="name"
-                        value={this.state.itemEdit.name}
-                        placeholder="New Item Name"
-                        onChange={this.onChangeEdit}
-                        />
-                      <input 
-                        type="number"
-                        name="price"
-                        value={this.state.itemEdit.price}
-                        onChange={this.onChangeEdit}
-                        placeholder="New Item Price"
-                      />
-                      <input 
-                        type="text"
-                        name="description"
-                        value={this.state.itemEdit.description}
-                        onChange={this.onChangeEdit}
-                        placeholder="New Description"
-                      />
-                      <div>
-                        <input 
-                          name="available" 
-                          type="checkbox" 
-                          onChange={this.onChangeEdit}
-                          checked={this.state.itemEdit.available} 
-                          />
-                        <label>Is item available?</label>
-                      </div>
-                      <button disabled={isInvalidEdit} type="submit">
-                        Save Changes
-                      </button>
-                    </form>
-
-                    <div>
-                      <button onClick={() => this.deleteItem(idx, 'dishes')}>
-                        Delete Item
-                      </button>
-                      <button onClick={this.cancelEdit}>
-                        Cancel
-                      </button>
-                    </div>
-                  </li>
-                }
-              </React.Fragment>  
-            )}
-          </ol>
-        }
-        <hr />
-
-        {/* ADD NEW ITEM FORM */}
-        <form onSubmit={this.addItem}>
-          <input 
-            name="name"
-            type="text"
-            value={name}
-            placeholder="Item Name"
-            onChange={this.onChange}
-          />
-          <input 
-            name="price"
-            type="number"
-            value={price}
-            placeholder="price"
-            onChange={this.onChange}
-          />
-          <input 
-            name="description"
-            type="text"
-            value={description}
-            placeholder="Item Description"
-            onChange={this.onChange}
-          />
-          <div>
-            <input 
-              name="type" 
-              type="radio" 
-              value="drinks" 
-              onChange={this.onChange}
-              checked={type === "drinks"} 
-              />
-            <label>Bebida</label>
-          </div>
-          <div>
-            <input 
-              name="type" 
-              type="radio" 
-              value="dishes" 
-              onChange={this.onChange}
-              checked={type === "dishes"}
-              />
-            <label>Comida</label>
-          </div>
-          <button disabled={addIsInvalid} type="submit">Add</button>
-        </form>
-
-        <hr/>
-        {/* GUARDAR CAMBIOS, SE SUBE NUEVA VERSION DE MENU A DATABASE (?mejor manera de hacerlo) */}
-        <button disabled={saveChangesIsInvalid} onClick={() => this.props.updateMenuDb(this.state.menu)} >
-          <h3>SAVE CHANGES AND UPDATE</h3>
-        </button>
-      </>
-    )
-  }
-}
+      <MenuManagerView 
+        menu={this.state.menu}
+        addItem={this.addItem}
+        onChange={this.onChange}
+        editItem={this.editItem}
+        addIsInvalid={addIsInvalid}
+        deleteItem={this.deleteItem}
+        cancelEdit={this.cancelEdit}
+        dishesIsempty={dishesIsEmpty}
+        drinksIsEmpty={drinksIsEmpty}
+        isInvalidEdit={isInvalidEdit}
+        itemEdit={this.state.itemEdit}
+        saveEditItem={this.saveEditItem}
+        onChangeEdit={this.onChangeEdit}
+        inputItem={this.state.inputItem}
+        updateMenuDb={this.props.updateMenuDb}
+        saveChangesIsInvalid={saveChangesIsInvalid}
+      />
+    ); 
+  };
+};
 
 export default MenuManager;
 

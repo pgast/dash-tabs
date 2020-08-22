@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import OrdersManagerView from './ordersManagerView';
 
 class OrdersManager extends Component {
   constructor(props) {
@@ -93,146 +94,21 @@ class OrdersManager extends Component {
     const pastOrdersValid = this.state.orders.past === 0 ? false : true;
 
     return (
-      <>
-        <h2 onClick={() => console.log(this.state)}>Orders Manager</h2>
-        <h2 onClick={() => console.log(this.props.dbOrders)}>console log props</h2>
-        <div className="viewToggler">
-          <h4 onClick={() => this.toggleViews(true)}>CURRENT ORDERS</h4>
-          <h4 onClick={() => this.toggleViews(false)}>PAST ORDERS</h4>
-        </div>
-
-        {this.state.viewCurrent && (
-          currentOrdersValid ? 
-            <>
-              <h3>CURRENT ORDERS LOG:</h3>
-              <ol>
-                {this.state.orders.current.map((el, idx) => (
-                  <li className="orderCard" key={idx}>
-                    <div className="info">
-                      <p>Cost: {el.cost}</p>
-                      <p>{el.table === "takeout" ? `Takeout order: ${el.orderNum}` : el.table}</p>
-                      <p>Order start: {this.getDate(el.start)}</p>
-                    </div>
-                    <div className="items">
-                      {
-                        this.state.showItems === idx &&
-                        <>
-                          {this.itemsAreValid(el.items.dishes) ?
-                            <>
-                              <p>DISHES</p>
-                              <ol>
-                                {el.items.dishes.map((item, index) => (
-                                  <li key={index}>{item.name} - Qty: {item.qty}</li>
-                                ))}
-                              </ol>
-                            </>
-                            :
-                            null
-                          }
-
-                          {this.itemsAreValid(el.items.drinks) ?
-                            <>
-                              <p>DRINKS</p>
-                              <ol>
-                                {el.items.drinks.map((item, index) => (
-                                  <li key={index}>{item.name} - Qty: {item.qty}</li>
-                                ))}
-                              </ol>
-                            </>
-                            :
-                            null
-                          }
-                          <div>
-                            <p>Comments</p>
-                            <p>{el.comments}</p>
-                          </div>
-                          <button onClick={this.toggleItems}>Close</button>
-                        </>
-                      }
-
-
-                      {this.state.showItems !== idx && 
-                        <>
-                          <button onClick={() => this.toggleItems(idx)}>Show Items</button>
-                          <button onClick={() => this.orderReady(idx)}>Order Completed</button>
-                          <button onClick={() => this.deleteOrder(idx, 'current')}>DELETE ORDER</button>
-                        </>
-                      }
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </>
-          :  
-            <h3>NO CURRENT ORDERS</h3>
-        )}
-
-
-        {!this.state.viewCurrent && (
-          pastOrdersValid ? 
-            <>
-              <h3>PAST ORDERS LOG:</h3>
-              <ol>
-                {this.state.orders.past.map((el, idx) => (
-                  <li className="orderCard" key={idx}>
-                    <div className="info">
-                      <p>Cost: {el.cost}</p>
-                      <p>{el.table === "takeout" ? `Takeout order: ${el.orderNum}` : el.table}</p>
-                      <p>Order start: {this.getDate(el.start)}</p>
-                      <p>Order end: {this.getDate(el.end)}</p>
-                      <p>Order completion in: {this.getOrderTime(el.start, el.end)}</p>
-                    </div>
-                    <div className="items">
-                      {
-                          this.state.showItems === idx ?
-                          <>
-                            {this.itemsAreValid(el.items.dishes) ? 
-                              <>
-                                <p>DISHES</p>
-                                <ol>
-                                  {el.items.dishes.map((item, index) => (
-                                    <li key={index}>{item.name} - Qty: {item.qty}</li>
-                                  ))}
-                                </ol>
-                              </>
-                              :
-                              null
-                            }
-                            
-                            {this.itemsAreValid(el.items.drinks) ?
-                              <>
-                                <p>DRINKS</p>
-                                <ol>
-                                  {el.items.drinks.map((item, index) => (
-                                    <li key={index}>{item.name} - Qty: {item.qty}</li>
-                                  ))}
-                                </ol>
-                              </>
-                              :
-                              null
-                            }
-                             <div>
-                              <p>Comments</p>
-                              <p>{el.comments}</p>
-                            </div>
-                            <button onClick={this.toggleItems}>Close</button>
-                          </>
-                          :
-                          <>
-                            <button onClick={() => this.resetOrder(idx)}>Reset Order</button>
-                            <button onClick={() => this.toggleItems(idx)}>Show Items</button>
-                            <button onClick={() => this.deleteOrder(idx, 'past')}>DELETE ORDER</button>
-                          </>
-                        }
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </>
-          :
-            <h3>NO PAST ORDERS</h3>
-        )}
-      </>
+      <OrdersManagerView 
+        getDate={this.getDate}
+        orders={this.state.orders}
+        orderReady={this.orderReady}
+        resetOrder={this.resetOrder}
+        toggleViews={this.toggleViews}
+        toggleItems={this.toggleItems}
+        deleteOrder={this.deleteOrder}
+        getOrderTime={this.getOrderTime}
+        showItems={this.state.showItems}
+        pastOrdersValid={pastOrdersValid}
+        itemsAreValid={this.itemsAreValid}
+        viewCurrent={this.state.viewCurrent}
+        currentOrdersValid={currentOrdersValid}
+      />
     )
   }
 }

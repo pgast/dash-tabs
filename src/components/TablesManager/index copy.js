@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TablesManagerView from './tablesManagerView';
 
 class TablesManager extends Component {
   constructor(props) {
@@ -152,35 +151,114 @@ class TablesManager extends Component {
   }
 
   render() {
-    const { inputTable, tableEdit, tables, error, tablesQrCodes, showQrs, displayQr } = this.state;
+    const { inputTable, tableEdit, tables, error, tablesQrCodes, showQrs } = this.state;
     const inputIsInvalid = this.numberIsInvalid(inputTable.number) || inputTable.description === '';
     const editIsInvalid = this.numberIsInvalid(tableEdit.newNumber) || tableEdit.newDescription === '';
     const tablesIsEmpty = tables === 0 || tables.length === 0 ? true : false;
 
     return (
-      <TablesManagerView 
-        error={error}
-        tables={this.state.tables}
-        showQrs={showQrs}
-        tableEdit={tableEdit}
-        displayQr={displayQr}
-        inputTable={inputTable}
-        addTable={this.addTable}
-        editTable={this.editTable}
-        tablesIsEmpty={tablesIsEmpty}
-        editIsInvalid={editIsInvalid}
-        tablesQrCodes={tablesQrCodes}
-        deleteTable={this.deleteTable}
-        inputIsInvalid={inputIsInvalid}
-        setTableEdit={this.setTableEdit}
-        saveEditTable={this.saveEditTable}
-        setInputTable={this.setInputTable}
-        resetTableEdit={this.resetTableEdit}
-        generateQrCodes={this.generateQrCodes}
-        generateSingleQr={this.generateSingleQr}
-        updateTablesDb={this.props.updateTablesDb}
-        closeQrs={() => this.setState({ showQrs: false })}
-      />
+      <>
+        <h2 onClick={() => console.log(this.state)}>Tables Manager</h2>
+        {error && <h4>{error.msg}</h4>}
+        <hr />
+    
+        {tablesIsEmpty ?
+          <h3>NO TABLES REGISTERED</h3>
+          :
+          <ol>
+            {tables.map((el, idx) => (
+              <React.Fragment key={idx}>
+                {tableEdit.current !== idx ? 
+                  <li key={idx}>
+                    Table number {el.number} - {el.description}
+                    <button onClick={() => this.editTable(idx)}>Edit</button>
+                    <button onClick={(e) => this.generateSingleQr(el.number, e, idx)}>Get Table QR Code</button>
+
+                    {(this.state.displayQr.src !== null && this.state.displayQr.current === idx) && 
+                      <>
+                        <h5>Table number: {el.number}</h5>
+                        <img src={this.state.displayQr.src} alt="" title="" />
+                      </>
+                    }
+                  </li>
+                :
+                  <li key={idx}>
+                    <form onSubmit={(e) => this.saveEditTable(e)}>
+                      <input 
+                        type="number"
+                        value={tableEdit.newNumber}
+                        placeholder="New table number"
+                        onChange={(e) => this.setTableEdit("newNumber", e.target.value)}
+                      />
+                      <input 
+                        type="text"
+                        value={tableEdit.newDescription}
+                        placeholder="New table description"
+                        onChange={(e) => this.setTableEdit("newDescription", e.target.value)}
+                      />
+                      <button disabled={editIsInvalid} type="submit">Save</button>
+                      <button onClick={() => this.deleteTable(idx)}>Delete Item</button>
+                      <button onClick={this.resetTableEdit}>Cancel Edit</button>
+                    </form>
+                  </li>
+                }
+              </React.Fragment>
+            ))}
+          </ol>
+        }
+    
+        <hr />
+        <div>
+          <button onClick={(e) => this.generateSingleQr(null, e, 'takeout', true)}>Get Takeout QR</button>
+          {(this.state.displayQr.src !== null && this.state.displayQr.current === 'takeout') &&
+            <>
+              <h5>Takeout</h5>
+              <img src={this.state.displayQr.src} alt="" title="" />
+            </>
+          }
+        </div>
+        <hr />
+    
+        <form onSubmit={(e) => this.addTable(e)}>
+          <input 
+            type="number"
+            value={inputTable.number}
+            placeholder="Table Number"
+            onChange={(e) => this.setInputTable("number", e.target.value)}
+          />
+          <input 
+            type="text"
+            value={inputTable.description}
+            placeholder="Table description"
+            onChange={(e) => this.setInputTable("description", e.target.value)}
+          />
+          <button disabled={inputIsInvalid} type="submit">Add Table</button>
+        </form>
+    
+        <div onClick={() => this.props.updateTablesDb(tables)} style={{ background: 'black', color: 'white' }}>
+          <h3>SAVE CHANGES AND UPDATE</h3>
+        </div>
+    
+        <hr />
+
+        <h3>QR Codes</h3>
+        <button onClick={this.generateQrCodes}>Generate Tables QR Codes</button>
+        {
+          showQrs && (
+            <React.Fragment>
+              <button onClick={() => this.setState({ showQrs: false })}>Close QRs</button>
+              <ol>
+                {tablesQrCodes.map((el, idx) => (
+                  <li key={idx}>
+                    <h5>Table number: {el.number}</h5>
+                    <img src={el.qr} alt="" title="" />
+                  </li>
+                ))}
+              </ol>
+            </React.Fragment>
+          )
+        }
+      </>
     )
   }
 }

@@ -3,10 +3,7 @@ import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
-import MenuManager from '../MenuManager';
-import OrdersManager from '../OrdersManager';
-import TablesManager from '../TablesManager';
-import Modal from '../Modal';
+import DashboardView from './dashboardView';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -97,41 +94,31 @@ class Dashboard extends Component {
     return `https://api.qrserver.com/v1/create-qr-code/?data=${qrUrl}&amp;size=500x500`;
   }
 
-  showModal = e => {
+  toggleModal = e => {
     this.setState({
       showModal: !this.state.showModal
     });
   };
 
   // AGREGAR FUNCIONALIDAD, DE QUE SI NO HAY ITEMS EN EL MENU NO SE PUEDE CREAR CODIGO QR
-  
-
   render() {
-    const { loading, menu } = this.state;
+    const { loading, menu, view, orders, showModal } = this.state;
 
     return (
-      <div className="dashboard">
-        <div className="dashboard_header">
-          <h3 onClick={() => console.log(this.state)}>Dashboard</h3>
-          <h5 onClick={() => console.log(this.props.firebase.getCurrentUser())}>Log current user</h5>
-          <p>Dashboard is accessible by every signed in admin user</p>
-          <div className="viewToggler">
-            <h4 onClick={() => this.toggleView('orders')}>ORDERS</h4>
-            <h4 onClick={() => this.toggleView('tables')}>TABLES</h4>
-            <h4 onClick={() => this.toggleView('menu')}>MENU MANAGER</h4>
-          </div>
-        </div>
-
-        {this.state.view === "orders" && <OrdersManager dbOrders={this.state.orders} updateOrdersDb={this.updateOrdersDb}/>}
-        {this.state.view === "tables" && <TablesManager createQR={this.createQR} dbTables={this.state.user.tables} updateTablesDb={this.updateTablesDb}/>}
-        {this.state.view === "menu" && <MenuManager menu={menu} updateMenuDb={this.updateMenuDb} />}
-
-        {loading && <div>Loading ...</div>}
-
-        <Modal onClose={this.showModal} show={this.state.showModal}>
-          Message in Modal
-        </Modal>
-      </div>
+      <DashboardView 
+        view={view}
+        menu={menu}
+        orders={orders}
+        loading={loading}
+        showModal={showModal}
+        createQR={this.createQR}
+        toggleView={this.toggleView}
+        toggleModal={this.toggleModal}
+        tables={this.state.user.tables}
+        updateMenuDb={this.updateMenuDb}
+        updateOrdersDb={this.updateOrdersDb}
+        updateTablesDb={this.updateTablesDb}
+      />
     );
   }
 }
