@@ -6,47 +6,48 @@
 html{
   font-size: 20px;
   box-sizing: border-box;
-  font-family: "Franklin Gothic Medium", sans-serif;
+  font-family: "Avenir Next", sans-serif;
 }
 
 #root {
   width: 100vw;
 }
 
-/* ######################################################################## */
-/* NAVBAR */
-/* ######################################################################## */
+.dashboard{
+  padding-left: 8rem;
+}
+
+.dashboard .view {
+  padding-right: 2.5rem;
+  padding-top: 2rem;
+}
+
+.dashboardHeader {
+  height: 6rem;
+  display: flex;
+  padding-right: 3rem;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  background: rgb(243, 243, 243);
+}
+
+.dashboardHeader h1 {
+  font-size: 1.7rem;
+}
+
+.dashboardHeader .orderToggler {
+  display: flex;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.orderToggler h4 {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
 
 /* DEBUG AND PRODUCTION STYLING */
-.navBar {
-  display: flex;
-  padding: 1rem;
-  background: peru;
-}
-
-.navBar > * {
-  margin-right: 1rem;
-  text-decoration: none;
-  color: white;
-}
-
-.dashboard_header {
-  background: lightgray;
-  display: flex;
-  flex-direction: column;
-}
-
-.viewToggler {
-  background: lightslategrey;
-  display: flex;
-  font-size: .8rem;
-  padding: 0.4rem;
-  justify-content: center;
-}
-
-.viewToggler h4 {
-  margin: 0 1rem;
-}
 
 .orderCard {
   border: 1px solid black;

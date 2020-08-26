@@ -35,9 +35,9 @@ const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
   }
 
   return (
-    <button type="button" onClick={() => handleLogout()}>
-      Sign Out
-    </button>
+    <div onClick={() => handleLogout()}>
+      SIGN OUT
+    </div>
   )
 };
 

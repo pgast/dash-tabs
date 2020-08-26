@@ -12,12 +12,10 @@ class Dashboard extends Component {
       loading: false,
       user: {},
       menu: {},
-      view: "orders",
       orders: { current: [], past: [] },
       showModal: false,
     };
   };
-
 
   componentDidMount() {
     this.setState({ loading: true });
@@ -84,8 +82,6 @@ class Dashboard extends Component {
     this.props.firebase.userOrders(this.state.user.uid).set(newOrders);
   }
 
-  toggleView = (input) => this.setState({ view: input });
-
   createQR = (tableNum, takeOut=false) => {
     const currentUrl = window.location.href;
     let qrUrl = currentUrl.split('').slice(0, currentUrl.length-9).join('');
@@ -102,17 +98,15 @@ class Dashboard extends Component {
 
   // AGREGAR FUNCIONALIDAD, DE QUE SI NO HAY ITEMS EN EL MENU NO SE PUEDE CREAR CODIGO QR
   render() {
-    const { loading, menu, view, orders, showModal } = this.state;
+    const { loading, menu, orders, showModal } = this.state;
 
     return (
       <DashboardView 
-        view={view}
         menu={menu}
         orders={orders}
         loading={loading}
         showModal={showModal}
         createQR={this.createQR}
-        toggleView={this.toggleView}
         toggleModal={this.toggleModal}
         tables={this.state.user.tables}
         updateMenuDb={this.updateMenuDb}

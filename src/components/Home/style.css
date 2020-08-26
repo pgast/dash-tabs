@@ -1,0 +1,19 @@
+.homeView {
+  margin: 0;
+  width: 100%;
+  padding-left: 7rem;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.homeView div {
+  /* height: 33rem; */
+  background: blue;
+  height: 2rem;
+  padding: 1rem;
+}

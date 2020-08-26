@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import './style.css';
 
 import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
@@ -8,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
+import { Store } from '../../store';
 
 
 const Navigation = (props) => {
@@ -18,7 +20,7 @@ const Navigation = (props) => {
     <AuthUserContext.Consumer>
         {authUser =>
           authUser ? (
-            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} history={history} firebase={props.firebase}/>
+            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} history={history} />
           ) : (
             <NavigationNonAuth displayingMenu={displayingMenu} />
           )
@@ -27,24 +29,44 @@ const Navigation = (props) => {
   );
 };
 
-const NavigationAuth = ({ authUser, displayingMenu, history, firebase }) => (
-  <div className="navBar">
-    <Link to={ROUTES.HOME}>Home</Link>
-    {(!authUser.isAnonymous && !displayingMenu) && <Link to={ROUTES.ACCOUNT}>Account</Link>}
-    {!displayingMenu && <Link to={ROUTES.DASHBOARD}>Dashboard</Link>}
-    {!displayingMenu && <SignOutButton userIsAnonymous={authUser.isAnonymous} history={history} />}
-    <p onClick={() => firebase.demoCleanupDb()}>Log DB</p>
-  </div>
-);
+const NavigationAuth = ({ authUser, displayingMenu, history }) => {
+  const { dispatch } = useContext(Store);
+  const toggleView = view => dispatch({ payload: view });
+  let parameter = window.location.href.split('').slice(-9).join('');
+
+  return (
+    <div className="navBar">
+      <div>
+        <div id="logo">
+          <Link to={ROUTES.HOME}>HOME</Link>
+        </div>
+        {(!displayingMenu && parameter === "dashboard") && (
+          <div className="navLinks dashboardLinks">
+            <p onClick={() => toggleView('orders')}>ORDERS</p>
+            <p onClick={() => toggleView('tables')}>TABLES</p>
+            <p onClick={() => toggleView('menu')}>MENU</p>
+          </div>
+        )}
+      </div>
+      <div className="navLinks">
+        {!displayingMenu && <Link style={{ textDecoration: 'none' }} to={ROUTES.DASHBOARD}>DASHBOARD</Link>}
+        {(!authUser.isAnonymous && !displayingMenu) && <Link style={{ textDecoration: 'none' }} to={ROUTES.ACCOUNT}>ACCOUNT</Link>}
+        {!displayingMenu && <SignOutButton userIsAnonymous={authUser.isAnonymous} history={history} />}
+      </div>
+    </div>
+  );
+};
 
 const NavigationNonAuth = ({ displayingMenu }) => (
   <div className="navBar">
-    <Link to={ROUTES.HOME}>Home</Link>
-    {!displayingMenu && <Link to={ROUTES.SIGN_IN}>Sign In</Link>}
+    <div id="logo">
+      <Link style={{ textDecoration: 'none' }} to={ROUTES.HOME}>HOME</Link>
+    </div>
+    <div className="navLinks">
+      {!displayingMenu && <Link style={{ textDecoration: 'none' }} to={ROUTES.SIGN_IN}>SIGN IN</Link>}
+    </div>
   </div>
 );
-
-// export default withRouter(Navigation);
 
 export default compose(
   withRouter,
