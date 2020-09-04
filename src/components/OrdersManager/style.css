@@ -1,0 +1,66 @@
+.dashboardHeader .orderToggler {
+  display: flex;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.orderToggler h4 {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.ordersCardsView {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.ordersSideboard {
+  background: blue;
+}
+
+.orderCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: .6rem;
+  background: rgb(238, 238, 238);
+  height: 2rem;
+  width: 9rem;
+  border-radius: 0.9rem;
+}
+
+.highlightCard h3,
+.orderCard h3 {
+  font-size: 0.8rem;
+}
+
+
+.cardSelected {
+  background: black;
+  color: white;
+}
+
+.highlightCard {
+  display: flex;
+  flex-direction: column;
+  margin: 0.6rem;
+  padding: 0.6rem 0;
+  background: rgb(238, 238, 238);
+  width: 9rem;
+  border-radius: 0.9rem; 
+}
+
+.highlightCard_header {
+  /* border: 1px solid green; */
+}
+
+.highlightCard_header_title {
+  display: flex;
+  justify-content: space-around;
+}
+
+.highlightCard_items {
+  /* border: 1px solid blue; */
+  margin: 0 0.6rem;
+}

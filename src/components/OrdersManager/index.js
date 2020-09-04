@@ -7,7 +7,15 @@ class OrdersManager extends Component {
     this.state = {
       orders: { current: [], past: [] },
       viewCurrent: true,
-      showItems: false,
+      selectedOrder: {
+        cost: null,
+        start: null,
+        table: null,
+        dishes: null,
+        drinks: null,
+        orderNum: null,
+        comments: null,
+      },
     }
   }
 
@@ -22,11 +30,45 @@ class OrdersManager extends Component {
   }
 
   toggleViews = (input) => {
-    this.setState({ viewCurrent: input, showItems: false })
-  }
+    this.setState({ 
+      viewCurrent: input, 
+      selectedOrder: { 
+        ...this.state.selectedOrder, 
+        table: null, 
+        index: null 
+      }});
+  };
 
-  toggleItems = (idx=false) => {
-    this.setState({ showItems: idx })
+  setSelectedOrder = (el, idx) => {
+    this.setState({ selectedOrder: {
+      index: idx,
+      cost: el.cost,
+      start: el.start,
+      table: el.table,
+      orderNum: el.orderNum,
+      comments: el.comments,
+      dishes: el.items.dishes,
+      drinks: el.items.drinks,
+    }});
+
+    // el.end
+
+    // el.cost
+    // el.table
+    // el.orderNum
+    // el.start
+    // el.items.dishes
+    // el.items.drinks
+    // el.comments
+
+    // el.cost
+    // el.table
+    // el.orderNum
+    // el.start
+    // el.end
+    // el.items.dishes
+    // el.items.drinks
+    // el.comments
   }
 
   orderReady = (index) => {
@@ -39,6 +81,13 @@ class OrdersManager extends Component {
     newOrders.current = newOrders.current.filter((el, idx) => idx !== index);
     if(newOrders.current.length === 0) newOrders.current = 0;
     newOrders.past.push(selectedOrder);
+    this.setState({ 
+      selectedOrder: {
+        ...this.state.selectedOrder, 
+        table: null, 
+        index: null
+      }
+    });
     this.props.updateOrdersDb(newOrders);
   }
 
@@ -57,13 +106,19 @@ class OrdersManager extends Component {
       if(newOrders.past.length === 0) newOrders.past = 0;
       // if(!newOrders.current) newOrders.current = [];
       newOrders.current.push(selectedOrder);
+      this.setState({ 
+        selectedOrder: {
+          ...this.state.selectedOrder, 
+          table: null, 
+          index: null} 
+        });
       this.props.updateOrdersDb(newOrders);
     } else {
       return;
     }
   }
 
-  itemsAreValid = (items) => items === 0 ? false : true;
+  itemsAreValid = (items) => (items === 0 || items === null) ? false : true;
 
   getDate = (mils) => { 
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -85,9 +140,14 @@ class OrdersManager extends Component {
 
     if(newOrders.current.length === 0) newOrders.current = 0;
     if(newOrders.past.length === 0) newOrders.past = 0;
+    this.setState({ selectedOrder: {
+      ...this.state.selectedOrder, 
+      table: null, 
+      index: null 
+      } 
+    })
     this.props.updateOrdersDb(newOrders);
   };
-
 
   render() {
     const currentOrdersValid = this.state.orders.current === 0 ? false : true;
@@ -100,17 +160,17 @@ class OrdersManager extends Component {
         orderReady={this.orderReady}
         resetOrder={this.resetOrder}
         toggleViews={this.toggleViews}
-        toggleItems={this.toggleItems}
         deleteOrder={this.deleteOrder}
         getOrderTime={this.getOrderTime}
-        showItems={this.state.showItems}
         pastOrdersValid={pastOrdersValid}
         itemsAreValid={this.itemsAreValid}
         viewCurrent={this.state.viewCurrent}
         currentOrdersValid={currentOrdersValid}
+        setSelectedOrder={this.setSelectedOrder}
+        selectedOrder={this.state.selectedOrder}
       />
-    )
-  }
-}
+    );
+  };
+};
 
 export default OrdersManager;

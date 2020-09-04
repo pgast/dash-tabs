@@ -18,14 +18,20 @@ html{
 }
 
 .dashboard .view {
-  padding-right: 2.5rem;
-  padding-top: 2rem;
+  padding: 0 1.4rem;
+  margin: 0;
+}
+
+.dashboard .orders .view {
+  margin-top: 2.4rem;
+  margin-left: 1rem;
+  margin-right: 22rem;
 }
 
 .dashboardHeader {
   height: 6rem;
   display: flex;
-  padding-right: 3rem;
+  padding-right: 2rem;
   align-items: flex-end;
   flex-direction: column;
   justify-content: center;
@@ -36,34 +42,21 @@ html{
   font-size: 1.7rem;
 }
 
-.dashboardHeader .orderToggler {
-  display: flex;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+.fixedSideboard {
+  position: fixed;
+  border: 1px solid black;
+  right: 2rem;
+  /* top: 8rem; */
+  top: 9rem;
+  height: 67%;
+  width: 16rem;
 }
 
-.orderToggler h4 {
-  margin-left: 1rem;
-  font-size: 0.8rem;
+.hidden {
+  display: none;
 }
 
 /* DEBUG AND PRODUCTION STYLING */
-
-.orderCard {
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
-}
-
-.orderCard .info {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid black;
-  font-size: 0.8rem;
-  justify-content: space-around;
-}
-
 .items {
   background: black;
   color: white;
