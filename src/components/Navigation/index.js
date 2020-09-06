@@ -20,7 +20,7 @@ const Navigation = (props) => {
     <AuthUserContext.Consumer>
         {authUser =>
           authUser ? (
-            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} history={history} />
+            <NavigationAuth authUser={authUser} displayingMenu={displayingMenu} history={history}/>
           ) : (
             <NavigationNonAuth displayingMenu={displayingMenu} />
           )
@@ -30,7 +30,7 @@ const Navigation = (props) => {
 };
 
 const NavigationAuth = ({ authUser, displayingMenu, history }) => {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const toggleView = view => dispatch({ payload: view });
   let parameter = window.location.href.split('').slice(-9).join('');
 
@@ -42,15 +42,39 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
         </div>
         {(!displayingMenu && parameter === "dashboard") && (
           <div className="navLinks dashboardLinks">
-            <p onClick={() => toggleView('orders')}>ORDERS</p>
-            <p onClick={() => toggleView('tables')}>TABLES</p>
-            <p onClick={() => toggleView('menu')}>MENU</p>
+            <div>
+              <p 
+                onClick={() => toggleView('orders')} 
+                id={state.view !== 'orders' && "inactiveLink"}
+              >
+                ORDERS
+              </p>
+              <span id={state.view === 'orders' && 'navDash'}></span>
+            </div>
+            <div>
+              <p 
+                onClick={() => toggleView('tables')} 
+                id={state.view !== 'tables' && 'inactiveLink'}
+              >
+                TABLES
+              </p>
+              <span id={state.view === 'tables' && 'navDash'}></span>
+            </div>
+            <div>
+              <p 
+                onClick={() => toggleView('menu')} 
+                id={state.view !== 'menu' && 'inactiveLink'}
+              >
+                MENU
+              </p>
+              <span id={state.view === 'menu' && 'navDash'}></span>
+            </div>
           </div>
         )}
       </div>
-      <div className="navLinks">
-        {!displayingMenu && <Link style={{ textDecoration: 'none' }} to={ROUTES.DASHBOARD}>DASHBOARD</Link>}
-        {(!authUser.isAnonymous && !displayingMenu) && <Link style={{ textDecoration: 'none' }} to={ROUTES.ACCOUNT}>ACCOUNT</Link>}
+      <div className="navLinks bottomNav">
+        {!displayingMenu && <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.DASHBOARD}>DASHBOARD</Link>}
+        {(!authUser.isAnonymous && !displayingMenu) && <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.ACCOUNT}>ACCOUNT</Link>}
         {!displayingMenu && <SignOutButton userIsAnonymous={authUser.isAnonymous} history={history} />}
       </div>
     </div>
@@ -60,7 +84,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
 const NavigationNonAuth = ({ displayingMenu }) => (
   <div className="navBar">
     <div id="logo">
-      <Link style={{ textDecoration: 'none' }} to={ROUTES.HOME}>HOME</Link>
+      <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.HOME}>HOME</Link>
     </div>
     <div className="navLinks">
       {!displayingMenu && <Link style={{ textDecoration: 'none' }} to={ROUTES.SIGN_IN}>SIGN IN</Link>}

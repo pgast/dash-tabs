@@ -8,6 +8,7 @@ class OrdersManager extends Component {
       orders: { current: [], past: [] },
       viewCurrent: true,
       selectedOrder: {
+        index: null,
         cost: null,
         start: null,
         table: null,

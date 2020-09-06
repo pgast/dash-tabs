@@ -67,7 +67,7 @@ const OrdersManagerView = ({
             <h3>NO PAST ORDERS</h3>
         )}
       </div>
-      <div className="fixedSideboard">
+      <div className="fixedSideboard" style={ {display: selectedOrder.index === null && 'none' }}>
         <OrdersSideboard 
           getDate={getDate}
           orderReady={orderReady}

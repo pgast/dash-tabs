@@ -13,29 +13,29 @@ html{
   width: 100vw;
 }
 
-.dashboard{
-  padding-left: 8rem;
+.dashboardFull{
+  margin-left: 6.8rem;
+  border: 1px dashed red;
+  width: 100vw - 6.8rem;
+  display: flex;
 }
 
-.dashboard .view {
-  padding: 0 1.4rem;
-  margin: 0;
-}
-
-.dashboard .orders .view {
-  margin-top: 2.4rem;
-  margin-left: 1rem;
-  margin-right: 22rem;
+.dashboardFull .view {
+  margin-left: 0;
+  border: 1px solid blue;
+  width: 100%;
 }
 
 .dashboardHeader {
-  height: 6rem;
+  top: 0;
+  right: 0;
+  padding: 2rem;
   display: flex;
-  padding-right: 2rem;
+  height: 5.3rem;
+  position: fixed;
   align-items: flex-end;
   flex-direction: column;
   justify-content: center;
-  background: rgb(243, 243, 243);
 }
 
 .dashboardHeader h1 {
@@ -44,12 +44,12 @@ html{
 
 .fixedSideboard {
   position: fixed;
-  border: 1px solid black;
-  right: 2rem;
-  /* top: 8rem; */
-  top: 9rem;
-  height: 67%;
-  width: 16rem;
+  right: 0;
+  top: 0;
+  z-index: -22;
+  height: 100%;
+  background: #F5F5F7;
+  width: 17rem;
 }
 
 .hidden {

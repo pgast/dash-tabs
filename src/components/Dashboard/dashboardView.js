@@ -20,7 +20,7 @@ const DashboardView = ({
   const { state } = useContext(Store);
 
   return (
-    <div className="dashboard">
+    <div className="dashboardFull">
       {state.view === "orders" && 
         <OrdersManager 
           dbOrders={orders} 

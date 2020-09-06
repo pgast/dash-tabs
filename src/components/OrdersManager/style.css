@@ -5,8 +5,8 @@
 }
 
 .orderToggler h4 {
-  margin-left: 1rem;
-  font-size: 0.8rem;
+  margin-left: 0.7rem;
+  font-size: 0.7rem;
 }
 
 .ordersCardsView {
@@ -16,7 +16,9 @@
 }
 
 .ordersSideboard {
-  background: blue;
+  background: rgb(238, 238, 238);
+  border-radius: 0.9rem;
+  height: 100%
 }
 
 .orderCard {
@@ -36,23 +38,23 @@
 }
 
 
-.cardSelected {
+#cardSelected {
   background: black;
   color: white;
 }
 
 .highlightCard {
+  width: 9rem;
   display: flex;
-  flex-direction: column;
   margin: 0.6rem;
   padding: 0.6rem 0;
-  background: rgb(238, 238, 238);
-  width: 9rem;
   border-radius: 0.9rem; 
+  flex-direction: column;
+  background: rgb(238, 238, 238);
 }
 
 .highlightCard_header {
-  /* border: 1px solid green; */
+
 }
 
 .highlightCard_header_title {
@@ -60,7 +62,30 @@
   justify-content: space-around;
 }
 
+.highlightCard_header_time {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
 .highlightCard_items {
-  /* border: 1px solid blue; */
-  margin: 0 0.6rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0.6rem 0.6rem;
+}
+
+.highlightCard_items > div {
+  margin-bottom: 2rem;
+}
+
+.highlightCard_items h3 {
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.highlightCard_items > div > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.7rem;
 }

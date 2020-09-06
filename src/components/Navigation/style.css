@@ -1,36 +1,61 @@
 .navBar {
-  position: fixed;
   left: 0;
   height: 100%;
-  background: gainsboro;
   display: flex;
+  width: 6.8rem;
+  color: white;
+  position: fixed;
+  font-weight: bold;
+  font-size: 0.7rem;
+  background: black;
   flex-direction: column;
   justify-content: space-between;
-  width: 8rem;
-  font-weight: bold;
-  font-size: 0.8rem;
 }
 
 .navLinks {
-  background: rgb(120, 121, 121);
-  height: 8rem;
   display: flex;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   flex-direction: column;
   justify-content: space-around;
-  padding-left: 1rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+}
+
+.navLinks > * {
+  margin-bottom: 0.5rem;
+}
+
+#navDash {
+  border-bottom: 1px dashed white;
+  width: 100%;
+  margin-left: 0.6rem;
 }
 
 .navBar #logo {
+  padding: 0;
+  height: 5.5rem;
   background: none;
   text-align: center;
   align-content: center;
-  padding: 0;
-  height: 3rem;
 }
 
 .navBar .dashboardLinks {
   background: none;
-  height: 9rem;
+}
+
+.dashboardLinks div {
+  display: flex;
+  align-items: center;
+}
+
+#inactiveLink {
+  opacity: 0.3;
+}
+
+#inactiveLink:hover {
+  opacity: 1;
+}
+
+.bottomNav {
+  border-top: 1px dashed white;
+  padding-top: 1.5rem;
 }
