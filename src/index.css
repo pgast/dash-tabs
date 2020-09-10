@@ -15,15 +15,8 @@ html{
 
 .dashboardFull{
   margin-left: 6.8rem;
-  border: 1px dashed red;
   width: 100vw - 6.8rem;
   display: flex;
-}
-
-.dashboardFull .view {
-  margin-left: 0;
-  border: 1px solid blue;
-  width: 100%;
 }
 
 .dashboardHeader {
@@ -33,6 +26,7 @@ html{
   display: flex;
   height: 5.3rem;
   position: fixed;
+  z-index: 22;
   align-items: flex-end;
   flex-direction: column;
   justify-content: center;
@@ -46,14 +40,35 @@ html{
   position: fixed;
   right: 0;
   top: 0;
-  z-index: -22;
   height: 100%;
   background: #F5F5F7;
   width: 17rem;
 }
 
+.viewFull {
+  width: 100%;
+}
+
+.viewSmall {
+  width: 40.3rem;
+}
+
 .hidden {
   display: none;
+}
+
+.btn {
+  width: 9rem;
+  height: 2rem;
+  display: flex;
+  margin: .6rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+  background: black;
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: white;
 }
 
 /* DEBUG AND PRODUCTION STYLING */

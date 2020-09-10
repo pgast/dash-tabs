@@ -1,8 +1,15 @@
 import React, { useReducer, createContext } from "react";
 
-const initialState = { view: "orders" };
+const initialState = { view: "orders", sideboardOpen: false };
 
-function reducer (state, action) { return { ...state, view: action.payload } };
+function reducer (state, action) { 
+  switch(action.type) {
+    case 'TOGGLE_VIEW': 
+      return { ...state, view: action.payload };
+    case 'TOGGLE_SIDEBOARD':
+      return { ...state, sideboardOpen: action.payload };
+  };
+};
 
 export function StoreProvider (props) {
   const [state, dispatch] = useReducer(reducer, initialState)

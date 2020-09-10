@@ -31,7 +31,7 @@ const Navigation = (props) => {
 
 const NavigationAuth = ({ authUser, displayingMenu, history }) => {
   const { state, dispatch } = useContext(Store);
-  const toggleView = view => dispatch({ payload: view });
+  const toggleView = view => dispatch({ type: 'TOGGLE_VIEW', payload: view });
   let parameter = window.location.href.split('').slice(-9).join('');
 
   return (

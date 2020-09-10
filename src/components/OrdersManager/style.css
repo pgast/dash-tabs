@@ -5,42 +5,101 @@
 }
 
 .orderToggler h4 {
-  margin-left: 0.7rem;
   font-size: 0.7rem;
+  margin-left: 0.7rem;
+}
+
+#unselected {
+  opacity: 0.3
+}
+
+#unselected:hover {
+  opacity: 1;
 }
 
 .ordersCardsView {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  padding: 5rem;
+  justify-items: center;
   grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
+/* ORDERS SIDEBOARD */
 .ordersSideboard {
   background: rgb(238, 238, 238);
-  border-radius: 0.9rem;
-  height: 100%
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.orderCard {
+.ordersSideboard_view {
+  margin-top: 5.8rem;
+  border-top: 1px dashed black;
+}
+
+.ordersSideboard_view_header {
+  border: 2px dashed blue;
+}
+
+.ordersSideboard_view_items {
+  border: 1px solid violet;
+}
+
+.ordersSideboard_actionButtons {
+  height: 6.8rem;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: .6rem;
-  background: rgb(238, 238, 238);
-  height: 2rem;
+  border-top: 1px dashed black;
+}
+
+
+/* ORDER CARDS */
+.orderCard {
   width: 9rem;
+  height: 2rem;
+  display: flex;
+  margin: .6rem;
+  align-items: center;
   border-radius: 0.9rem;
+  justify-content: space-around;
+  background: rgb(238, 238, 238);
+}
+
+.highlightCard:hover,
+.orderCard:hover {
+  -webkit-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+  box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+}
+
+.highlightCard_header > div,
+.orderCard > div {
+  width: 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderCard > div > h3 {
+  padding-right: 0.4rem;
+}
+
+#time {
+  font-weight: 300;
 }
 
 .highlightCard h3,
 .orderCard h3 {
-  font-size: 0.8rem;
+  font-size: 0.65rem;
 }
 
-
 #cardSelected {
-  background: black;
   color: white;
+  background: black;
+}
+
+#cardSelected .highlightCard_header {
+  border-bottom: 1px dashed white;
 }
 
 .highlightCard {
@@ -54,38 +113,38 @@
 }
 
 .highlightCard_header {
-
-}
-
-.highlightCard_header_title {
+  height: 2rem;
   display: flex;
-  justify-content: space-around;
-}
-
-.highlightCard_header_time {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
+  padding: 0 0.5rem;
+  padding-top: 0.4rem;
+  justify-content: space-between;
+  border-bottom: 1px dashed black;
 }
 
 .highlightCard_items {
   display: flex;
   flex-direction: column;
-  margin: 0.6rem 0.6rem;
+  margin: 0.8rem 0.8rem 0.2rem 0.8rem;
 }
 
-.highlightCard_items > div {
-  margin-bottom: 2rem;
+.highlightCard_items > div:first-child {
+  margin-bottom: 1rem;
 }
 
 .highlightCard_items h3 {
   font-size: 0.7rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
-.highlightCard_items > div > div {
+.item_dish,
+.item_drink {
   display: flex;
+  font-size: 0.7rem;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 0.7rem;
+}
+
+.item_dish > *,
+.item_drink > * {
+  font-weight: 300;;
 }

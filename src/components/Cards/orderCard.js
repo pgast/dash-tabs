@@ -7,45 +7,58 @@ const OrderCard = ({
   isCurrent,
   highlight,
   isSelected,
+  getTimeDate,
   setSelectedOrder,
+  updateSideboardState,
 }) => {
   const cardType = () => {
     if(isCurrent && !highlight) return 'currentOrder';
     if(isCurrent && highlight) return 'highlightOrder';
     return 'pastOrder';
-  }
+  };
 
-  const cardClasses = () => cardType() !== "highlightOrder" ? "orderCard" : "highlightCard";
+  const toggleSideboard = () => {
+    setSelectedOrder(el, idx);
+    updateSideboardState(true)
+  };
+
+  const cardClasses = () => {
+    let type = cardType();
+    if(type === 'currentOrder') return 'orderCard';
+    if(type === 'highlightOrder') return 'highlightCard';
+    return 'orderCard pastOrderCard';
+  };
 
   const itemsAreValid = (items) => items !== 0 ? true : false;
 
 
   return (
-    <div onClick={() => setSelectedOrder(el, idx)} className={cardClasses()} id={isSelected && "cardSelected"}>
+    <div onClick={() => toggleSideboard()} className={cardClasses()} id={isSelected && "cardSelected"}>
       {cardType() === 'currentOrder' && (
         <>
-          <h3>#{el.orderNum}</h3> 
-          <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+          <div>
+            <h3>#{el.orderNum}</h3> 
+            <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+          </div>
+          <h3 id="time">{getTimeDate(el.start)}</h3>
         </>
       )}
       {cardType() === 'highlightOrder' && (
-        <div onClick={() => console.log(el)}>
+        <div>
           <div className="highlightCard_header">
-            <div className="highlightCard_header_title">
+            <div>
               <h3>#{el.orderNum}</h3> 
               <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
             </div>
-            <div className="highlightCard_header_time">
-              <h3>{getDate(el.start)}</h3>
-            </div>
+            <h3 id="time">{getTimeDate(el.start)}</h3>
           </div>
           <div className="highlightCard_items">
             {itemsAreValid(el.items.dishes) && (
               <div>
-                <h3>DISHES</h3>
+                <h3>Dishes</h3>
                 {el.items.dishes.map((item, index) => (
-                  <div key={index}>
-                    <h4>{item.name}</h4>
+                  <div className="item_dish" key={index}>
+                    <h4>- {item.name}</h4>
                     <h4>x{item.qty}</h4>
                   </div>
                 ))}
@@ -53,10 +66,10 @@ const OrderCard = ({
             )}
             {itemsAreValid(el.items.drinks) && (
               <div>
-                <h3>DRINKS</h3>
+                <h3>Drinks</h3>
                 {el.items.drinks.map((item, index) => (
-                  <div key={index}>
-                    <h4>{item.name}</h4>
+                  <div className="item_drink" key={index}>
+                    <h4>- {item.name}</h4>
                     <h4>x{item.qty}</h4>
                   </div>
                 ))}

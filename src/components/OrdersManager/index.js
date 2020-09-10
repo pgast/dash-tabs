@@ -121,11 +121,17 @@ class OrdersManager extends Component {
 
   itemsAreValid = (items) => (items === 0 || items === null) ? false : true;
 
+  getTimeDate = (mils) => {
+    let date = new Date(mils);
+    return `${date.getHours()}:${date.getMinutes()}`
+  }
+
   getDate = (mils) => { 
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let date = new Date(mils);
-    return `${days[date.getDay()]} ${date.getDate()} ${date.getHours()}:${date.getMinutes()}` 
+    return `${days[date.getDay()]} ${date.getDate()} ${this.getTimeDate(mils)}`;
   }
+
 
   getOrderTime = (start, end) => {
     let minutes = ((end-start)/1000)/60;
@@ -161,6 +167,7 @@ class OrdersManager extends Component {
         orderReady={this.orderReady}
         resetOrder={this.resetOrder}
         toggleViews={this.toggleViews}
+        getTimeDate={this.getTimeDate}
         deleteOrder={this.deleteOrder}
         getOrderTime={this.getOrderTime}
         pastOrdersValid={pastOrdersValid}
