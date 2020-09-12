@@ -3,7 +3,6 @@ import React from 'react';
 const OrderCard = ({
   el,
   idx,
-  getDate,
   isCurrent,
   highlight,
   isSelected,
@@ -80,8 +79,20 @@ const OrderCard = ({
       )}
       {cardType() === 'pastOrder' && (
         <>
-          <h3>#{el.orderNum}</h3> 
-          <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+          <div className="pastOrder_header">
+            <h3>#{el.orderNum}</h3> 
+            <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+          </div>
+          <div>
+            <div className="pastOrder_time">
+              <h3>Start</h3>
+              <h3 id="time">{getTimeDate(el.start)}</h3>
+            </div>
+            <div className="pastOrder_time">
+              <h3>End</h3>
+              <h3 id="time">{getTimeDate(el.end)}</h3>
+            </div>
+          </div>
         </>
       )}
     </div>

@@ -22,7 +22,7 @@ html{
 .dashboardHeader {
   top: 0;
   right: 0;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
   display: flex;
   height: 5.3rem;
   position: fixed;
@@ -58,16 +58,33 @@ html{
 }
 
 .btn {
-  width: 9rem;
   height: 2rem;
   display: flex;
   margin: .6rem;
+  padding: 0 0.7rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.9rem;
+  border-radius: 1rem;
   background: black;
   font-size: 0.63rem;
   font-weight: 700;
+  color: white;
+}
+
+.btn:hover {
+  -webkit-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.438);
+  -moz-box-shadow: 0px 2px 10px -1px rgba(0, 0, 0, 0.438);
+  box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.43);
+}
+
+.btn_secondary {
+  background: none;
+  color: black;
+  border: 2px solid black;
+}
+
+.btn_secondary:hover {
+  background: black;
   color: white;
 }
 

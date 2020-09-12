@@ -46,7 +46,6 @@ const OrdersManagerView = ({
                   key={idx}
                   idx={idx}
                   isCurrent
-                  getDate={getDate}
                   getTimeDate={getTimeDate}
                   highlight={idx <= 2 ? true : false}
                   setSelectedOrder={setSelectedOrder}
@@ -84,7 +83,7 @@ const OrdersManagerView = ({
           resetOrder={resetOrder}
           viewCurrent={viewCurrent}
           deleteOrder={deleteOrder}
-          getTimeDate={getTimeDate}
+          getOrderTime={getOrderTime}
           selectedOrder={selectedOrder} 
           itemsAreValid={itemsAreValid}
         />

@@ -50,27 +50,9 @@ class OrdersManager extends Component {
       comments: el.comments,
       dishes: el.items.dishes,
       drinks: el.items.drinks,
+      end: el.end ? el.end : null,
     }});
-
-    // el.end
-
-    // el.cost
-    // el.table
-    // el.orderNum
-    // el.start
-    // el.items.dishes
-    // el.items.drinks
-    // el.comments
-
-    // el.cost
-    // el.table
-    // el.orderNum
-    // el.start
-    // el.end
-    // el.items.dishes
-    // el.items.drinks
-    // el.comments
-  }
+  };
 
   orderReady = (index) => {
     let current = [...this.state.orders.current];
@@ -127,15 +109,18 @@ class OrdersManager extends Component {
   }
 
   getDate = (mils) => { 
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let date = new Date(mils);
-    return `${days[date.getDay()]} ${date.getDate()} ${this.getTimeDate(mils)}`;
+    return { 
+      completeDate: `${this.getTimeDate(mils)} - ${days[date.getDay()]} ${date.getDate()}`, 
+      time: this.getTimeDate(mils) 
+    };
   }
 
 
   getOrderTime = (start, end) => {
     let minutes = ((end-start)/1000)/60;
-    minutes = Math.round(minutes * 100) / 100;
+    minutes = Math.round(Math.round(minutes * 100) / 100);
     return `${minutes} ${minutes < 10 ? 'minute':'minutes'}`;
   }
 

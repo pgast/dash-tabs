@@ -20,6 +20,7 @@
 .ordersCardsView {
   display: grid;
   padding: 5rem;
+  padding-left: 3.5rem;
   justify-items: center;
   grid-template-rows: auto;
   grid-template-columns: 1fr 1fr 1fr;
@@ -37,19 +38,72 @@
 .ordersSideboard_view {
   margin-top: 5.8rem;
   border-top: 1px dashed black;
+  padding: 0.7rem 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
+#total {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.65rem;
+  margin-top: 1rem;
+}
+
+#total h3:last-child {
+  font-weight: 400;
+  margin-left: 2rem;
+}
+
+
 .ordersSideboard_view_header {
-  border: 2px dashed blue;
+  margin-bottom: 1.4rem;
+}
+
+.ordersSideboard_view_header div {
+  display: flex;
+  font-size: 0.65rem;
+}
+
+.order_title {
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.order_info {
+  font-size: 0.65rem;
+  margin-top: 0.2rem;
+}
+
+.order_info h3 {
+  overflow-wrap: break-word;
+}
+
+.order_info h3:first-child {
+  width: 5rem;
 }
 
 .ordersSideboard_view_items {
-  border: 1px solid violet;
+  margin-bottom: 0.7rem;
+}
+
+.ordersSideboard_view_items div:first-child {
+  margin-bottom: 0.7rem;
+}
+
+.order_items {
+  font-size: 0.7rem;
+}
+
+.order_items h3 {
+  margin-bottom: 0.2rem;
 }
 
 .ordersSideboard_actionButtons {
   height: 6.8rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
   border-top: 1px dashed black;
 }
 
@@ -59,7 +113,7 @@
   width: 9rem;
   height: 2rem;
   display: flex;
-  margin: .6rem;
+  margin: 1rem;
   align-items: center;
   border-radius: 0.9rem;
   justify-content: space-around;
@@ -98,14 +152,15 @@
   background: black;
 }
 
+#cardSelected .pastOrder_header,
 #cardSelected .highlightCard_header {
-  border-bottom: 1px dashed white;
+  border-bottom: 1px solid white;
 }
 
 .highlightCard {
   width: 9rem;
   display: flex;
-  margin: 0.6rem;
+  margin: 1rem;
   padding: 0.6rem 0;
   border-radius: 0.9rem; 
   flex-direction: column;
@@ -147,4 +202,33 @@
 .item_dish > *,
 .item_drink > * {
   font-weight: 300;;
+}
+
+.pastOrderCard {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 0.6rem 0;
+  padding-bottom: 0.8rem;
+}
+
+.pastOrderCard > div {
+  display: flex;
+  width: 6.3rem;
+}
+
+.pastOrderCard > div:first-child {
+  margin-bottom: 0.4rem;
+  width: 100%;
+  padding: 0 0.9rem;
+  padding-bottom: 0.6rem;
+  padding-top: 0.3rem;
+  border-bottom: 1px dashed black;
+}
+
+.pastOrder_time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
 }

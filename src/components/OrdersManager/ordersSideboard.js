@@ -6,6 +6,7 @@ const OrdersSideboard = ({
   orderReady,
   viewCurrent, 
   deleteOrder,
+  getOrderTime,
   itemsAreValid, 
   selectedOrder, 
 }) => {
@@ -13,36 +14,62 @@ const OrdersSideboard = ({
     <div className={selectedOrder.table === null ? "hidden" : "ordersSideboard"}>
       <div className="ordersSideboard_view">
         <div className="ordersSideboard_view_header">
-          <h1 onClick={() => console.log(selectedOrder)}>ORDER</h1>
-          <p>{selectedOrder.table === "takeout" ? `Takeout order: ${selectedOrder.orderNum}` : `Table: ${selectedOrder.table}`}</p>
-          <h4>Comments - {selectedOrder.comments}</h4>
-          <p>Order start: {getDate(selectedOrder.start)}</p>
+          <div className="order_title">
+            <h3>ORDER #{selectedOrder.orderNum}</h3>
+            <h3>{selectedOrder.table === "takeout" ? `TAKEOUT` : `TABLE ${selectedOrder.table}`}</h3>
+          </div>
+          <div className="order_info">
+            <h3>Start</h3>
+            <h3 id="time">{getDate(selectedOrder.start).completeDate}</h3>
+          </div>
+          {selectedOrder.end && (
+            <>
+              <div className="order_info">
+                <h3>End</h3>
+                <h3 id="time">{getDate(selectedOrder.end).time}</h3>
+              </div>
+              <div className="order_info">
+                <h3>Duration</h3>
+                <h3 id="time">{getOrderTime(selectedOrder.start, selectedOrder.end)}</h3>
+              </div>
+            </>
+          )}
+          {selectedOrder.comments !== '' && (
+            <div className="order_info">
+              <h3>Comments</h3>
+              <h3 id="time">{selectedOrder.comments}</h3>
+            </div>
+          )}
         </div>
         <div className="ordersSideboard_view_items">
           {itemsAreValid(selectedOrder.dishes) && (
-            <>
-              <p>DISHES</p>
-              <ol>
-                {selectedOrder.dishes.map((item, index) => (
-                  <li key={index}>{item.name} - Qty: {item.qty}</li>
-                ))}
-              </ol>
-            </>
+            <div className="order_items">
+              <h3>Dishes</h3>
+              {selectedOrder.dishes.map((item, index) => (
+                <div className="item_dish" key={index}>
+                  <h4>- {item.name}</h4>
+                  <h4>x{item.qty}</h4>
+                </div>
+              ))}
+            </div>
           )}
-
           {itemsAreValid(selectedOrder.drinks) && (
-            <>
-              <p>DRINKS</p>
-              <ol>
-                {selectedOrder.drinks.map((item, index) => (
-                  <li key={index}>{item.name} - Qty: {item.qty}</li>
-                ))}
-              </ol>
-            </>
+            <div className="order_items">
+              <h3>Drinks</h3>
+              {selectedOrder.drinks.map((item, index) => (
+                <div className="item_dish" key={index}>
+                  <h4>- {item.name}</h4>
+                  <h4>x{item.qty}</h4>
+                </div>
+              ))}
+            </div>
           )}
         </div>
+        <div id="total">
+          <h3>Total</h3>
+          <h3>${selectedOrder.cost}</h3>
+        </div>
       </div>
-
       <div className="ordersSideboard_actionButtons">
         {viewCurrent ? (
           <>
@@ -50,13 +77,13 @@ const OrdersSideboard = ({
               className="btn"
               onClick={() => orderReady(selectedOrder.index)} 
             >
-              COMPLETE ORDER
+              ORDER DONE
             </div>
             <div 
-              className="btn"
+              className="btn btn_secondary"
               onClick={() => deleteOrder(selectedOrder.index, 'current')} 
             >
-              DELETE ORDER
+              DELETE
             </div>
           </>
         ):(
@@ -65,13 +92,13 @@ const OrdersSideboard = ({
               className="btn"
               onClick={() => resetOrder(selectedOrder.index)} 
             >
-              RESET ORDER
+              RESET
             </div>
             <div 
-              className="btn"
+              className="btn btn_secondary"
               onClick={() => deleteOrder(selectedOrder.index, 'past')} 
             >
-              DELETE ORDER
+              DELETE
             </div>
           </>
         )}
