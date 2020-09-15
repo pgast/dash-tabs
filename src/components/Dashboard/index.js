@@ -50,6 +50,8 @@ class Dashboard extends Component {
       if(orders === null) return;
       this.setState({ orders: snapshot.val() });
     })
+
+    console.log(this.state);
   }
 
   componentWillUnmount() {       
@@ -60,7 +62,6 @@ class Dashboard extends Component {
     // REVISAR QUE SEAN SIEMPRE ARRAYS CON ITEMS O SOLO 0 
     if(newMenu.drinks.length === 0) newMenu.drinks = 0;
     if(newMenu.dishes.length === 0) newMenu.dishes = 0;
-
 
       // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
     this.props.firebase.userMenu(this.state.user.uid).set({ 

@@ -1,4 +1,4 @@
-import MenuCard from './menuCard';
+import MenuItemCard from './menuItemCard';
 import OrderCard from './orderCard';
 
-export { MenuCard, OrderCard };
+export { MenuItemCard, OrderCard };

@@ -43,7 +43,7 @@ class MenuManager extends Component {
     }
   }
 
-  onChange = event => {
+  onChangeForm = event => {
     let newInputItem = {...this.state.inputItem};
     newInputItem[event.target.name] = event.target.value;
     this.setState({ inputItem: newInputItem });
@@ -91,6 +91,8 @@ class MenuManager extends Component {
           available: true, 
         } 
       });
+
+      this.props.updateMenuDb(newMenu);
     }
   };
 
@@ -130,16 +132,19 @@ class MenuManager extends Component {
           description: '',
         }
       });
+
+      this.props.updateMenuDb(newMenu);
     };
   };
 
-  editItem = (item, type) => {
+  editItem = (item, type, itemIdx) => {
     this.setState({ 
       itemEdit: { 
         type,
-        current: item.name, 
+        idx: itemIdx,
         name: item.name, 
         price: item.price, 
+        current: item.name, 
         available: item.available,
         description: item.description,
       } 
@@ -165,6 +170,8 @@ class MenuManager extends Component {
         description: '',
       }
     });
+
+    this.props.updateMenuDb(newMenu);
   };
 
   cancelEdit = () => {
@@ -194,7 +201,6 @@ class MenuManager extends Component {
       <MenuManagerView 
         menu={this.state.menu}
         addItem={this.addItem}
-        onChange={this.onChange}
         editItem={this.editItem}
         addIsInvalid={addIsInvalid}
         deleteItem={this.deleteItem}
@@ -203,10 +209,10 @@ class MenuManager extends Component {
         drinksIsEmpty={drinksIsEmpty}
         isInvalidEdit={isInvalidEdit}
         itemEdit={this.state.itemEdit}
+        onChangeForm={this.onChangeForm}
         saveEditItem={this.saveEditItem}
         onChangeEdit={this.onChangeEdit}
         inputItem={this.state.inputItem}
-        updateMenuDb={this.props.updateMenuDb}
         saveChangesIsInvalid={saveChangesIsInvalid}
       />
     ); 

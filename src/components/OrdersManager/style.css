@@ -28,26 +28,26 @@
 
 /* ORDERS SIDEBOARD */
 .ordersSideboard {
-  background: rgb(238, 238, 238);
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: rgb(238, 238, 238);
 }
 
 .ordersSideboard_view {
-  margin-top: 5.8rem;
-  border-top: 1px dashed black;
-  padding: 0.7rem 1.5rem;
   display: flex;
+  margin-top: 5.8rem;
+  padding: 0.7rem 1.5rem;
   flex-direction: column;
+  border-top: 1px dashed black;
 }
 
 #total {
   display: flex;
-  justify-content: flex-end;
-  font-size: 0.65rem;
   margin-top: 1rem;
+  font-size: 0.65rem;
+  justify-content: flex-end;
 }
 
 #total h3:last-child {
@@ -66,8 +66,8 @@
 }
 
 .order_title {
-  justify-content: space-between;
   margin-bottom: 1rem;
+  justify-content: space-between;
 }
 
 .order_info {
@@ -100,8 +100,8 @@
 }
 
 .ordersSideboard_actionButtons {
-  height: 6.8rem;
   display: flex;
+  height: 6.8rem;
   align-items: center;
   justify-content: center;
   border-top: 1px dashed black;
@@ -112,8 +112,8 @@
 .orderCard {
   width: 9rem;
   height: 2rem;
-  display: flex;
   margin: 1rem;
+  display: flex;
   align-items: center;
   border-radius: 0.9rem;
   justify-content: space-around;
@@ -159,8 +159,8 @@
 
 .highlightCard {
   width: 9rem;
-  display: flex;
   margin: 1rem;
+  display: flex;
   padding: 0.6rem 0;
   border-radius: 0.9rem; 
   flex-direction: column;
@@ -206,9 +206,9 @@
 
 .pastOrderCard {
   display: flex;
-  flex-direction: column;
   height: auto;
   padding: 0.6rem 0;
+  flex-direction: column;
   padding-bottom: 0.8rem;
 }
 
@@ -218,17 +218,17 @@
 }
 
 .pastOrderCard > div:first-child {
-  margin-bottom: 0.4rem;
   width: 100%;
   padding: 0 0.9rem;
-  padding-bottom: 0.6rem;
   padding-top: 0.3rem;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.6rem;
   border-bottom: 1px dashed black;
 }
 
 .pastOrder_time {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   margin-top: 0.5rem;
+  align-items: center;
+  flex-direction: column;
 }

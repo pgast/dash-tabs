@@ -11,7 +11,7 @@ const OrdersSideboard = ({
   selectedOrder, 
 }) => {
   return (
-    <div className={selectedOrder.table === null ? "hidden" : "ordersSideboard"}>
+    <div className="ordersSideboard">  
       <div className="ordersSideboard_view">
         <div className="ordersSideboard_view_header">
           <div className="order_title">
