@@ -15,6 +15,11 @@
   width: 50%;
 }
 
+.menuItemCardsView > div > h3 {
+  padding-left: 1rem;
+  font-size: 0.65rem;
+}
+
 .menuItemCard {
   height: 3rem;
   margin: 1rem;
@@ -63,4 +68,95 @@
   flex-direction: column;
   justify-content: space-between;
   background: rgb(238, 238, 238);
+}
+
+.menuSideboard_view {
+  display: flex;
+  margin-top: 5.8rem;
+  padding: 0.7rem 2rem;
+  flex-direction: column;
+  border-top: 1px dashed black;
+}
+
+.menuSideboard_view h3 {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.menuSideboard_editItemForm,
+.menuSideboard_addItemForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  height: 16rem;
+}
+
+.menuSideboard_actionButtons {
+  display: flex;
+  height: 6.8rem;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px dashed black;
+}
+
+/* NEW ITEM FORM */
+.inputGroup {
+  font-size: 0.7rem;
+}
+
+.inputGroup > h4 {
+  margin-bottom: 0.2rem;
+}
+
+.inputGroup:nth-child(2) > div {
+  display: flex;
+  align-items: center;
+}
+
+.inputGroup:nth-child(2) > div h4 {
+  margin-right: 0.4rem;
+}
+
+.inputGroup:nth-child(4) > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 3rem;
+  justify-content: space-between;
+}
+
+.inputGroup input[type=radio] {
+  background-color: black;
+  border: 1px solid green;
+}
+
+.inputGroup textarea,
+.inputGroup input[type=number],
+.inputGroup input[type=text] {
+  background: rgb(218, 218, 218);
+  border: none;
+  font-size: 0.75rem;
+  width: 100%;
+}
+
+.inputGroup textarea,
+.inputGroup input[type=number],
+.inputGroup input[type=text] {
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  font-family: "Avenir Next", sans-serif;
+}
+
+.inputGroup input[type=number] {
+  width: 4rem;
+}
+
+.inputGroup textarea {
+  resize: none;
+}
+
+.inputGroup input[type=checkbox] {
+  border: 1px solid black;
+  margin-left: 0.6rem;
 }

@@ -8,6 +8,7 @@ class MenuManager extends Component {
     this.state = {
       menu: { drinks: [], dishes: [] },
       itemEdit: {
+        idx: '',
         type: '',
         current: '',
         name: '',
@@ -124,6 +125,7 @@ class MenuManager extends Component {
       this.setState({ 
         menu: newMenu,  
         itemEdit: {
+          idx: '',
           type: '',
           current: '',
           name: '',
@@ -162,6 +164,7 @@ class MenuManager extends Component {
     this.setState({ 
       menu: newMenu,  
       itemEdit: {
+        idx: '',
         type: '',
         current: '',
         name: '',
@@ -177,6 +180,7 @@ class MenuManager extends Component {
   cancelEdit = () => {
     this.setState({
       itemEdit: {
+        idx: '',
         type: '',
         current: '',
         name: '',

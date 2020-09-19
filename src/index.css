@@ -71,6 +71,17 @@ html{
   color: white;
 }
 
+.btn_disabled {
+  color: black;
+  background: rgb(214, 214, 214);
+  border: 2px solid black;
+  opacity: 0.3;
+}
+
+.btn_disabled:hover {
+  box-shadow: none;
+}
+
 .btn:hover {
   -webkit-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.438);
   -moz-box-shadow: 0px 2px 10px -1px rgba(0, 0, 0, 0.438);

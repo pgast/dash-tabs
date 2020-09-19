@@ -27,22 +27,21 @@ const MenuManagerView = ({
       </div>
       <div className="menuItemCardsView">
         <div>
-          <h4>Bebidas</h4>
+          <h3>DRINKS</h3>
           <div className="menuItemCards_items">
             {drinksIsEmpty ? 
               <h3>NO HAY BEBIDAS REGISTRADAS</h3>
             :
               <>
                 {menu.drinks && menu.drinks.map((el, idx) => 
-                // REDUNDANTE TENER KEY Y IDX AL MISMO TIEMPO
                   <MenuItemCard 
                     el={el}
-                    idx={idx}
                     key={idx}
+                    idx={idx}
                     editItem={editItem}
                     editItemType={"drinks"}
                     cancelEdit={cancelEdit}
-                    isSelected={itemEdit.name === el.name ? true : false}
+                    isSelected={(itemEdit.type === "drinks" && itemEdit.idx === idx) ? true : false}
                   />
                 )}
               </>
@@ -50,21 +49,20 @@ const MenuManagerView = ({
           </div>
         </div>
         <div>
-          <h4>Comidas</h4>
+          <h3>DISHES</h3>
           <div className="menuItemCards_items">  
             {dishesIsEmpty ?
               <h3>NO HAY COMIDAS REGISTRADAS</h3>
             :
               <>
                 {menu.dishes && menu.dishes.map((el, idx) => 
-                // REDUNDANTE TENER IDX Y KEY AL MISMO TIEMPO
                   <MenuItemCard 
                     el={el}
-                    idx={idx}
                     key={idx}
+                    idx={idx}
                     editItem={editItem}
                     editItemType={"dishes"}
-                    isSelected={itemEdit.name === el.name ? true : false}
+                    isSelected={(itemEdit.type === "dishes" && itemEdit.idx === idx) ? true : false}
                   /> 
                 )}
               </>
@@ -78,6 +76,7 @@ const MenuManagerView = ({
           itemEdit={itemEdit}
           inputItem={inputItem}
           deleteItem={deleteItem}
+          cancelEdit={cancelEdit}
           onChangeEdit={onChangeEdit}
           onChangeForm={onChangeForm}
           addIsInvalid={addIsInvalid}
