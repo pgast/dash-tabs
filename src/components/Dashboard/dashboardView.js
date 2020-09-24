@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import MenuManager from '../MenuManager';
 import OrdersManager from '../OrdersManager';
 import TablesManager from '../TablesManager';
-import Modal from '../Modal';
+import Modal from '../Modals';
+import DashboardDemoModal from '../Modals/DashboardDemoModal';
 import { Store } from '../../store';
 
 const DashboardView = ({ 
@@ -42,7 +43,7 @@ const DashboardView = ({
         }
       {loading && <div>Loading ...</div>}
       <Modal toggleModal={toggleModal} show={showModal}>
-        Message in Modal
+        <DashboardDemoModal />
       </Modal>
     </div>
   );

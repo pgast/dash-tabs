@@ -1,0 +1,59 @@
+/* TABLES SIDEBOARD */
+.tablesSideboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgb(238, 238, 238);
+}
+
+.tableCardsView {
+  display: flex;
+  padding: 5rem;
+  padding-left: 3.5rem;
+  justify-items: center;
+}
+
+.main {
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+
+.main > div {
+  width: 11rem;
+}
+
+.main > .btn {
+  width: 10rem;
+  margin-top: 8rem;
+}
+
+.main > div:last-of-type,
+.main > div:last-of-type > div:first-of-type {
+  margin-bottom: 1rem;
+}
+
+.tablesSideboard_view {
+  display: flex;
+  margin-top: 5.8rem;
+  padding: 0.7rem 2rem;
+  flex-direction: column;
+  border-top: 1px dashed black;
+}
+
+.tablesSideboard_view h3 {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.tablesSideboard_view > div:first-of-type {
+  margin-bottom: 1.5rem;
+}
+
+#showQr {
+  width: 5rem;
+  align-self: center;
+  margin-top: 3rem;
+}

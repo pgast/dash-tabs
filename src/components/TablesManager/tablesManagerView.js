@@ -1,83 +1,56 @@
 import React from 'react';
+import TablesSideboard from './tablesSideboard';
+import { TableCard } from '../Cards';
+import Modal from '../Modals';
+import TableQRModal from '../Modals/TableQRModal';
 
 const TablesManagerView = ({
   error,
   tables,
-  showQrs,
   addTable,
-  closeQrs,
+  showModal,
   tableEdit,
   displayQr,
   editTable,
   inputTable,
+  toggleModal,
   deleteTable,
   setTableEdit,
   tablesIsEmpty,
   editIsInvalid,
   saveEditTable,
   setInputTable,
-  tablesQrCodes,
+  sideboardView,
   inputIsInvalid,
   resetTableEdit,
-  updateTablesDb,
-  generateQrCodes,
-  generateSingleQr,
+  toggleAddTableForm,
 }) => (
-  <>
+  <div className="viewSmall">
     <div className="dashboardHeader">
       <h1>TABLES</h1>
     </div>
-    <div className="view">
+    <div className="tableCardsView">
       {error && <h4>{error.msg}</h4>}
-      <hr />
 
-      {tablesIsEmpty ?
-        <h3>NO TABLES REGISTERED</h3>
-        :
-        <ol>
-          {tables.map((el, idx) => (
-            <React.Fragment key={idx}>
-              {tableEdit.current !== idx ? 
-                <li key={idx}>
-                  Table number {el.number} - {el.description}
-                  <button onClick={() => editTable(idx)}>Edit</button>
-                  <button onClick={(e) => generateSingleQr(el.number, e, idx)}>Get Table QR Code</button>
+      <div className="tableCards_items">
+        {tablesIsEmpty ?
+          <h3>NO TABLES REGISTERED</h3>
+          :
+          <ol>
+            {tables.map((el, idx) => (
+              <TableCard 
+                key={idx}
+                idx={idx}
+                table={el}
+                editTable={editTable}
+                isSelected={tableEdit.current === idx}
+              />
+            ))}
+          </ol>
+        }
+      </div>
 
-                  {(displayQr.src !== null && displayQr.current === idx) && 
-                    <>
-                      <h5>Table number: {el.number}</h5>
-                      <img src={displayQr.src} alt="" title="" />
-                    </>
-                  }
-                </li>
-              :
-                <li key={idx}>
-                  <form onSubmit={(e) => saveEditTable(e)}>
-                    <input 
-                      type="number"
-                      value={tableEdit.newNumber}
-                      placeholder="New table number"
-                      onChange={(e) => setTableEdit("newNumber", e.target.value)}
-                    />
-                    <input 
-                      type="text"
-                      value={tableEdit.newDescription}
-                      placeholder="New table description"
-                      onChange={(e) => setTableEdit("newDescription", e.target.value)}
-                    />
-                    <button disabled={editIsInvalid} type="submit">Save</button>
-                    <button onClick={() => deleteTable(idx)}>Delete Item</button>
-                    <button onClick={resetTableEdit}>Cancel Edit</button>
-                  </form>
-                </li>
-              }
-            </React.Fragment>
-          ))}
-        </ol>
-      }
-
-      <hr />
-      <div>
+      {/* <div>
         <button onClick={(e) => generateSingleQr(null, e, 'takeout', true)}>Get Takeout QR</button>
         {(displayQr.src !== null && displayQr.current === 'takeout') &&
           <>
@@ -86,30 +59,6 @@ const TablesManagerView = ({
           </>
         }
       </div>
-      <hr />
-
-      <form onSubmit={(e) => addTable(e)}>
-        <input 
-          type="number"
-          value={inputTable.number}
-          placeholder="Table Number"
-          onChange={(e) => setInputTable("number", e.target.value)}
-        />
-        <input 
-          type="text"
-          value={inputTable.description}
-          placeholder="Table description"
-          onChange={(e) => setInputTable("description", e.target.value)}
-        />
-        <button disabled={inputIsInvalid} type="submit">Add Table</button>
-      </form>
-
-      <div onClick={() => updateTablesDb(tables)} style={{ background: 'black', color: 'white' }}>
-        <h3>SAVE CHANGES AND UPDATE</h3>
-      </div>
-
-      <hr />
-
       <h3>QR Codes</h3>
       <button onClick={generateQrCodes}>Generate Tables QR Codes</button>
       {
@@ -126,9 +75,30 @@ const TablesManagerView = ({
             </ol>
           </React.Fragment>
         )
-      }
+      } */}
+
     </div>
-  </>
+    <div className="fixedSideboard">
+      <TablesSideboard 
+        addTable={addTable}
+        tableEdit={tableEdit}
+        inputTable={inputTable}
+        deleteTable={deleteTable}
+        toggleModal={toggleModal}
+        setTableEdit={setTableEdit}
+        sideboardView={sideboardView}
+        setInputTable={setInputTable}
+        saveEditTable={saveEditTable}
+        editIsInvalid={editIsInvalid}
+        inputIsInvalid={inputIsInvalid}
+        resetTableEdit={resetTableEdit}
+        toggleAddTableForm={toggleAddTableForm}
+      />
+    </div>
+    <Modal toggleModal={toggleModal} show={showModal}>
+      <TableQRModal displayQr={displayQr} />
+    </Modal>
+  </div>
 );
 
 export default TablesManagerView;

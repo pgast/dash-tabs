@@ -17,7 +17,7 @@ const MenuSideboard = ({
       {(itemEdit.name === '' && itemEdit.idx === '') && (
         <>
           <div className="menuSideboard_view">
-            <h3>NEW ITEM</h3>
+            <h3>ADD NEW ITEM</h3>
             <div className="menuSideboard_addItemForm">
               <div className="inputGroup">
                 <h4>Name</h4>
@@ -47,8 +47,8 @@ const MenuSideboard = ({
                   cols="50" 
                   form="usrform"  
                   name="description"
-                  value={inputItem.description}
                   onChange={onChangeForm}
+                  value={inputItem.description}
                 />
               </div>
               <div className="inputGroup">
@@ -105,8 +105,8 @@ const MenuSideboard = ({
                 <div>
                   <h4>$</h4>
                   <input 
-                    type="number"
                     name="price"
+                    type="number"
                     value={itemEdit.price}
                     onChange={onChangeEdit}
                   />
@@ -119,18 +119,32 @@ const MenuSideboard = ({
                   cols="50" 
                   form="usrform"  
                   name="description"
-                  value={itemEdit.description}
                   onChange={onChangeEdit}
+                  value={itemEdit.description}
                 />
               </div>
               <div className="inputGroup">
-                <label>Is item available?</label>
-                <input 
-                  name="available" 
-                  type="checkbox" 
-                  onChange={onChangeEdit}
-                  checked={itemEdit.available} 
-                  />
+                <h4>Available</h4>
+                <div>
+                  <div>Yes</div>
+                  <input 
+                    type="radio" 
+                    value={true} 
+                    name="available" 
+                    onChange={onChangeEdit}
+                    checked={itemEdit.available} 
+                    />
+                </div>
+                <div>
+                  <div>No</div>
+                  <input 
+                    type="radio" 
+                    value={false} 
+                    name="available" 
+                    onChange={onChangeEdit}
+                    checked={!itemEdit.available}
+                    />
+                </div>
               </div>
             </div>
           </div>

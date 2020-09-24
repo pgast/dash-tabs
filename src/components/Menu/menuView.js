@@ -1,5 +1,6 @@
 import React from 'react';
-import Modal from '../Modal';
+import Modal from '../Modals';
+import MenuDemoModal from '../Modals/MenuDemoModal';
 
 const MenuView = ({
   error,
@@ -137,7 +138,7 @@ const MenuView = ({
     )}
 
     <Modal toggleModal={toggleModal} show={showModal}>
-      Message in Modal
+      <MenuDemoModal />
     </Modal>
 
     {error && <p>{error}</p>}

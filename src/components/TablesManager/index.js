@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import TablesManagerView from './tablesManagerView';
+import './style.css';
 
 class TablesManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tables: [],
+      sideboard: "menu",
+      showModal: false,
       inputTable: {
         number: '',
         description: '',
@@ -66,16 +69,6 @@ class TablesManager extends Component {
     this.setState({ tablesQrCodes: newQrs, showQrs: true });
   }
 
-  generateSingleQr = (tableNumber, e, index, takeout=false) => {
-    e.preventDefault();
-    this.setState({
-      displayQr: {
-        src: this.props.createQR(tableNumber, takeout),
-        current: index
-      }
-    })
-  };
-
   editTable = (tableIdx) => {
     let newTableEdit = { 
       current: tableIdx,
@@ -83,7 +76,11 @@ class TablesManager extends Component {
       waitingOrder: this.state.tables[tableIdx].waitingOrder,
       newDescription: this.state.tables[tableIdx].description,
      }
-    this.setState({ tableEdit: newTableEdit, displayQr: { src: null, current: null } })
+    this.setState({ 
+      sideboard: "editTable",
+      tableEdit: newTableEdit, 
+      displayQr: { src: null, current: null } 
+    });
   };
 
   resetTableEdit = () => {
@@ -93,12 +90,17 @@ class TablesManager extends Component {
       newDescription: '',
       waitingOrder: false,
     }
-    this.setState({ tableEdit: newTableEdit, displayQr: { src: null, current: null } });
+    this.setState({ 
+      sideboard:"menu", 
+      tableEdit: newTableEdit, 
+      displayQr: { src: null, current: null } 
+    });
   }
 
   deleteTable = (deleteIndex) => {
     let newTables = [...this.state.tables].filter((el, idx) => idx !== deleteIndex);
-    this.setState({ tables: newTables });
+    this.setState({ sideboard:"menu", tables: newTables });
+    this.props.updateTablesDb(newTables);
     this.resetTableEdit();
   }
 
@@ -114,9 +116,14 @@ class TablesManager extends Component {
         waitingOrder: this.state.tableEdit.waitingOrder, 
         description: this.state.tableEdit.newDescription, 
       };
-      this.setState({ tables: newTables });
+      this.setState({ sideboard:"menu", tables: newTables });
+      this.props.updateTablesDb(newTables);
       this.resetTableEdit();
     }
+  };
+
+  toggleAddTableForm = (input) => {
+    this.setState({ sideboard: input === "open" ? "addTable" : "menu" });
   };
 
   addTable = (e) => {
@@ -132,9 +139,12 @@ class TablesManager extends Component {
         let number = parseInt(this.state.inputTable.number, 10);
         newTables.push({ ...this.state.inputTable, number});
         this.setState({ 
+          sideboard: "menu",
           tables: newTables,
           inputTable: { number: '', description: '', waitingOrder: false } 
         });
+
+        this.props.updateTablesDb(newTables);
       }
     }
   }
@@ -151,8 +161,33 @@ class TablesManager extends Component {
     this.setState({ inputTable: newInputTable });
   }
 
+  toggleModal = (tableNumber=false) => {
+
+    if(tableNumber === "takeout") {
+      this.setState({ displayQr: { src: this.props.createQR(null, true) } })
+    } 
+    
+    if(tableNumber === "tables") { }
+
+    if(!isNaN(tableNumber)) {
+      this.setState({ displayQr: { src: this.props.createQR(tableNumber, false) } })
+    }
+
+    this.setState({ showModal: !this.state.showModal });
+  }
+
   render() {
-    const { inputTable, tableEdit, tables, error, tablesQrCodes, showQrs, displayQr } = this.state;
+    const { 
+      error, 
+      tables, 
+      showQrs, 
+      tableEdit, 
+      displayQr, 
+      sideboard, 
+      showModal, 
+      inputTable, 
+      tablesQrCodes, 
+    } = this.state;
     const inputIsInvalid = this.numberIsInvalid(inputTable.number) || inputTable.description === '';
     const editIsInvalid = this.numberIsInvalid(tableEdit.newNumber) || tableEdit.newDescription === '';
     const tablesIsEmpty = tables === 0 || tables.length === 0 ? true : false;
@@ -160,26 +195,28 @@ class TablesManager extends Component {
     return (
       <TablesManagerView 
         error={error}
-        tables={this.state.tables}
+        tables={tables}
         showQrs={showQrs}
         tableEdit={tableEdit}
         displayQr={displayQr}
+        showModal={showModal}
         inputTable={inputTable}
         addTable={this.addTable}
+        sideboardView={sideboard}
         editTable={this.editTable}
         tablesIsEmpty={tablesIsEmpty}
         editIsInvalid={editIsInvalid}
         tablesQrCodes={tablesQrCodes}
         deleteTable={this.deleteTable}
+        toggleModal={this.toggleModal}
         inputIsInvalid={inputIsInvalid}
         setTableEdit={this.setTableEdit}
         saveEditTable={this.saveEditTable}
         setInputTable={this.setInputTable}
         resetTableEdit={this.resetTableEdit}
         generateQrCodes={this.generateQrCodes}
-        generateSingleQr={this.generateSingleQr}
         updateTablesDb={this.props.updateTablesDb}
-        closeQrs={() => this.setState({ showQrs: false })}
+        toggleAddTableForm={this.toggleAddTableForm}
       />
     )
   }
