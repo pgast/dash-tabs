@@ -20,13 +20,9 @@ class TablesManager extends Component {
         newDescription: '',
         waitingOrder: false,
       },
-      showQrs: false,
       tablesQrCodes: null,
       error: { exists: false },
-      displayQr: {
-        src: null,
-        current: null
-      }
+      qrSrc: {qr: null, table: null},
     }
   }
 
@@ -66,7 +62,7 @@ class TablesManager extends Component {
     });
 
     newQrs.push({ number: "takeout", qr: this.props.createQR(null, true) });
-    this.setState({ tablesQrCodes: newQrs, showQrs: true });
+    this.setState({tablesQrCodes: newQrs});
   }
 
   editTable = (tableIdx) => {
@@ -79,7 +75,7 @@ class TablesManager extends Component {
     this.setState({ 
       sideboard: "editTable",
       tableEdit: newTableEdit, 
-      displayQr: { src: null, current: null } 
+      qrSrc: {src: null, table: null},
     });
   };
 
@@ -93,7 +89,7 @@ class TablesManager extends Component {
     this.setState({ 
       sideboard:"menu", 
       tableEdit: newTableEdit, 
-      displayQr: { src: null, current: null } 
+      qrSrc: {src: null, table: null},
     });
   }
 
@@ -162,27 +158,30 @@ class TablesManager extends Component {
   }
 
   toggleModal = (tableNumber=false) => {
-
     if(tableNumber === "takeout") {
-      this.setState({ displayQr: { src: this.props.createQR(null, true) } })
-    } 
-    
-    if(tableNumber === "tables") { }
-
-    if(!isNaN(tableNumber)) {
-      this.setState({ displayQr: { src: this.props.createQR(tableNumber, false) } })
+      this.setState({
+        showModal: !this.state.showModal,
+        qrSrc: {src: this.props.createQR(null, true), table: tableNumber}
+      });
+    }else if(tableNumber === "tables") { 
+      this.generateQrCodes();
+      this.setState({ showModal: !this.state.showModal });
+    }else if(!isNaN(tableNumber)) {
+      this.setState({
+        showModal: !this.state.showModal,
+        qrSrc: {src: this.props.createQR(tableNumber, false), table: tableNumber}
+      });
+    } else {
+      this.setState({ showModal: !this.state.showModal, tablesQrCodes: null });
     }
-
-    this.setState({ showModal: !this.state.showModal });
   }
 
   render() {
     const { 
+      qrSrc, 
       error, 
       tables, 
-      showQrs, 
       tableEdit, 
-      displayQr, 
       sideboard, 
       showModal, 
       inputTable, 
@@ -194,11 +193,10 @@ class TablesManager extends Component {
 
     return (
       <TablesManagerView 
+        qrSrc={qrSrc}
         error={error}
         tables={tables}
-        showQrs={showQrs}
         tableEdit={tableEdit}
-        displayQr={displayQr}
         showModal={showModal}
         inputTable={inputTable}
         addTable={this.addTable}

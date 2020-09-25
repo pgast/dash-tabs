@@ -34,7 +34,7 @@ const TablesSideboard = ({
           </div>
           <div>
             <div 
-              onClick={() => toggleModal()} 
+              onClick={() => toggleModal("tables")} 
               className="btn btn_secondary"
             >
               GET TABLES QR CODES

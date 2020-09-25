@@ -7,14 +7,7 @@ export default class Modal extends Component {
 
     return (
       <div className={showHideClassName}>
-        <div className="modal-main">
-          <div>{this.props.children}</div>
-            <div>
-              <button onClick={e => this.props.toggleModal(e)}>
-                Close
-              </button>
-            </div>
-        </div>
+        {this.props.children}
       </div>
     )
   }

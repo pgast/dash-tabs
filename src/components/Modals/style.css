@@ -1,0 +1,76 @@
+.tableModal {
+  position:fixed;
+  background: rgb(238, 238, 238);
+  width: 25rem;
+  height: 25rem;
+  border-radius: 1.6rem;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tableModal_wide > div:nth-of-type(2),
+.tableModal > div:first-of-type {
+  background: white;
+  border-top-left-radius: 1.6rem;
+  border-top-right-radius: 1.6rem;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableModal_wide > div:first-of-type {
+  background: white;
+  height: 10%;
+  border-top-left-radius: 1.6rem;
+  border-top-right-radius: 1.6rem;
+}
+
+.tableModal_wide > div:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 70%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow-y: scroll;
+  padding: 0 2rem;
+}
+
+.tableModal_wide > div:nth-of-type(2) > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.tableModal_wide h4,
+.tableModal h4 {
+  margin-bottom: 1.5rem;
+}
+
+.tableModal_wide > div:last-of-type,
+.tableModal > div:last-of-type {
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableModal_wide {
+  width: 80%;
+  position:fixed;
+  background: rgb(238, 238, 238);
+  height: 25rem;
+  border-radius: 1.6rem;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

@@ -6,17 +6,18 @@ import TableQRModal from '../Modals/TableQRModal';
 
 const TablesManagerView = ({
   error,
+  qrSrc,
   tables,
   addTable,
   showModal,
   tableEdit,
-  displayQr,
   editTable,
   inputTable,
   toggleModal,
   deleteTable,
   setTableEdit,
   tablesIsEmpty,
+  tablesQrCodes,
   editIsInvalid,
   saveEditTable,
   setInputTable,
@@ -30,6 +31,7 @@ const TablesManagerView = ({
       <h1>TABLES</h1>
     </div>
     <div className="tableCardsView">
+      
       {error && <h4>{error.msg}</h4>}
 
       <div className="tableCards_items">
@@ -49,34 +51,6 @@ const TablesManagerView = ({
           </ol>
         }
       </div>
-
-      {/* <div>
-        <button onClick={(e) => generateSingleQr(null, e, 'takeout', true)}>Get Takeout QR</button>
-        {(displayQr.src !== null && displayQr.current === 'takeout') &&
-          <>
-            <h5>Takeout</h5>
-            <img src={displayQr.src} alt="" title="" />
-          </>
-        }
-      </div>
-      <h3>QR Codes</h3>
-      <button onClick={generateQrCodes}>Generate Tables QR Codes</button>
-      {
-        showQrs && (
-          <React.Fragment>
-            <button onClick={() => closeQrs()}>Close QRs</button>
-            <ol>
-              {tablesQrCodes.map((el, idx) => (
-                <li key={idx}>
-                  <h5>Table number: {el.number}</h5>
-                  <img src={el.qr} alt="" title="" />
-                </li>
-              ))}
-            </ol>
-          </React.Fragment>
-        )
-      } */}
-
     </div>
     <div className="fixedSideboard">
       <TablesSideboard 
@@ -96,7 +70,7 @@ const TablesManagerView = ({
       />
     </div>
     <Modal toggleModal={toggleModal} show={showModal}>
-      <TableQRModal displayQr={displayQr} />
+      <TableQRModal qrSrc={qrSrc} tablesQrCodes={tablesQrCodes} toggleModal={toggleModal}/>
     </Modal>
   </div>
 );
