@@ -9,12 +9,15 @@ const TableCard = ({
 
   return (
     <div 
-      className="menuItemCard" 
+      className="tableCard" 
       id={isSelected && "cardSelected"}
       onClick={() => editTable(idx)}
     >
       <h3>
-        Table number {table.number} - {table.description}
+        #{table.number}
+      </h3>
+      <h3 id="time">
+        {table.description}
       </h3>
     </div>
   );

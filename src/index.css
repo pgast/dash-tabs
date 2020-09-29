@@ -214,3 +214,7 @@ html{
 }
 
 /* DEBUG AND PRODUCTION STYLING */
+
+@media screen and (max-width: 480px) {
+
+}

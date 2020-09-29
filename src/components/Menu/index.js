@@ -24,6 +24,8 @@ class Menu extends Component {
       },
       comments: '',
       showModal: false,
+      confirmationScreen: false,
+      currentItem: { type: null, idx: null }
     };
   };
 
@@ -167,21 +169,6 @@ class Menu extends Component {
     return exists === undefined ? false : true;
   }
 
-  addItem = (item, type) => {
-    if(this.itemExistsInOrder(item.name, type)) return;
-    let newOrder = {
-      ...this.state.order,
-      items: {
-        dishes: [...this.state.order.items.dishes],
-        drinks: [...this.state.order.items.drinks],
-      }
-    };
-
-    newOrder.cost = newOrder.cost + this.getItemCost(item.name, type);
-    newOrder.items[type].push({ name: item.name, qty: 1 });
-    this.setState({ order: newOrder });
-  }
-
   getItemCost = (name, type) => {
     return this.state.menu[type].find(el => el.name === name).price;
   };
@@ -200,26 +187,6 @@ class Menu extends Component {
     this.setState({ order: newOrder });
   }
 
-  upgradeItemQty = (name, type, qty) => {  
-    let newOrder = { 
-      ...this.state.order,
-      items: {
-        dishes: [...this.state.order.items.dishes],
-        drinks: [...this.state.order.items.drinks],
-      } 
-    };
-    let itemIndex = newOrder.items[type].findIndex(el => el.name === name);
-    if(newOrder.items[type][itemIndex].qty === 1 && qty === -1) return;
-    newOrder.items[type][itemIndex].qty = newOrder.items[type][itemIndex].qty + qty;
-    let itemCost = this.getItemCost(name, type);
-    if(qty === -1) {
-      newOrder.cost = newOrder.cost - itemCost; 
-    } else {
-      newOrder.cost = newOrder.cost + itemCost;
-    }
-    this.setState({ order: newOrder });
-  }
-
   toggleModal = e => {
     this.setState({
       showModal: !this.state.showModal
@@ -232,6 +199,55 @@ class Menu extends Component {
     });
   };
 
+
+  // NEW ITEM HANDLERS
+  setCurrentItem = (type, idx, item) => {
+    // REVISAR SI NO ESTA EN LA ORDEN YA
+    // SI SI ESTA, TOMAR ESOS VALORES Y AGREGARLOS A CURRENT STATE
+    // SI NO, EMPEZAR DESDE 0
+
+
+    this.setState({ currentItem: {
+      idx,
+      type,
+      qty: 1,
+      name: item.name,
+      cost: item.price,
+      subtotal: item.price,
+    }});
+  };
+
+  upgradeItemQty = (qty) => {
+    let newCurrentItem = {...this.state.currentItem};  
+    if(qty === -1) {
+      if(newCurrentItem.qty === 1) return;
+      newCurrentItem.qty--;
+    } else {
+      newCurrentItem.qty++;
+    }
+    newCurrentItem.subtotal = newCurrentItem.cost * newCurrentItem.qty;
+    this.setState({ currentItem: newCurrentItem });
+  };
+
+  addItem = () => {
+    if(this.itemExistsInOrder(this.state.currentItem.name, this.state.currentItem.type)) return;
+    let newOrder = {
+      ...this.state.order,
+      items: {
+        dishes: [...this.state.order.items.dishes],
+        drinks: [...this.state.order.items.drinks],
+      }
+    };
+
+    newOrder.cost = newOrder.cost + this.state.currentItem.subtotal;
+    newOrder.items[this.state.currentItem.type].push({ name: this.state.currentItem.name, qty: this.state.currentItem.qty });
+    
+    this.setState({ 
+      order: newOrder,
+      currentItem: { type: null, idx: null },
+    });
+  }
+
   render() {
     const {
       menu,
@@ -241,6 +257,7 @@ class Menu extends Component {
       showModal,
       orderSent,
       dataFetched,
+      currentItem,
       businessName,
     } = this.state;
 
@@ -260,6 +277,7 @@ class Menu extends Component {
         showModal={showModal}
         addItem={this.addItem}
         order={this.state.order}
+        currentItem={currentItem}
         dataFetched={dataFetched}
         sendOrder={this.sendOrder}
         orderIsEmpty={orderIsEmpty}
@@ -268,10 +286,12 @@ class Menu extends Component {
         drinksIsEmpty={drinksIsEmpty}
         dishesIsEmpty={dishesIsEmpty}
         toggleModal={this.toggleModal}
+        setCurrentItem={this.setCurrentItem}
         upgradeItemQty={this.upgradeItemQty}
         handleFormInput={this.handleFormInput}
         orderDishesIsEmpty={orderDishesIsEmpty}
         orderDrinksIsEmpty={orderDrinksIsEmpty}
+        itemExistsInOrder={this.itemExistsInOrder}
       />
     );
   }

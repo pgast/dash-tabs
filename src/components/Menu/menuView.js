@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from '../Modals';
+import { ClientMenuItemCard } from '../Cards';
 import MenuDemoModal from '../Modals/MenuDemoModal';
+import './style.css'
 
 const MenuView = ({
   error,
@@ -13,23 +15,29 @@ const MenuView = ({
   sendOrder,
   orderSent,
   deleteItem,
+  currentItem,
   toggleModal,
   dataFetched,
   orderIsEmpty,
   businessName,
   drinksIsEmpty,
   dishesIsEmpty,
+  setCurrentItem,
   upgradeItemQty,
   handleFormInput,
+  itemExistsInOrder,
   orderDishesIsEmpty,
   orderDrinksIsEmpty,
 }) => (
-  <div className="clientMenu"> 
-    {!dataFetched && <h1>Menu</h1>}
+  <div className="menuView"> 
+    {/* FETCHING DATA SCREEN */}
+    {!dataFetched && <h1>Fetching Data</h1>}
+    {/* FETCHING DATA SCREEN END */}
 
+    {/* MAIN SCREEN */}
     {!orderSent && (
       <>
-        <h1>Welcome to {businessName}</h1>
+        <h1 onClick={() => console.log(currentItem)}>Welcome to {businessName}</h1>
         <h2>Table {table}</h2>
         <div className="menu">
           <div>
@@ -37,14 +45,27 @@ const MenuView = ({
             {drinksIsEmpty ? 
               <h3>No hay bebidas registradas</h3>
             :
-              <ol>
-                {drinks && drinks.map((item, idx) =>
-                  <li key={idx} onClick={() => addItem(item, 'drinks')}>
-                    <p>{item.name} - ${item.price}</p>
-                    <p>{item.description}</p>
-                  </li>
-                )}
-              </ol>
+              <>
+              {drinks && drinks.map((item, idx) =>
+                // <li key={idx} onClick={() => addItem(item, 'drinks')}>
+                //   <p>{item.name} - ${item.price}</p>
+                //   <p>{item.description}</p>
+                // </li>
+                <ClientMenuItemCard 
+                  key={idx}
+                  setCurrentItem={setCurrentItem}
+                  type="drinks"
+                  idx={idx}
+                  item={item}
+                  currentItem={currentItem}
+                  upgradeItemQty={upgradeItemQty}
+                  addItem={addItem}
+                  isCurrentItem={(currentItem.type === 'drinks' && currentItem.idx === idx)}
+                  isInOrder={itemExistsInOrder(item.name, "drinks")}
+                  // isInOrder = dice si esta en la orden para ver si se pone negro o no.
+                />
+              )}
+              </>
             }
           </div>
           <div>
@@ -52,14 +73,27 @@ const MenuView = ({
             {dishesIsEmpty ? 
               <h3>No hay comidas registradas</h3>
             :
-              <ol>
-                {dishes && dishes.map((item, idx) => 
-                  <li key={idx} onClick={() => addItem(item, 'dishes')}>
-                    <p>{item.name} - ${item.price}</p>
-                    <p>{item.description}</p>
-                  </li>        
-                )}
-              </ol>
+              <>
+              {dishes && dishes.map((item, idx) => 
+                // <li key={idx} onClick={() => addItem(item, 'dishes')}>
+                //   <p>{item.name} - ${item.price}</p>
+                //   <p>{item.description}</p>
+                // </li>     
+                <ClientMenuItemCard 
+                  key={idx}
+                  setCurrentItem={setCurrentItem}
+                  type="dishes"
+                  currentItem={currentItem}
+                  idx={idx}
+                  item={item}
+                  upgradeItemQty={upgradeItemQty}
+                  addItem={addItem}
+                  isCurrentItem={(currentItem.type === 'dishes' && currentItem.idx === idx)}
+                  isInOrder={itemExistsInOrder(item.name, "dishes")}
+                  // isInOrder = dice si esta en la orden para ver si se pone negro o no.
+                />   
+              )}
+              </>
             }
           </div>
         </div>
@@ -75,14 +109,6 @@ const MenuView = ({
                       <li key={idx}>
                         <div>
                           {item.name} - x {item.qty}
-                        </div>
-                        <div id="itemQty">
-                          <div>
-                            <button onClick={() => upgradeItemQty(item.name, 'drinks', 1)}>+</button>
-                          </div>
-                          <div>
-                            <button onClick={() => upgradeItemQty(item.name, 'drinks', -1)}>-</button>
-                          </div>
                         </div>
                         <button onClick={() => deleteItem(item, 'drinks')}>X</button>
                       </li>
@@ -100,14 +126,6 @@ const MenuView = ({
                       <li key={idx}>
                         <div>
                           {item.name} - x {item.qty}
-                        </div>
-                        <div id="itemQty">
-                          <div>
-                            <button onClick={() => upgradeItemQty(item.name, 'dishes', 1)}>+</button>
-                          </div>
-                          <div>
-                            <button onClick={() => upgradeItemQty(item.name, 'dishes', -1)}>-</button>
-                          </div>
                         </div>
                         <button onClick={() => deleteItem(item, 'dishes')}>X</button>
                       </li>
@@ -129,19 +147,26 @@ const MenuView = ({
         </div>
       </>
     )}
+    {/* MAIN SCREEN END */}
 
+    {/* ORDER SUCCESS SCREEN */}
     {orderSent && (
       <>
         <h2>ORDER SENT!</h2>
         <p>Your total is: {order.cost}</p>
       </>
     )}
+    {/* ORDER SUCCESS SCREEN END */}
 
+    {/* DEMO MODAL */}
     <Modal toggleModal={toggleModal} show={showModal}>
       <MenuDemoModal />
     </Modal>
+    {/* DEMO MODAL END */}
 
+    {/* ERROR SCREEN */}
     {error && <p>{error}</p>}
+    {/* ERROR SCREEN END */}
   </div>
 );
 

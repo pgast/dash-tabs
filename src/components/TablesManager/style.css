@@ -9,9 +9,12 @@
 
 .tableCardsView {
   display: flex;
+  flex-direction: column;
   padding: 5rem;
+  padding-top: 6rem;
   padding-left: 3.5rem;
   justify-items: center;
+  align-items: center;
 }
 
 .main {
@@ -56,4 +59,30 @@
   width: 5rem;
   align-self: center;
   margin-top: 3rem;
+}
+
+
+/* TABLE CARD */
+.tableCard {
+  height: 2rem;
+  margin-bottom: 1rem;
+  width: 22rem;
+  display: flex;
+  font-size: 0.6rem;
+  padding: 0 0.6rem;
+  align-items: center;
+  justify-items: center;
+  border-radius: 0.9rem;
+  justify-content: flex-start;
+  background: rgb(238, 238, 238);
+}
+
+.tableCard:hover {
+  -webkit-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+  box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+}
+
+.tableCard > h3:first-of-type {
+  margin-right: 2rem;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import printJS from 'print-js';
 import './style.css';
 
 export default class TableQRModal extends Component {
@@ -8,7 +9,7 @@ export default class TableQRModal extends Component {
     return (
       <div className={singleQr ? "tableModal" : "tableModal_wide"}>
         {singleQr && (
-          <div>
+          <div id="printjs-qr">
             <h4>
               {this.props.qrSrc.table === "takeout" ? "TAKEOUT" : `TABLE #${this.props.qrSrc.table}`} CODE
             </h4>
@@ -19,7 +20,7 @@ export default class TableQRModal extends Component {
         {singleQr === false && (
           <>
             <div></div>
-            <div>
+            <div id="printjs-qr">
               {this.props.tablesQrCodes.map((el, idx) => (
                 <div key={idx}>
                   <h4>
@@ -33,7 +34,7 @@ export default class TableQRModal extends Component {
         )}
 
         <div>
-          <div className="btn">
+          <div className="btn" onClick={() => printJS('printjs-qr', 'html')}>
             PRINT
           </div>
           <div 
