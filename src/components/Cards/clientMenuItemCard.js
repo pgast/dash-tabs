@@ -1,19 +1,20 @@
 import React from 'react';
 
 const ClientMenuItemCard = ({
-  item,
-  isCurrentItem,
-  setCurrentItem,
-  type,
   idx,
-  currentItem,
+  item,
+  type,
   addItem,
   isInOrder,
+  deleteItem,
+  currentItem,
+  isCurrentItem,
+  setCurrentItem,
   upgradeItemQty,
 }) => {
 
   return (
-    <> 
+    <div className="client_menuItemCard"> 
       {/* display card (not selected) */}
       {/* i */}
       <div onClick={() => setCurrentItem(type, idx, item)}>
@@ -30,7 +31,8 @@ const ClientMenuItemCard = ({
             <p>{currentItem.qty}</p>
             <button onClick={() => upgradeItemQty(1)}>+</button>
           </div>
-          <button onClick={() => addItem()}>ADD</button>
+          <button onClick={() => addItem()}>{isInOrder ? "SAVE" : "ADD"}</button>
+          {isInOrder && <button onClick={() => deleteItem(item, type)}>REMOVE ITEM</button>}
         </div>
       )}
 
@@ -43,7 +45,7 @@ const ClientMenuItemCard = ({
 
       {/* display card selected (with quantity and add button) */}
       {/* display after item is added to order */}
-    </>
+    </div>
   );
 };
 

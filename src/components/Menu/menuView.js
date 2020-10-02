@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from '../Modals';
 import { ClientMenuItemCard } from '../Cards';
 import MenuDemoModal from '../Modals/MenuDemoModal';
-import './style.css'
+import './style.css';
 
 const MenuView = ({
   error,
@@ -30,122 +30,76 @@ const MenuView = ({
   orderDrinksIsEmpty,
 }) => (
   <div className="menuView"> 
+    <div className="menuHeader">
+      <h3>MENU</h3>
+      <h3>{businessName}</h3>
+    </div>
     {/* FETCHING DATA SCREEN */}
     {!dataFetched && <h1>Fetching Data</h1>}
     {/* FETCHING DATA SCREEN END */}
 
     {/* MAIN SCREEN */}
     {!orderSent && (
-      <>
-        <h1 onClick={() => console.log(currentItem)}>Welcome to {businessName}</h1>
-        <h2>Table {table}</h2>
-        <div className="menu">
-          <div>
-            <h4>Bebidas</h4> 
-            {drinksIsEmpty ? 
-              <h3>No hay bebidas registradas</h3>
-            :
-              <>
-              {drinks && drinks.map((item, idx) =>
-                // <li key={idx} onClick={() => addItem(item, 'drinks')}>
-                //   <p>{item.name} - ${item.price}</p>
-                //   <p>{item.description}</p>
-                // </li>
-                <ClientMenuItemCard 
-                  key={idx}
-                  setCurrentItem={setCurrentItem}
-                  type="drinks"
-                  idx={idx}
-                  item={item}
-                  currentItem={currentItem}
-                  upgradeItemQty={upgradeItemQty}
-                  addItem={addItem}
-                  isCurrentItem={(currentItem.type === 'drinks' && currentItem.idx === idx)}
-                  isInOrder={itemExistsInOrder(item.name, "drinks")}
-                  // isInOrder = dice si esta en la orden para ver si se pone negro o no.
-                />
-              )}
-              </>
-            }
-          </div>
-          <div>
-            <h4>Comidas</h4>
-            {dishesIsEmpty ? 
-              <h3>No hay comidas registradas</h3>
-            :
-              <>
-              {dishes && dishes.map((item, idx) => 
-                // <li key={idx} onClick={() => addItem(item, 'dishes')}>
-                //   <p>{item.name} - ${item.price}</p>
-                //   <p>{item.description}</p>
-                // </li>     
-                <ClientMenuItemCard 
-                  key={idx}
-                  setCurrentItem={setCurrentItem}
-                  type="dishes"
-                  currentItem={currentItem}
-                  idx={idx}
-                  item={item}
-                  upgradeItemQty={upgradeItemQty}
-                  addItem={addItem}
-                  isCurrentItem={(currentItem.type === 'dishes' && currentItem.idx === idx)}
-                  isInOrder={itemExistsInOrder(item.name, "dishes")}
-                  // isInOrder = dice si esta en la orden para ver si se pone negro o no.
-                />   
-              )}
-              </>
-            }
-          </div>
+      <div className="client_menuItems">
+        <div>
+          <h4>DRINKS</h4> 
+          {drinksIsEmpty ? 
+            <h3>No hay bebidas registradas</h3>
+          :
+            <>
+            {drinks && drinks.map((item, idx) =>
+              <ClientMenuItemCard 
+                key={idx}
+                idx={idx}
+                item={item}
+                type="drinks"
+                addItem={addItem}
+                deleteItem={deleteItem}
+                currentItem={currentItem}
+                setCurrentItem={setCurrentItem}
+                upgradeItemQty={upgradeItemQty}
+                isInOrder={itemExistsInOrder(item.name, "drinks")}
+                isCurrentItem={(currentItem.type === 'drinks' && currentItem.idx === idx)}
+              />
+            )}
+            </>
+          }
         </div>
+        <div>
+          <h4>DISHES</h4>
+          {dishesIsEmpty ? 
+            <h3>No hay comidas registradas</h3>
+          :
+            <>
+            {dishes && dishes.map((item, idx) =>    
+              <ClientMenuItemCard 
+                key={idx}
+                idx={idx}
+                item={item}
+                type="dishes"
+                addItem={addItem}
+                deleteItem={deleteItem}
+                currentItem={currentItem}
+                setCurrentItem={setCurrentItem}
+                upgradeItemQty={upgradeItemQty}
+                isInOrder={itemExistsInOrder(item.name, "dishes")}
+                isCurrentItem={(currentItem.type === 'dishes' && currentItem.idx === idx)}
+              />   
+            )}
+            </>
+          }
+        </div>
+ 
 
-        <div className="clientMenu_orderForm">
-          <div>
-            <div>
-              {!orderDrinksIsEmpty && (
-                <>
-                  <h4>Drinks</h4>
-                  <ul>
-                    {order.items.drinks.map((item, idx) => 
-                      <li key={idx}>
-                        <div>
-                          {item.name} - x {item.qty}
-                        </div>
-                        <button onClick={() => deleteItem(item, 'drinks')}>X</button>
-                      </li>
-                    )}
-                  </ul>
-                </>
-              )}
-            </div>
-            <div>
-              {!orderDishesIsEmpty && (
-                <>
-                  <h4>Dishes</h4>
-                  <ul>
-                    {order.items.dishes.map((item, idx) => 
-                      <li key={idx}>
-                        <div>
-                          {item.name} - x {item.qty}
-                        </div>
-                        <button onClick={() => deleteItem(item, 'dishes')}>X</button>
-                      </li>
-                    )}
-                  </ul>
-                </>
-              )}
-            </div>
-          </div>
-          <hr />
+        {/* <div className="clientMenu_orderForm">          
           <div>
             <div>
               <label>Extra instructions or request</label>
               <textarea rows="4" cols="50" form="usrform"  onChange={(e) =>  handleFormInput(e.target.value)}/>
             </div>
-            <h3>Order cost: ${order.cost}</h3>
-            <button disabled={orderIsEmpty} onClick={() => sendOrder()}>TEST ORDER</button>
           </div>
-        </div>
-      </>
+        </div> */}
+      </div>
     )}
     {/* MAIN SCREEN END */}
 
@@ -167,6 +121,19 @@ const MenuView = ({
     {/* ERROR SCREEN */}
     {error && <p>{error}</p>}
     {/* ERROR SCREEN END */}
+
+    <div className="bottomNav">
+      <div>
+        <h4>TOTAL:</h4>
+        <h4>${order.cost}</h4>
+      </div>
+      <div 
+        onClick={orderIsEmpty ? null : () => sendOrder()}
+        className={orderIsEmpty ? "btn btn_disabled" : "btn"}
+      >
+        ORDER
+      </div>
+    </div>
   </div>
 );
 

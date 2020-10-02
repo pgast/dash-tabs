@@ -46,7 +46,7 @@ class Menu extends Component {
   /* QUE NO EXISTA ESTA FUNCION, SE PUEDE JUNTAR CON OTRA */
   fetchRestaurantName = (uid) => {
     this.props.firebase.user(uid).on('value', snapshot => {
-      let businessName = snapshot.val().businessName;
+      let businessName = snapshot.val().businessName.toUpperCase();
       this.setState({ businessName });
     });
   }
@@ -169,23 +169,23 @@ class Menu extends Component {
     return exists === undefined ? false : true;
   }
 
-  getItemCost = (name, type) => {
-    return this.state.menu[type].find(el => el.name === name).price;
-  };
+  getItemCost = (name, type) => this.state.menu[type].find(el => el.name === name).price;
 
   deleteItem = (item, type) => {
     let newOrder = {
       ...this.state.order,
       items: { 
         dishes: [...this.state.order.items.dishes], 
-        drinks: [...this.state.order.items.drinks] ,
+        drinks: [...this.state.order.items.drinks],
       }
-    }
+    };
+
+    let foundItem = this.state.order.items[type].find(it => it.name === item.name);
+    let itemSubtotal = this.getItemCost(item.name, type) * foundItem.qty;
     newOrder.items[type] = newOrder.items[type].filter(el => el.name !== item.name);
-    let itemCost = this.getItemCost(item.name, type) * item.qty;
-    newOrder.cost = newOrder.cost - itemCost;
-    this.setState({ order: newOrder });
-  }
+    newOrder.cost = newOrder.cost - itemSubtotal;
+    this.setState({ order: newOrder, currentItem: { type: null, idx: null } });
+  };
 
   toggleModal = e => {
     this.setState({
@@ -203,18 +203,29 @@ class Menu extends Component {
   // NEW ITEM HANDLERS
   setCurrentItem = (type, idx, item) => {
     // REVISAR SI NO ESTA EN LA ORDEN YA
-    // SI SI ESTA, TOMAR ESOS VALORES Y AGREGARLOS A CURRENT STATE
-    // SI NO, EMPEZAR DESDE 0
+    if(this.itemExistsInOrder(item.name, type)) {
+      // SI SI ESTA, TOMAR ESOS VALORES Y AGREGARLOS A CURRENT STATE
+      let foundItem = this.state.order.items[type].find(it => it.name === item.name);
+      this.setState({ currentItem: {
+        idx,
+        type,
+        qty: foundItem.qty,
+        name: foundItem.name,
+        cost: this.getItemCost(item.name, type),
+        subTotal: foundItem.qty * this.getItemCost(item.name, type),
+      }});
 
-
-    this.setState({ currentItem: {
-      idx,
-      type,
-      qty: 1,
-      name: item.name,
-      cost: item.price,
-      subtotal: item.price,
-    }});
+    } else {
+      // SI NO, EMPEZAR DESDE 0
+      this.setState({ currentItem: {
+        idx,
+        type,
+        qty: 1,
+        name: item.name,
+        cost: item.price,
+        subtotal: item.price,
+      }});
+    };
   };
 
   upgradeItemQty = (qty) => {
@@ -230,23 +241,29 @@ class Menu extends Component {
   };
 
   addItem = () => {
-    if(this.itemExistsInOrder(this.state.currentItem.name, this.state.currentItem.type)) return;
-    let newOrder = {
-      ...this.state.order,
-      items: {
-        dishes: [...this.state.order.items.dishes],
-        drinks: [...this.state.order.items.drinks],
-      }
-    };
+    let { order, currentItem } = this.state;
+    let newOrder = { ...order, items: { dishes: [...order.items.dishes], drinks: [...order.items.drinks] } };
 
-    newOrder.cost = newOrder.cost + this.state.currentItem.subtotal;
-    newOrder.items[this.state.currentItem.type].push({ name: this.state.currentItem.name, qty: this.state.currentItem.qty });
-    
-    this.setState({ 
-      order: newOrder,
-      currentItem: { type: null, idx: null },
-    });
-  }
+    if(this.itemExistsInOrder(currentItem.name, currentItem.type)) {
+      let foundItemIdx = newOrder.items[currentItem.type].findIndex(el => el.name === currentItem.name);
+      let prevItemSubtotal = newOrder.items[currentItem.type][foundItemIdx].qty * this.getItemCost(currentItem.name, currentItem.type);
+      let newItemSubtotal = currentItem.qty * this.getItemCost(currentItem.name, currentItem.type);
+      newOrder.items[currentItem.type][foundItemIdx].qty = currentItem.qty;
+      if(newItemSubtotal > prevItemSubtotal) {
+        newOrder.cost = newOrder.cost + (newItemSubtotal - prevItemSubtotal);
+      }
+
+      if(newItemSubtotal < prevItemSubtotal) {
+        newOrder.cost = newOrder.cost - (prevItemSubtotal - newItemSubtotal);
+      }
+
+    } else {
+      newOrder.items[currentItem.type].push({ name: currentItem.name, qty: currentItem.qty });
+      newOrder.cost = newOrder.cost + currentItem.subtotal;
+    }
+
+    this.setState({ order: newOrder, currentItem: { type: null, idx: null }});
+  };
 
   render() {
     const {
@@ -271,12 +288,12 @@ class Menu extends Component {
       <MenuView 
         error={error}
         table={table}
+        order={order}
         drinks={menu.drinks}
         dishes={menu.dishes}
         orderSent={orderSent}
         showModal={showModal}
         addItem={this.addItem}
-        order={this.state.order}
         currentItem={currentItem}
         dataFetched={dataFetched}
         sendOrder={this.sendOrder}

@@ -1,7 +1,85 @@
 .menuView {
-  border: 2px solid red;
-  width: 100vw;
+  /* border: 2px solid red; */
+  /* width: 100vw; */
+}
+
+.bottomNav {
+  display: none;
+}
+
+.menuHeader {
+  display: none;
 }
 
 @media screen and (max-width: 480px) {
+  .menuView {
+    /* border: 2px solid green; */
+    overflow-x: hidden;
+    /*  */
+    margin-top: 5.4rem;
+  }
+  
+  .menuHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1.5rem;
+    position: fixed;
+    border-bottom: 1px dashed black;
+    background: white;
+    width: 100%;
+    /*  */
+    height: 5.4rem;
+    /*  */
+    top: 0;
+    left: 0;
+  }
+
+  .menuHeader > h3:first-of-type {
+    font-size: 1.8rem;
+  }
+
+  .client_menuItems {
+    border: 1px sol÷id black;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+  }
+
+  .client_menuItemCard {
+    height: 3rem;
+    margin: 1rem 0;
+    display: flex;
+    font-size: 0.6rem;
+    padding: 0 0.6rem;
+    align-items: center;
+    justify-items: center;
+    border-radius: 0.9rem;
+    justify-content: space-between;
+    background: rgb(238, 238, 238);
+  }
+
+  .menuView .bottomNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    background: #F5F5F7;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 5.4rem;
+    padding: 0 1.5rem;
+  }
+
+  .menuView .bottomNav > div h4:last-of-type {
+    font-size: 1.3rem;
+  }
+
+  .menuView .btn {
+    height: 3.2rem;
+    border-radius: 1.6rem;
+    font-size: 1rem;
+    padding: 0 1.5rem;
+  }
 }
