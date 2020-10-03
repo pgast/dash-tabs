@@ -24,7 +24,7 @@ class Menu extends Component {
       },
       comments: '',
       showModal: false,
-      confirmationScreen: false,
+      confirmScreen: false,
       currentItem: { type: null, idx: null }
     };
   };
@@ -169,6 +169,11 @@ class Menu extends Component {
     return exists === undefined ? false : true;
   }
 
+  getItemQty = (name, type) => {
+    let foundItem = this.state.order.items[type].find(item => item.name === name);
+    return foundItem.qty;
+  }
+
   getItemCost = (name, type) => this.state.menu[type].find(el => el.name === name).price;
 
   deleteItem = (item, type) => {
@@ -196,6 +201,12 @@ class Menu extends Component {
   handleFormInput = input => {
     this.setState({
       comments: input
+    });
+  };
+
+  toggleConfirmScreen = () => {
+    this.setState({
+      confirmScreen: !this.state.confirmScreen
     });
   };
 
@@ -276,6 +287,7 @@ class Menu extends Component {
       dataFetched,
       currentItem,
       businessName,
+      confirmScreen,
     } = this.state;
 
     const orderIsEmpty = order.items.dishes.length === 0 && order.items.drinks.length === 0;
@@ -303,12 +315,15 @@ class Menu extends Component {
         drinksIsEmpty={drinksIsEmpty}
         dishesIsEmpty={dishesIsEmpty}
         toggleModal={this.toggleModal}
+        getItemQty={this.getItemQty}
         setCurrentItem={this.setCurrentItem}
         upgradeItemQty={this.upgradeItemQty}
         handleFormInput={this.handleFormInput}
         orderDishesIsEmpty={orderDishesIsEmpty}
         orderDrinksIsEmpty={orderDrinksIsEmpty}
+        confirmScreen={confirmScreen}
         itemExistsInOrder={this.itemExistsInOrder}
+        toggleConfirmScreen={this.toggleConfirmScreen}
       />
     );
   }

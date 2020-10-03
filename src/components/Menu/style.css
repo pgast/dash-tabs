@@ -17,6 +17,7 @@
     overflow-x: hidden;
     /*  */
     margin-top: 5.4rem;
+    margin-bottom: 5.4rem;
   }
   
   .menuHeader {
@@ -46,15 +47,19 @@
     padding: 0 1.5rem;
   }
 
+  .client_menuItems > div {
+    margin-top: 2rem;
+  }
+
   .client_menuItemCard {
     height: 3rem;
     margin: 1rem 0;
     display: flex;
-    font-size: 0.6rem;
-    padding: 0 0.6rem;
+    font-size: 0.7rem;
+    padding: 0 1.2rem;
     align-items: center;
     justify-items: center;
-    border-radius: 0.9rem;
+    border-radius: 1.5rem;
     justify-content: space-between;
     background: rgb(238, 238, 238);
   }
@@ -81,5 +86,78 @@
     border-radius: 1.6rem;
     font-size: 1rem;
     padding: 0 1.5rem;
+  }
+
+  #isInOrder {
+    background: black;
+    color: white;
+  }
+
+  #isSelected {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-bottom: 0.8rem;
+    /* height: 5.4rem; */
+    height: auto;
+  }
+
+  #isSelected > div:first-of-type {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #isSelected > div:first-of-type > div:first-of-type {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid green; */
+  }
+
+  #isSelected > div:first-of-type > p {
+    /* border: 1px solid purple; */
+    font-size: 0.9rem;
+    margin-top: 0.7em;
+    margin-bottom: 1.8rem;
+  }
+
+  #isSelected > div:nth-child(2) {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6rem;
+  }
+
+  /* Quantity btn group */
+  #isSelected > div:nth-child(2) > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #isSelected > div:nth-child(2) > div > h3:last-of-type,
+  #isSelected > div:nth-child(2) > div > h3:first-of-type {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  #isSelected > div:nth-child(2) > div > h3:nth-child(2) {
+    background: rgb(218, 218, 218);
+    margin: 0 .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.4rem;
+    text-align: center;
+    border-radius: 0.3rem;
+  }
+
+  .orderConfirmScreen {
+    background: #F5F5F7;
+    min-height: 100vh;
   }
 }

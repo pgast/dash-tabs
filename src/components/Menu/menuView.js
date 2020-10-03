@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from '../Modals';
 import { ClientMenuItemCard } from '../Cards';
 import MenuDemoModal from '../Modals/MenuDemoModal';
+import OrderConfirmScreen from './orderConfirmScreen';
 import './style.css';
 
 const MenuView = ({
@@ -17,7 +18,9 @@ const MenuView = ({
   deleteItem,
   currentItem,
   toggleModal,
+  confirmScreen,
   dataFetched,
+  getItemQty,
   orderIsEmpty,
   businessName,
   drinksIsEmpty,
@@ -28,25 +31,27 @@ const MenuView = ({
   itemExistsInOrder,
   orderDishesIsEmpty,
   orderDrinksIsEmpty,
+  toggleConfirmScreen,
 }) => (
   <div className="menuView"> 
-    <div className="menuHeader">
-      <h3>MENU</h3>
-      <h3>{businessName}</h3>
-    </div>
+    {!orderSent && (
+      <div className="menuHeader">
+        <h3>MENU</h3>
+        <h3>{businessName}</h3>
+      </div>
+      // AGREGAR EL CAMBIO DE HEADER A ORDER CUANDO ESTA EN CONFIRM ORDER
+    )}
     {/* FETCHING DATA SCREEN */}
     {!dataFetched && <h1>Fetching Data</h1>}
     {/* FETCHING DATA SCREEN END */}
 
     {/* MAIN SCREEN */}
-    {!orderSent && (
+    {(!orderSent && !confirmScreen) && (
       <div className="client_menuItems">
         <div>
-          <h4>DRINKS</h4> 
-          {drinksIsEmpty ? 
-            <h3>No hay bebidas registradas</h3>
-          :
+          {!drinksIsEmpty && ( 
             <>
+            <h4>DRINKS</h4> 
             {drinks && drinks.map((item, idx) =>
               <ClientMenuItemCard 
                 key={idx}
@@ -54,6 +59,7 @@ const MenuView = ({
                 item={item}
                 type="drinks"
                 addItem={addItem}
+                getItemQty={getItemQty}
                 deleteItem={deleteItem}
                 currentItem={currentItem}
                 setCurrentItem={setCurrentItem}
@@ -63,14 +69,12 @@ const MenuView = ({
               />
             )}
             </>
-          }
+          )}
         </div>
         <div>
-          <h4>DISHES</h4>
-          {dishesIsEmpty ? 
-            <h3>No hay comidas registradas</h3>
-          :
+          {!dishesIsEmpty && (           
             <>
+            <h4>DISHES</h4>
             {dishes && dishes.map((item, idx) =>    
               <ClientMenuItemCard 
                 key={idx}
@@ -79,6 +83,7 @@ const MenuView = ({
                 type="dishes"
                 addItem={addItem}
                 deleteItem={deleteItem}
+                getItemQty={getItemQty}
                 currentItem={currentItem}
                 setCurrentItem={setCurrentItem}
                 upgradeItemQty={upgradeItemQty}
@@ -87,28 +92,15 @@ const MenuView = ({
               />   
             )}
             </>
-          }
+          )}
         </div>
- 
-
-        {/* <div className="clientMenu_orderForm">          
-          <div>
-            <div>
-              <label>Extra instructions or request</label>
-              <textarea rows="4" cols="50" form="usrform"  onChange={(e) =>  handleFormInput(e.target.value)}/>
-            </div>
-          </div>
-        </div> */}
       </div>
     )}
     {/* MAIN SCREEN END */}
 
     {/* ORDER SUCCESS SCREEN */}
     {orderSent && (
-      <>
-        <h2>ORDER SENT!</h2>
-        <p>Your total is: {order.cost}</p>
-      </>
+      <div>SUCCESS! ORDER SENT</div>
     )}
     {/* ORDER SUCCESS SCREEN END */}
 
@@ -122,18 +114,29 @@ const MenuView = ({
     {error && <p>{error}</p>}
     {/* ERROR SCREEN END */}
 
-    <div className="bottomNav">
-      <div>
-        <h4>TOTAL:</h4>
-        <h4>${order.cost}</h4>
+    {/* CONFIRM SCREEN */}
+    {(confirmScreen && !orderSent) && (
+      <OrderConfirmScreen 
+        order={order}
+        handleFormInput={handleFormInput}
+      />
+    )}
+    {/* confirm screen / */}
+
+    {!orderSent && (
+      <div className="bottomNav">
+        <div>
+          <h4>TOTAL:</h4>
+          <h4>${order.cost}</h4>
+        </div>
+        <div 
+          onClick={confirmScreen ? () => sendOrder() : () => toggleConfirmScreen()}
+          className={orderIsEmpty ? "btn btn_disabled" : "btn"}
+        >
+          {confirmScreen ? "CONFIRM" : "ORDER"}
+        </div>
       </div>
-      <div 
-        onClick={orderIsEmpty ? null : () => sendOrder()}
-        className={orderIsEmpty ? "btn btn_disabled" : "btn"}
-      >
-        ORDER
-      </div>
-    </div>
+    )}
   </div>
 );
 

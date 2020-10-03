@@ -7,6 +7,7 @@ const ClientMenuItemCard = ({
   addItem,
   isInOrder,
   deleteItem,
+  getItemQty,
   currentItem,
   isCurrentItem,
   setCurrentItem,
@@ -14,38 +15,38 @@ const ClientMenuItemCard = ({
 }) => {
 
   return (
-    <div className="client_menuItemCard"> 
-      {/* display card (not selected) */}
-      {/* i */}
-      <div onClick={() => setCurrentItem(type, idx, item)}>
-        <p>{item.name} - ${item.price}</p>
-        <p>{item.description}</p>
-      </div>
-
-
-      {/* CURRENTLY SELECTED CARD - MINI FORM */}
+    <> 
+      {!isCurrentItem && (
+        <div 
+          className="client_menuItemCard" 
+          id={isInOrder && "isInOrder"} 
+          onClick={() => setCurrentItem(type, idx, item)}
+        >
+          <h3>{item.name.toUpperCase()}</h3>
+          <h3>{isInOrder ? `x${getItemQty(item.name, type)}` : `$${item.price}`}</h3>
+        </div>
+      )}
       {isCurrentItem && (
-        <div>
+        <div className="client_menuItemCard" id="isSelected">
           <div>
-            <button onClick={() => upgradeItemQty(-1)}>-</button>
-            <p>{currentItem.qty}</p>
-            <button onClick={() => upgradeItemQty(1)}>+</button>
+            <div>
+              <h3>{item.name.toUpperCase()}</h3>
+              <h3>${item.price}</h3>
+            </div>
+            <p>{item.description}</p>
           </div>
-          <button onClick={() => addItem()}>{isInOrder ? "SAVE" : "ADD"}</button>
-          {isInOrder && <button onClick={() => deleteItem(item, type)}>REMOVE ITEM</button>}
+          <div>
+            <div>
+              <h3 onClick={() => upgradeItemQty(-1)}>-</h3>
+              <h3>{currentItem.qty}</h3>
+              <h3 onClick={() => upgradeItemQty(1)}>+</h3>
+            </div>
+            <h3 onClick={() => addItem()}>{isInOrder ? "SAVE" : "ADD"}</h3>
+            {isInOrder && <h3 onClick={() => deleteItem(item, type)}>REMOVE</h3>}
+          </div>
         </div>
       )}
-
-      {/* IS IN ORDER */}
-      {isInOrder && (
-        <div>
-          IS IN ORDER
-        </div>
-      )}
-
-      {/* display card selected (with quantity and add button) */}
-      {/* display after item is added to order */}
-    </div>
+    </>
   );
 };
 
