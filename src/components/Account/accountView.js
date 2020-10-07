@@ -8,21 +8,26 @@ const AccountView = ({ authUser, newBusinessName, setNewBusinessName, updateBusi
       <h1>ACCOUNT</h1>
     </div>
     <div>
-      <h1>Account: {authUser.email}</h1>
+      <div>
+        <h3>Logged in as:</h3>
+        <h3>{authUser.email}</h3>
+      </div>
       <PasswordChangeForm />
-      <label>Set new business name</label>
-      <input 
-        type="text"
-        value={newBusinessName}
-        placeholder="New business name"
-        onChange={e => setNewBusinessName(e.target.value)}
-      />
-      <button 
-        disabled={newBusinessName === '' ? true : false} 
-        onClick={() => updateBusinessName(newBusinessName)}
-      >
-        Upgrade business name
-      </button>
+      <div>
+        <h3>Change business name</h3>
+        <input 
+          type="text"
+          value={newBusinessName}
+          onChange={e => setNewBusinessName(e.target.value)}
+        />
+        <div 
+          className="btn btn_secondary"
+          disabled={newBusinessName === '' ? true : false} 
+          onClick={() => updateBusinessName(newBusinessName)}
+        >
+          Upgrade business name
+        </div>
+      </div>
     </div>
   </div>
 );

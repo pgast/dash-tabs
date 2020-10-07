@@ -128,7 +128,6 @@
 
 .inputGroup input[type=radio] {
   background-color: black;
-  border: 1px solid green;
 }
 
 .inputGroup textarea,
@@ -138,11 +137,6 @@
   border: none;
   font-size: 0.75rem;
   width: 100%;
-}
-
-.inputGroup textarea,
-.inputGroup input[type=number],
-.inputGroup input[type=text] {
   padding: 0.3rem;
   border-radius: 0.3rem;
   font-family: "Avenir Next", sans-serif;

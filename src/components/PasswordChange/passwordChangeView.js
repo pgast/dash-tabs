@@ -8,9 +8,8 @@ const PasswordChangeView = ({
   passwordOne,
   passwordTwo,
 }) => (
-  <>
-    <h3>Password Change Form</h3>
-    <p>Cambiar contrasena pero ya desde dentro de app</p>
+  <div>
+    <h3>Update password</h3>
     <form onSubmit={onSubmit}>
       <input
         type="password"
@@ -31,7 +30,7 @@ const PasswordChangeView = ({
       </button>
       {error && <p>{error.message}</p>}
     </form>
-  </>
+  </div>
 );
 
 export default PasswordChangeView;

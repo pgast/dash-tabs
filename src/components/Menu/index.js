@@ -324,6 +324,7 @@ class Menu extends Component {
         confirmScreen={confirmScreen}
         itemExistsInOrder={this.itemExistsInOrder}
         toggleConfirmScreen={this.toggleConfirmScreen}
+        getItemCost={this.getItemCost}
       />
     );
   }

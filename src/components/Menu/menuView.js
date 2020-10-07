@@ -19,6 +19,7 @@ const MenuView = ({
   currentItem,
   toggleModal,
   confirmScreen,
+  getItemCost,
   dataFetched,
   getItemQty,
   orderIsEmpty,
@@ -33,11 +34,11 @@ const MenuView = ({
   orderDrinksIsEmpty,
   toggleConfirmScreen,
 }) => (
-  <div className="menuView"> 
+  <div className="menuView" id={orderSent && "noMargin"}> 
     {!orderSent && (
-      <div className="menuHeader">
-        <h3>MENU</h3>
-        <h3>{businessName}</h3>
+      <div className="menuHeader" id={confirmScreen && "menuHeaderConfirm"}>
+        <h3>{confirmScreen ? "YOUR ORDER" : "MENU"}</h3>
+        {!confirmScreen && <h3>{businessName}</h3>}
       </div>
       // AGREGAR EL CAMBIO DE HEADER A ORDER CUANDO ESTA EN CONFIRM ORDER
     )}
@@ -100,7 +101,15 @@ const MenuView = ({
 
     {/* ORDER SUCCESS SCREEN */}
     {orderSent && (
-      <div>SUCCESS! ORDER SENT</div>
+      <div className="orderSent">
+        <div>
+          <h3>SUCCESS!</h3>
+          <h4>YOUR ORDER HAS BEEN SENT</h4>
+        </div>
+        <div>
+          <h4>TOTAL: ${order.cost}</h4>
+        </div>
+      </div>
     )}
     {/* ORDER SUCCESS SCREEN END */}
 
@@ -118,13 +127,17 @@ const MenuView = ({
     {(confirmScreen && !orderSent) && (
       <OrderConfirmScreen 
         order={order}
+        getItemCost={getItemCost}
         handleFormInput={handleFormInput}
+        toggleConfirmScreen={toggleConfirmScreen}
+        orderDrinksIsEmpty={orderDrinksIsEmpty}
+        orderDishesIsEmpty={orderDishesIsEmpty}
       />
     )}
     {/* confirm screen / */}
 
     {!orderSent && (
-      <div className="bottomNav">
+      <div className="bottomNav" id={confirmScreen && "bottomNavConfirm"}>
         <div>
           <h4>TOTAL:</h4>
           <h4>${order.cost}</h4>
