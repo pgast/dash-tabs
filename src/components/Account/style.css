@@ -1,14 +1,52 @@
 .accountView {
   height: 100vh;
-}
-
-.accountView > div:nth-child(2) {
-  border: 3px solid black;
-  margin-left: 6.8rem;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  /* padding: 12rem; */
+}
+
+.accountView > .accountForm {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  margin-left: 6.8rem;
   padding-top: 5.3rem;
-  padding-left: 5.3rem;
+  flex-direction: column;
+}
+
+.accountForm h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.accountForm > div:first-of-type > h3:last-of-type {
+  font-weight: 500;
+}
+
+.accountForm input {
+  width: auto;
+  border: none;
+  height: 1.8rem;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  border-radius: .3rem;
+  padding: 1rem 0.7rem;
+  background: #F5F5F7;
+}
+
+.accountForm > div { 
+  display: flex;
+  margin-bottom: 2rem;
+  flex-direction: column;
+}
+
+.accountForm > div > div {
+  display: flex;
+  padding-top: 1rem;
+  align-items: center;
+  border-top: 1px dashed black;
+}
+
+.accountForm .btn {
+  width: 5rem;
 }

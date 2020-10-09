@@ -9,8 +9,8 @@ const PasswordChangeView = ({
   passwordTwo,
 }) => (
   <div>
-    <h3>Update password</h3>
-    <form onSubmit={onSubmit}>
+    <h3>UPDATE PASSWORD</h3>
+    <div>
       <input
         type="password"
         name="passwordOne"
@@ -25,11 +25,14 @@ const PasswordChangeView = ({
         onChange={onChange}
         placeholder="Confirm New Password"
       />
-      <button disabled={isInvalid} type="submit">
-        Reset My Password
-      </button>
-      {error && <p>{error.message}</p>}
-    </form>
+      <div 
+        className={isInvalid ? "btn btn_disabled" : "btn btn_secondary"}
+        onClick={isInvalid ? null : () => onSubmit()}
+        >
+        RESET
+      </div>
+    </div>
+    {error && <p>{error.message}</p>}
   </div>
 );
 
