@@ -6,13 +6,18 @@ import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import './style.css';
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
+  <div className="signInView">
+    <div className="dashboardHeader">
+      <h1>SIGN IN</h1>
+    </div>
+    <div>
+      <SignInForm />
+      <PasswordForgetLink />
+      <SignUpLink />
+    </div>
   </div>
 );
 
@@ -55,7 +60,7 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <div className="signInForm">
         <input
           type="text"
           name="email"
@@ -70,12 +75,14 @@ class SignInFormBase extends Component {
           placeholder="Password"
           onChange={this.onChange}
         />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
-
+        <div 
+          onClick={isInvalid ? null : (e) => this.onSubmit(e)}
+          className={isInvalid ? "btn btn_disabled" : "btn"}
+          >
+          SIGN IN
+        </div>
         {error && <p>{error.message}</p>}
-      </form>
+      </div>
     );
   }
 }

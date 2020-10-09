@@ -15,7 +15,7 @@
 }
 
 .accountForm h3 {
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.4rem;
 }
 
@@ -42,7 +42,7 @@
 
 .accountForm > div > div {
   display: flex;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   align-items: center;
   border-top: 1px dashed black;
 }

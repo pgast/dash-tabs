@@ -3,10 +3,13 @@ import { Link, withRouter } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import './style.css';
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
+  <div className="signupView">
+    <div className="dashboardHeader">
+      <h1>SIGN UP</h1>
+    </div>
     <SignUpForm />
   </div>
 );
@@ -83,56 +86,73 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          name="username"
-          value={username}
-          placeholder="Full Name"
-          onChange={this.onChange}
-        />
-        <input
-          type="text"
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          placeholder="Email Address"
-        />
-        <input
-          type="password"
-          name="passwordOne"
-          value={passwordOne}
-          placeholder="Password"
-          onChange={this.onChange}
-        />
-        <input
-          type="password"
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          placeholder="Confirm Password"
-        />
-        <input
-          type="text"
-          name="businessName"
-          value={businessName}
-          onChange={this.onChange}
-          placeholder="Add restaurant name"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+      <div>
+        <div>
+          <div>
+            <h3>NAME</h3>
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={this.onChange}
+            />
+          </div>
+          <div>
+            <h3>E-MAIL</h3>
+            <input
+              type="text"
+              name="email"
+              value={email}
+              onChange={this.onChange}
+            />
+          </div>
+        </div>
+        <div>
+          <div>
+            <h3>PASSWORD</h3>
+            <input
+              type="password"
+              name="passwordOne"
+              value={passwordOne}
+              onChange={this.onChange}
+            />
+          </div>
+          <div>
+            <h3>CONFIRM PASSWORD</h3>
+            <input
+              type="password"
+              name="passwordTwo"
+              value={passwordTwo}
+              onChange={this.onChange}
+            />
+          </div>
+        </div>
+        <div>
+          <h3>BUSINESS NAME</h3>
+          <input
+            type="text"
+            name="businessName"
+            value={businessName}
+            onChange={this.onChange}
+          />
+        </div>
+        <div 
+          onClick={isInvalid ? null : () => this.onSubmit()}
+          className={isInvalid ? "btn btn_disabled" : "btn"}
+          >
+          CREATE ACCOUNT
+        </div>
 
         {error && <p>{error.message}</p>}
-      </form>
+      </div>
     );
   }
 }
 
 const SignUpLink = () => (
-  <p>
+  <div>
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
+  </div>
 );
 
 const SignUpForm = withRouter(withFirebase(SignUpFormBase));

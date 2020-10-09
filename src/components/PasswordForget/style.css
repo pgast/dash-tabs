@@ -1,0 +1,16 @@
+.passwordForget {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.passwordForget > div:last-of-type {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  margin-left: 6.8rem;
+  padding-top: 5.3rem;
+  flex-direction: column;
+}

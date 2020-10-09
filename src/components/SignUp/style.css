@@ -1,0 +1,50 @@
+.signupView {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.signupView h3 {
+  font-size: 0.7rem;
+  margin-bottom: 0.4rem;
+}
+
+.signupView > div:last-of-type {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  margin-left: 6.8rem;
+  padding-top: 5.3rem;
+  flex-direction: column;
+}
+
+.signupView > div:last-of-type > div {
+  margin-bottom: 1.5rem;
+  display: flex;
+}
+
+.signupView > div:last-of-type > div > div:first-of-type {
+  margin-right: 2.1rem;
+}
+
+.signupView > div:last-of-type > div:nth-child(3) {
+  flex-direction: column;
+}
+
+.signupView input {
+  width: 12rem;
+  border: none;
+  height: 1.8rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border-radius: .3rem;
+  padding: 1rem 0.7rem;
+  background: #F5F5F7;
+}
+
+.signupView .btn {
+  width: 10rem;
+  align-self: center;
+}
