@@ -12,16 +12,99 @@
   justify-content: space-between;
 }
 
+.demoModal_wide,
+.tableModal_wide {
+  width: 80%;
+  position:fixed;
+  background: rgb(238, 238, 238);
+  height: 25rem;
+  border-radius: 1.6rem;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demoModal_wide > .demoModal_content,
 .tableModal_wide > div:nth-of-type(2),
 .tableModal > div:first-of-type {
   background: white;
   border-top-left-radius: 1.6rem;
   border-top-right-radius: 1.6rem;
-  height: 80%;
+  height: 84%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+}
+
+/* espacio de contenido dashboard */
+.demoModal_wide > .demoModal_content {
+  justify-content: space-between;
+  /* padding: 2rem; */
+  padding: 4rem;
+  padding-top: 1.6rem;
+  padding-bottom: 1.7rem;
+  width: 100%;
+}
+
+.demoModal_wide .btn {
+  width: 6.5rem;
+  margin-bottom: 1rem;
+}
+
+/* header */
+.demoModal_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.demoModal_content > h3:last-of-type,
+.demoModal_header > h3:first-of-type,
+.demoModal_header > h3:last-of-type {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+/* contenedor de columnas */
+.demoModal_content > div:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* individual columns */
+.demoModal_infoColumn {
+  width: 25%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.demoModal_infoColumn h4 {
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.3rem;
+  font-size: 0.7rem;
+  border-bottom: 1px dashed black;
+  width: 100%;
+  text-align: center;
+}
+
+.demoModal_infoColumn > div:first-of-type {
+  width: 100%;
+}
+
+.demoModal_infoColumn > div:first-of-type > div {
+  margin-bottom: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .tableModal_wide > div:first-of-type {
@@ -59,18 +142,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.tableModal_wide {
-  width: 80%;
-  position:fixed;
-  background: rgb(238, 238, 238);
-  height: 25rem;
-  border-radius: 1.6rem;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }

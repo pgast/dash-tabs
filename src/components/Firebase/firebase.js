@@ -1,6 +1,8 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+// 
+import 'firebase/storage';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -18,7 +20,16 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
+
+    //
+    this.storage = app.storage();
   }
+
+  // STORAGE NOODLE
+  storageRef = () => this.storage.ref().child('pr.png').getDownloadURL().then(url => {
+    console.log(url);
+    return url;
+  });
 
   // *** Auth API ***
   doCreateUserWithEmailAndPassword = (email, password) =>

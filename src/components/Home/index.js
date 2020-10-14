@@ -8,7 +8,26 @@ import { withFirebase } from '../Firebase';
 class HomePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      url: ''
+    }
+
   };
+
+  componentDidMount() {
+    this.getImage();
+  }
+
+  getImage () {
+    // this.props.firebase.storageRef.getDownloadURL().then((url) => {
+    //   this.setState({ url })
+    // })
+    let url = this.props.firebase.storageRef();
+    console.log(`HOME PAGE ${url}`);
+    this.setState({ url: url.i })
+  }
+
+  logImageUrl = () => { console.log(this.state) };
 
   launchDemo = () => {
     this.props.firebase.doSignOut();
@@ -27,7 +46,7 @@ class HomePage extends Component {
   };
 
   render() {
-    return <HomeView launchDemo={this.launchDemo} signUpRoute={ROUTES.SIGN_UP} />
+    return <HomeView launchDemo={this.launchDemo} signUpRoute={ROUTES.SIGN_UP} logImageUrl={this.logImageUrl} />
   };
 };
 

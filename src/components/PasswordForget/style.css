@@ -5,12 +5,35 @@
 }
 
 .passwordForget > div:last-of-type {
-  width: auto;
+  width: 13rem;
   height: 100%;
   display: flex;
   align-self: center;
-  justify-content: center;
+  margin-top: 5.4rem;
+  align-items: center;
   margin-left: 6.8rem;
   padding-top: 5.3rem;
   flex-direction: column;
+}
+
+.passwordForget > div:last-of-type > div:first-of-type {
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.passwordForget input {
+  width: 12rem;
+  border: none;
+  height: 1.8rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  border-radius: .3rem;
+  padding: 1rem 0.7rem;
+  background: #F5F5F7;
+}
+
+.passwordForget .btn {
+  width: 8rem;
 }

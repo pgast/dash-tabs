@@ -91,7 +91,8 @@ class Dashboard extends Component {
     return `https://api.qrserver.com/v1/create-qr-code/?data=${qrUrl}&amp;size=500x500`;
   }
 
-  toggleModal = e => {
+  toggleModal = () => {
+    console.log(this.state.showModal)
     this.setState({
       showModal: !this.state.showModal
     });

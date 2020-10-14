@@ -38,7 +38,7 @@ export default class TableQRModal extends Component {
             PRINT
           </div>
           <div 
-            onClick={e => this.props.toggleModal(e)}
+            onClick={() => this.props.toggleModal()}
             className="btn btn_secondary"
           >
             CLOSE

@@ -158,22 +158,29 @@ class TablesManager extends Component {
   }
 
   toggleModal = (tableNumber=false) => {
-    if(tableNumber === "takeout") {
-      this.setState({
-        showModal: !this.state.showModal,
-        qrSrc: {src: this.props.createQR(null, true), table: tableNumber}
-      });
-    }else if(tableNumber === "tables") { 
-      this.generateQrCodes();
-      this.setState({ showModal: !this.state.showModal });
-    }else if(!isNaN(tableNumber)) {
-      this.setState({
-        showModal: !this.state.showModal,
-        qrSrc: {src: this.props.createQR(tableNumber, false), table: tableNumber}
-      });
-    } else {
-      this.setState({ showModal: !this.state.showModal, tablesQrCodes: null });
-    }
+    switch(tableNumber) {
+      case "takeout":
+        this.setState({
+          showModal: !this.state.showModal,
+          qrSrc: {src: this.props.createQR(null, true), table: tableNumber}
+        });
+        break;
+
+      case "tables":
+        this.generateQrCodes();
+        this.setState({ showModal: !this.state.showModal });
+        break;
+
+      case false:
+        this.setState({ showModal: !this.state.showModal, tablesQrCodes: null });
+        break;
+
+      default:
+        this.setState({
+          showModal: !this.state.showModal,
+          qrSrc: {src: this.props.createQR(tableNumber, false), table: tableNumber}
+        });
+    };
   }
 
   render() {
