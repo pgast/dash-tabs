@@ -42,8 +42,7 @@ const DashboardView = ({
         />
         }
       {loading && <div>Loading ...</div>}
-      <Modal show={false}>
-      {/* <Modal show={showModal}> */}
+      <Modal show={showModal}>
         <DashboardDemoModal toggleModal={toggleModal} />
       </Modal>
     </div>

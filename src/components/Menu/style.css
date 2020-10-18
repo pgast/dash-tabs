@@ -6,13 +6,267 @@
   display: none;
 }
 
+.menuView {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5.4rem;
+}
+
+.menuContainer {
+  width: 100vw;
+  display: flex;
+  padding-left: 6.8rem;
+  flex-direction: column;
+}
+
+.client_menuItems {
+  display: flex;
+  padding-top: 5.3rem;
+  justify-content: center;
+}
+
+.client_menuItems > div:first-of-type {
+  margin-right: 3rem;
+}
+
+.client_menuItemCard {
+  width: 17rem;
+  display: flex;
+  height: 2.4rem;
+  margin: 1rem 0;
+  font-size: 0.6rem;
+  padding: 0 1.2rem;
+  align-items: center;
+  justify-items: center;
+  border-radius: 1.5rem;
+  justify-content: space-between;
+  background: rgb(238, 238, 238);
+}
+
+.client_menuItemCard:hover {
+  -webkit-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+  box-shadow: 0px 2px 10px -1px rgba(0,0,0,0.25);
+}
+
+.menuView .bottomNav {
+  left: 6.8rem;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  height: 5.4rem;
+  position: fixed;
+  padding: 0 1.5rem;
+  align-items: center;
+  background: #F5F5F7;
+  justify-content: flex-end;
+  padding-right: 9rem;
+  -webkit-box-shadow: 0px -5px 19px -2px rgba(0,0,0,0.17);
+  -moz-box-shadow: 0px -5px 19px -2px rgba(0,0,0,0.17);
+  box-shadow: 0px -5px 19px -2px rgba(0,0,0,0.17);
+}
+
+.menuView .bottomNav .btn {
+  font-size: 0.9rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  width: 6.7rem;
+}
+
+.menuView .bottomNav > div:first-of-type {
+  display: flex;
+  margin-right: 5rem;
+  align-items: center;
+}
+
+.menuView .bottomNav > div h4:last-of-type {
+  font-size: 1.3rem;
+  margin-left: 1rem;
+}
+
+#isInOrder {
+  color: white;
+  background: black;
+}
+
+#isSelected {
+  height: auto;
+  display: flex;
+  padding-top: 1rem;
+  flex-direction: column;
+  padding-bottom: 0.8rem;
+}
+
+#isSelected > div:first-of-type {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#isSelected > div:first-of-type > div:first-of-type {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#isSelected > div:first-of-type > p {
+  font-size: 0.8rem;
+  margin-top: 0.7em;
+  margin-bottom: 1.8rem;
+}
+
+#isSelected > div:nth-child(2) {
+  width: 100%;
+  display: flex;
+  font-size: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#isSelected > div:nth-child(2) > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#isSelected > div:nth-child(2) > div > h3:last-of-type,
+#isSelected > div:nth-child(2) > div > h3:first-of-type {
+  font-weight: 700;
+  text-align: center;
+}
+
+#isSelected > div:nth-child(2) > div > h3:nth-child(2) {
+  display: flex;
+  width: 1.6rem;
+  height: 1.4rem;
+  margin: 0 .5rem;
+  text-align: center;
+  align-items: center;
+  border-radius: 0.3rem;
+  justify-content: center;
+  background: rgb(218, 218, 218);
+}
+
+.orderConfirmScreen {
+  width: 100%;
+  height: auto;
+  display: flex;
+  min-height: 75vh;
+  align-self: center;
+  padding: 0rem 19rem;
+  padding-top: 5.3rem;
+  background: #F5F5F7;
+  flex-direction: column;
+}
+
+.orderConfirmScreen > div:nth-child(2),
+.orderConfirmScreen > div:first-of-type {
+  margin-bottom: 2rem;
+}
+
+.orderConfirmScreen > div:nth-child(2) > h4,
+.orderConfirmScreen > div:first-of-type > h4 {
+  margin-bottom: 1rem;
+}
+
+.orderConfirmScreen textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  padding: 0.3rem;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+  background: rgb(218, 218, 218);
+  font-family: "Avenir Next", sans-serif;
+}
+
+.orderConfirmScreen > .btn {
+  width: 9rem;
+  align-self: center;
+}
+
+.orderItem {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid black;
+}
+
+.orderItem > div:first-of-type {
+  display: flex;
+  align-items: center;
+}
+
+.orderItem > div:last-of-type {
+  height: auto;
+  display: flex;
+  height: 1.4rem;
+  justify-content: space-between;
+}
+
+.orderItem > div:last-of-type > div:first-of-type {
+  margin-bottom: 1rem;
+}
+
+.orderSent {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  background: #F5F5F7;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.orderSent > div:first-of-type {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.orderSent > div:last-of-type {
+  bottom: 0;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: absolute;
+  background: black;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.orderSent h3 {
+  font-size: 2.6rem;    
+}
+
+#noMargin {
+  margin: 0;
+}
+
+/* MOBILE */
 @media screen and (max-width: 480px) {
   .menuView {
     overflow-x: hidden;
     margin-top: 5.4rem;
     margin-bottom: 5.4rem;
   }
+
+  .menuContainer {
+    padding-left: 0;
+  }
+
+  .dashboardHeader {
+    display: none;
+  }
   
+  /* Menu Header */
   .menuHeader {
     top: 0;
     left: 0;
@@ -37,50 +291,39 @@
     align-items: center;
   }
 
+  /* Client Menu Item Card */
+  .client_menuItemCard {
+    width: 100%;
+    height: 3rem;
+    font-size: 0.7rem;
+  } 
+
+  #bottomNavConfirm {
+    border-top: 1px dashed black;
+    box-shadow: none;
+  }
+
+  /* Order Confirm Screen */
+  .orderConfirmScreen {
+    padding: 2rem 1.5rem;
+  }
+
+  /* Client Menu Items */
   .client_menuItems {
-    display: flex;
+    margin-left: 0;
     padding: 0 1.5rem;
     flex-direction: column;
+  }
+
+  .client_menuItems > div:first-of-type {
+    margin-right: 0;
   }
 
   .client_menuItems > div {
     margin-top: 2rem;
   }
 
-  .client_menuItemCard {
-    height: 3rem;
-    display: flex;
-    margin: 1rem 0;
-    font-size: 0.7rem;
-    padding: 0 1.2rem;
-    align-items: center;
-    justify-items: center;
-    border-radius: 1.5rem;
-    justify-content: space-between;
-    background: rgb(238, 238, 238);
-  }
-
-  .menuView .bottomNav {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    height: 5.4rem;
-    position: fixed;
-    padding: 0 1.5rem;
-    align-items: center;
-    background: #F5F5F7;
-    justify-content: space-between;
-  }
-
-  .menuView .bottomNav > div h4:last-of-type {
-    font-size: 1.3rem;
-  }
-
-  #bottomNavConfirm {
-    border-top: 1px dashed black;
-  }
-
+  /* Menu View */
   .menuView .btn {
     height: 3.2rem;
     font-size: 1rem;
@@ -88,166 +331,20 @@
     border-radius: 1.6rem;
   }
 
-  #isInOrder {
-    color: white;
-    background: black;
-  }
-
-  #isSelected {
-    height: auto;
-    display: flex;
-    padding-top: 1rem;
-    flex-direction: column;
-    padding-bottom: 0.8rem;
-  }
-
-  #isSelected > div:first-of-type {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  .menuView .bottomNav {
+    left: 0;
+    margin-left: 0;
+    padding: 0 1.5rem;
     justify-content: space-between;
   }
 
-  #isSelected > div:first-of-type > div:first-of-type {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  #isSelected > div:first-of-type > p {
-    font-size: 0.9rem;
-    margin-top: 0.7em;
-    margin-bottom: 1.8rem;
-  }
-
-  #isSelected > div:nth-child(2) {
-    width: 100%;
-    display: flex;
-    font-size: 0.6rem;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  #isSelected > div:nth-child(2) > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  #isSelected > div:nth-child(2) > div > h3:last-of-type,
-  #isSelected > div:nth-child(2) > div > h3:first-of-type {
-    font-weight: 700;
-    text-align: center;
-  }
-
-  #isSelected > div:nth-child(2) > div > h3:nth-child(2) {
-    display: flex;
-    width: 1.6rem;
-    height: 1.4rem;
-    margin: 0 .5rem;
-    text-align: center;
-    align-items: center;
-    border-radius: 0.3rem;
-    justify-content: center;
-    background: rgb(218, 218, 218);
-  }
-
-  .orderConfirmScreen {
-    height: auto;
-    display: flex;
-    min-height: 75vh;
-    padding: 2rem 1.5rem;
-    background: #F5F5F7;
+  .menuView .bottomNav > div:first-of-type {
+    margin-right: 0;
     flex-direction: column;
+    align-items: flex-start;
   }
 
-  .orderConfirmScreen > div:nth-child(2),
-  .orderConfirmScreen > div:first-of-type {
-    margin-bottom: 2rem;
-  }
-
-  .orderConfirmScreen > div:nth-child(2) > h4,
-  .orderConfirmScreen > div:first-of-type > h4 {
-    margin-bottom: 1rem;
-  }
-
-  .orderConfirmScreen textarea {
-    width: 100%;
-    resize: none;
-    border: none;
-    padding: 0.3rem;
-    font-size: 0.75rem;
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-    border-radius: 0.3rem;
-    background: rgb(218, 218, 218);
-    font-family: "Avenir Next", sans-serif;
-  }
-
-  .orderConfirmScreen > .btn {
-    width: 9rem;
-    align-self: center;
-  }
-
-  .orderItem {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.8rem;
-    padding-bottom: 0.7rem;
-    border-bottom: 1px solid black;
-  }
-
-  .orderItem > div:first-of-type {
-    display: flex;
-    align-items: center;
-  }
-
-  .orderItem > div:last-of-type {
-    height: auto;
-    display: flex;
-    height: 1.4rem;
-    justify-content: space-between;
-  }
-
-  .orderItem > div:last-of-type > div:first-of-type {
-    margin-bottom: 1rem;
-  }
-
-  .orderSent {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    background: #F5F5F7;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .orderSent > div:first-of-type {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .orderSent > div:last-of-type {
-    bottom: 0;
-    width: 100%;
-    height: 6rem;
-    display: flex;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    position: absolute;
-    background: black;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .orderSent h3 {
-    font-size: 2.6rem;    
-  }
-
-  #noMargin {
-    margin: 0;
+  .menuView .bottomNav > div h4:last-of-type {
+    margin-left: 0;
   }
 }

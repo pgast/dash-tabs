@@ -1,55 +1,66 @@
+.demoMenuModal,
 .tableModal {
-  position:fixed;
-  background: rgb(238, 238, 238);
-  width: 25rem;
-  height: 25rem;
-  border-radius: 1.6rem;
   top:50%;
   left:50%;
-  transform: translate(-50%,-50%);
+  width: 25rem;
   display: flex;
+  height: 25rem;
+  position:fixed;
+  border-radius: 1.6rem;
   flex-direction: column;
   justify-content: space-between;
+  transform: translate(-50%,-50%);
+  background: rgb(238, 238, 238);
 }
 
 .demoModal_wide,
 .tableModal_wide {
-  width: 80%;
-  position:fixed;
-  background: rgb(238, 238, 238);
-  height: 25rem;
-  border-radius: 1.6rem;
   top:50%;
   left:50%;
-  transform: translate(-50%,-50%);
+  width: 80%;
+  height: 25rem;
   display: flex;
-  flex-direction: column;
+  position:fixed;
   align-items: center;
+  border-radius: 1.6rem;
+  flex-direction: column;
   justify-content: space-between;
+  transform: translate(-50%,-50%);
+  background: rgb(238, 238, 238);
 }
+
 
 .demoModal_wide > .demoModal_content,
 .tableModal_wide > div:nth-of-type(2),
+.demoMenuModal > div:first-of-type,
 .tableModal > div:first-of-type {
+  height: 84%;
+  width: 100%;
+  display: flex;
   background: white;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   border-top-left-radius: 1.6rem;
   border-top-right-radius: 1.6rem;
-  height: 84%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+}
+
+.demoMenuModal > div:first-of-type {
+  padding: 3rem;
+}
+
+.demoMenuModal p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
 }
 
 /* espacio de contenido dashboard */
 .demoModal_wide > .demoModal_content {
-  justify-content: space-between;
-  /* padding: 2rem; */
+  width: 100%;
   padding: 4rem;
   padding-top: 1.6rem;
   padding-bottom: 1.7rem;
-  width: 100%;
+  justify-content: space-between;
 }
 
 .demoModal_wide .btn {
@@ -59,43 +70,43 @@
 
 /* header */
 .demoModal_header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
   width: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .demoModal_content > h3:last-of-type,
 .demoModal_header > h3:first-of-type,
 .demoModal_header > h3:last-of-type {
-  margin-top: 0.3rem;
-  font-size: 0.8rem;
   width: 100%;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
 }
 
 /* contenedor de columnas */
 .demoModal_content > div:nth-child(2) {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  width: 100%;
 }
 
 /* individual columns */
 .demoModal_infoColumn {
   width: 25%;
-  align-items: center;
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 
 .demoModal_infoColumn h4 {
+  width: 100%;
+  font-size: 0.7rem;
+  text-align: center;
   margin-bottom: 0.7rem;
   padding-bottom: 0.3rem;
-  font-size: 0.7rem;
   border-bottom: 1px dashed black;
-  width: 100%;
-  text-align: center;
 }
 
 .demoModal_infoColumn > div:first-of-type {
@@ -103,40 +114,43 @@
 }
 
 .demoModal_infoColumn > div:first-of-type > div {
-  margin-bottom: 0.6rem;
   font-size: 0.7rem;
+  margin-bottom: 0.6rem;
 }
 
 .tableModal_wide > div:first-of-type {
-  background: white;
   height: 10%;
+  width: 100%;
+  background: white;
   border-top-left-radius: 1.6rem;
   border-top-right-radius: 1.6rem;
 }
 
 .tableModal_wide > div:nth-of-type(2) {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   height: 70%;
+  display: grid;
+  padding: 0 2rem;
+  overflow-y: scroll;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  overflow-y: scroll;
-  padding: 0 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .tableModal_wide > div:nth-of-type(2) > div {
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
+  flex-direction: column;
 }
 
+.demoMenuModal h3,
 .tableModal_wide h4,
 .tableModal h4 {
   margin-bottom: 1.5rem;
 }
 
 .tableModal_wide > div:last-of-type,
+.demoMenuModal > div:last-of-type,
 .tableModal > div:last-of-type {
   height: 20%;
   display: flex;
