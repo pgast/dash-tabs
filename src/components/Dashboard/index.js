@@ -25,7 +25,7 @@ class Dashboard extends Component {
     this.props.firebase.user(userUid).on('value', snapshot => {
       const userObject = snapshot.val();
 
-      // CHECK FOR DEMO USER LOGGOUT PREVENT CRASH
+      // check for demo user logout prevent crash
       if(this.props.firebase.getCurrentUser() === null || this.props.firebase.getCurrentUserUid() === null || userObject === null) return;
       userObject.uid = userUid;
       this.setState({ 
@@ -42,11 +42,10 @@ class Dashboard extends Component {
       this.setState({ menu: snapshot.val() });
     });
 
-
     // fetch orders with user uid
     this.props.firebase.userOrders(userUid).on('value', snapshot => {
       let orders = snapshot.val();
-      // CHECK FOR DEMO USER LOGOUT PREVENT CRASH
+      // check for demo user logout prevent crash
       if(orders === null) return;
       this.setState({ orders: snapshot.val() });
     })
@@ -59,11 +58,11 @@ class Dashboard extends Component {
   }
 
   updateMenuDb = (newMenu) => {
-    // REVISAR QUE SEAN SIEMPRE ARRAYS CON ITEMS O SOLO 0 
+    // check that items are always arrays with items or 0
     if(newMenu.drinks.length === 0) newMenu.drinks = 0;
     if(newMenu.dishes.length === 0) newMenu.dishes = 0;
 
-      // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
+    // change second props with user uid in state
     this.props.firebase.userMenu(this.state.user.uid).set({ 
       drinks: newMenu.drinks,
       dishes: newMenu.dishes
@@ -71,11 +70,8 @@ class Dashboard extends Component {
   }
 
   updateTablesDb = (newTables) => {
-    // REVISAR QUE SEA SIEMPRE ARRAY CON ITEMS O SOLO 0
+    // check for arrays with items or set as 0
     if(newTables.length === 0) newTables = 0;
-
-    // CAMBIAR EL SEGUNDO THIS PROPS YA CON USER UID EN ESTADO
-    // this.props.firebase.user(this.state.user.uid).set({ tables: newTables });
     this.props.firebase.userTables(this.state.user.uid).set(newTables);
   }
 
@@ -98,7 +94,6 @@ class Dashboard extends Component {
     });
   };
 
-  // AGREGAR FUNCIONALIDAD, DE QUE SI NO HAY ITEMS EN EL MENU NO SE PUEDE CREAR CODIGO QR
   render() {
     const { loading, menu, orders, showModal } = this.state;
 

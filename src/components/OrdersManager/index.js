@@ -83,11 +83,13 @@ class OrdersManager extends Component {
     let tableNum = past[index].table;
     let numIsInCurrent = current.find(el => el.table === tableNum) === undefined ? false : true;
 
+    // check if selected order number is in current tables
     if(!numIsInCurrent || tableNum === "takeout") {
       selectedOrder.ready = false;
+      selectedOrder.end = null;
+
       newOrders.past = newOrders.past.filter((el, idx) => idx !== index);
       if(newOrders.past.length === 0) newOrders.past = 0;
-      // if(!newOrders.current) newOrders.current = [];
       newOrders.current.push(selectedOrder);
       this.setState({ 
         selectedOrder: {
@@ -105,6 +107,8 @@ class OrdersManager extends Component {
 
   getTimeDate = (mils) => {
     let date = new Date(mils);
+    let minutes = date.getMinutes() + '';
+    if(minutes.length === 1) minutes = "0" + minutes;
     return `${date.getHours()}:${date.getMinutes()}`
   }
 

@@ -37,7 +37,6 @@ class SignUpFormBase extends Component {
 
       .then(authUser => {
         this.props.firebase.user(authUser.user.uid)
-        // agregar en tables el takeout point y generarlo cuando se cree usuario
         .set({ username, email, tables: 0, businessName })
         
         .then(() => {

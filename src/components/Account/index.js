@@ -35,8 +35,6 @@ const AccountPage = (props) => {
 
 const condition = authUser => !!authUser;
 
-// export default withAuthorization(condition)(AccountPage);
-
 export default compose(
   withAuthorization(condition),
   withFirebase,

@@ -40,7 +40,6 @@ class TablesManager extends Component {
     return (number <= 0) || (number === '');
   };
 
-  // REVISAR PORQUE FUNCIONA ESTO
   tableIsDuplicate = (newNumber, currentIdx=null) => {
     if(currentIdx !== null) {
       let newTables = this.state.tables.filter((el, idx) => idx !== currentIdx);

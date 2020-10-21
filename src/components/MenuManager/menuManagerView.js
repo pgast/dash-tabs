@@ -30,7 +30,7 @@ const MenuManagerView = ({
           <h3>DRINKS</h3>
           <div className="menuItemCards_items">
             {drinksIsEmpty ? 
-              <h3>NO HAY BEBIDAS REGISTRADAS</h3>
+              <h3>NO REGISTERED DRINKS</h3>
             :
               <>
                 {menu.drinks && menu.drinks.map((el, idx) => 
@@ -52,7 +52,7 @@ const MenuManagerView = ({
           <h3>DISHES</h3>
           <div className="menuItemCards_items">  
             {dishesIsEmpty ?
-              <h3>NO HAY COMIDAS REGISTRADAS</h3>
+              <h3>NO REGISTERED DISHES</h3>
             :
               <>
                 {menu.dishes && menu.dishes.map((el, idx) => 

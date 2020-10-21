@@ -143,7 +143,6 @@ class Firebase {
     this.cleanupDemoUsers(currentTime);
   };
 
-  // HACER ASYNC FUNCTION SI NO FUNCIONA
   getCurrentUserUid = () => this.auth.currentUser.uid;
   getCurrentUser = () => this.auth.currentUser;
 

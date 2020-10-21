@@ -224,5 +224,3 @@ class MenuManager extends Component {
 };
 
 export default MenuManager;
-
-// ON CHANGE FUNCTION HANDLER BOTH FOR INPUT ITEM Y EDIT CURRENT ITEM

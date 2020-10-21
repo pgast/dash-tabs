@@ -31,7 +31,6 @@ class Menu extends Component {
 
   componentWillMount() {
     this.fetchMenu(this.props.match.params.uid);
-    // VER SI SE PUEDE PASAR LOS VALIDADORES DE ORDEN A OTRA FUNCION Y NO EN EL MONTADO
     if(this.props.match.params.table !== "takeout") {
       this.tableIsValid(this.props.match.params.uid);
     }
@@ -43,7 +42,6 @@ class Menu extends Component {
     this.props.firebase.users().off();
   }
 
-  /* QUE NO EXISTA ESTA FUNCION, SE PUEDE JUNTAR CON OTRA */
   fetchRestaurantName = (uid) => {
     this.props.firebase.user(uid).on('value', snapshot => {
       let businessName = snapshot.val().businessName.toUpperCase();
@@ -51,7 +49,6 @@ class Menu extends Component {
     });
   }
 
-  /* NO CAMBIA CURRENT NI PAST ORDERS */
   fetchMenu = (uid) => {
     this.props.firebase.userMenu(uid).on('value', snapshot => {
       if(snapshot.val() !== null) {
@@ -205,17 +202,16 @@ class Menu extends Component {
   };
 
   toggleConfirmScreen = () => {
+    window.scrollTo(0,0); 
+
     this.setState({
       confirmScreen: !this.state.confirmScreen
     });
   };
 
 
-  // NEW ITEM HANDLERS
   setCurrentItem = (type, idx, item) => {
-    // REVISAR SI NO ESTA EN LA ORDEN YA
     if(this.itemExistsInOrder(item.name, type)) {
-      // SI SI ESTA, TOMAR ESOS VALORES Y AGREGARLOS A CURRENT STATE
       let foundItem = this.state.order.items[type].find(it => it.name === item.name);
       this.setState({ currentItem: {
         idx,
@@ -227,7 +223,6 @@ class Menu extends Component {
       }});
 
     } else {
-      // SI NO, EMPEZAR DESDE 0
       this.setState({ currentItem: {
         idx,
         type,

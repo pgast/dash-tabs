@@ -34,23 +34,21 @@ const TablesManagerView = ({
       
       {error && <h4>{error.msg}</h4>}
 
-      {/* <div className="tableCards_items"> */}
-        {tablesIsEmpty ?
-          <h3>NO TABLES REGISTERED</h3>
-          :
-          <>
-            {tables.map((el, idx) => (
-              <TableCard 
-                key={idx}
-                idx={idx}
-                table={el}
-                editTable={editTable}
-                isSelected={tableEdit.current === idx}
-              />
-            ))}
-          </>
-        }
-      {/* </div> */}
+      {tablesIsEmpty ?
+        <h3>NO TABLES REGISTERED</h3>
+        :
+        <>
+          {tables.map((el, idx) => (
+            <TableCard 
+              key={idx}
+              idx={idx}
+              table={el}
+              editTable={editTable}
+              isSelected={tableEdit.current === idx}
+            />
+          ))}
+        </>
+      }
     </div>
     <div className="fixedSideboard">
       <TablesSideboard 

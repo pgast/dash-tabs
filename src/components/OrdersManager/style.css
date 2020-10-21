@@ -73,6 +73,7 @@
 .order_info {
   font-size: 0.65rem;
   margin-top: 0.2rem;
+  display: flex;
 }
 
 .order_info h3 {
@@ -81,6 +82,10 @@
 
 .order_info h3:first-child {
   width: 5rem;
+}
+
+.order_info:last-child h3:last-child {
+  width: 9rem;
 }
 
 .ordersSideboard_view_items {
@@ -112,7 +117,7 @@
 .orderCard {
   width: 9rem;
   height: 2rem;
-  margin: 1rem;
+  margin: 0.5rem;
   display: flex;
   align-items: center;
   border-radius: 0.9rem;
