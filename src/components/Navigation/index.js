@@ -38,7 +38,13 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
     <div className="navBar">
       <div>
         <div id="logo">
-          <Link to={ROUTES.HOME}>HOME</Link>
+          <Link 
+            style={{ textDecoration: 'none' }}
+            onClick={() => toggleView=('orders')}
+            to={ROUTES.HOME}
+            >
+              DASH-TABS
+            </Link>
         </div>
         {(!displayingMenu && parameter === "dashboard") && (
           <div className="navLinks dashboardLinks">
@@ -74,7 +80,15 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
       </div>
       <div className="navLinks bottomNav">
         {!displayingMenu && <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.DASHBOARD}>DASHBOARD</Link>}
-        {(!authUser.isAnonymous && !displayingMenu) && <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.ACCOUNT}>ACCOUNT</Link>}
+        {(!authUser.isAnonymous && !displayingMenu) && 
+          <Link 
+            to={ROUTES.ACCOUNT}
+            onClick={() => toggleView=('orders')}
+            style={{ textDecoration: 'none', color: 'white' }} 
+            >
+              ACCOUNT
+            </Link>
+        }
         {!displayingMenu && <SignOutButton userIsAnonymous={authUser.isAnonymous} history={history} />}
       </div>
     </div>
@@ -84,7 +98,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
 const NavigationNonAuth = ({ displayingMenu }) => (
   <div className="navBar">
     <div id="logo">
-      <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.HOME}>HOME</Link>
+      <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.HOME}>DASH-TABS</Link>
     </div>
     <div className="navLinks">
       {!displayingMenu && <Link style={{ textDecoration: 'none' }} to={ROUTES.SIGN_IN}>SIGN IN</Link>}

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as ROUTES from '../../constants/routes';
+import { Store } from '../../store';
 
 import { withFirebase } from '../Firebase';
 
 const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
+  const { dispatch } = useContext(Store);
+  const toggleView = view => dispatch({ type: 'TOGGLE_VIEW', payload: view });
+
   const stopWatchingDbChanges = () => {
     firebase.users().off();
     firebase.userOrders().off();
@@ -19,6 +23,7 @@ const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
   }
 
   const handleLogout = async () => {
+    toggleView('orders');
     if(userIsAnonymous) {
       let anonUid = firebase.getCurrentUserUid();
       stopWatchingDbChanges()

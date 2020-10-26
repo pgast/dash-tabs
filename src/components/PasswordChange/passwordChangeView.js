@@ -27,7 +27,7 @@ const PasswordChangeView = ({
       />
       <div 
         className={isInvalid ? "btn btn_disabled" : "btn btn_secondary"}
-        onClick={isInvalid ? null : () => onSubmit()}
+        onClick={isInvalid ? null : (e) => onSubmit(e)}
         >
         RESET
       </div>

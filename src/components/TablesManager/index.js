@@ -35,7 +35,7 @@ class TablesManager extends Component {
       this.setState({ tables: this.props.dbTables });
     }
   }
-
+  
   numberIsInvalid = (number) => {
     return (number <= 0) || (number === '');
   };
@@ -102,7 +102,7 @@ class TablesManager extends Component {
   saveEditTable = (e) => {
     e.preventDefault();
     if(this.tableIsDuplicate(this.state.tableEdit.newNumber, this.state.tableEdit.current)) {
-      let newError = { ...this.state.error, msg: 'ITEM NUMBER IS DUPLICATE' };
+      let newError = { ...this.state.error, msg: 'TABLE NUMBER IS DUPLICATE, PLEASE TRY ANOTHER NUMBER' };
       this.setState({ error: newError });
     } else {
       let newTables = [...this.state.tables]
@@ -111,7 +111,11 @@ class TablesManager extends Component {
         waitingOrder: this.state.tableEdit.waitingOrder, 
         description: this.state.tableEdit.newDescription, 
       };
-      this.setState({ sideboard:"menu", tables: newTables });
+      this.setState({ 
+        sideboard:"menu", 
+        tables: newTables,
+        error: { exists: false },
+      });
       this.props.updateTablesDb(newTables);
       this.resetTableEdit();
     }
@@ -124,7 +128,7 @@ class TablesManager extends Component {
   addTable = (e) => {
     e.preventDefault();
     if(this.tableIsDuplicate(this.state.inputTable.number*1)) {
-      let newError = { ...this.state.error, msg: 'ITEM NUMBER IS DUPLICATE' };
+      let newError = { ...this.state.error, msg: 'TABLE NUMBER IS DUPLICATE, PLEASE TRY ANOTHER NUMBER' };
       this.setState({ error: newError });
     } else {
       if(!this.state.tables) {
@@ -136,7 +140,8 @@ class TablesManager extends Component {
         this.setState({ 
           sideboard: "menu",
           tables: newTables,
-          inputTable: { number: '', description: '', waitingOrder: false } 
+          inputTable: { number: '', description: '', waitingOrder: false },
+          error: { exists: false }
         });
 
         this.props.updateTablesDb(newTables);

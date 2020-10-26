@@ -22,7 +22,8 @@ class MenuManager extends Component {
         price: '',
         description: '',
         available: true,
-      }
+      },
+      error: null,
     };
   };
 
@@ -52,21 +53,18 @@ class MenuManager extends Component {
 
   onChangeEdit = event => {
     let newEditItem = {...this.state.itemEdit};
-
     if(event.target.name === 'available') {
       newEditItem[event.target.name] = !newEditItem[event.target.name];
     } else {
       newEditItem[event.target.name] = event.target.value;
     }
-
     this.setState({ itemEdit: newEditItem });
-
   };
 
   addItem = (event) => {
     event.preventDefault();
     if(this.itemIsDuplicate(this.state.inputItem)) {
-      console.log('item is duplicate');
+      this.setState({ error: "Item is duplicate" });
     } else {
       let newItem = { 
         name: this.state.inputItem.name, 
@@ -74,14 +72,11 @@ class MenuManager extends Component {
         available: this.state.inputItem.available,
         description: this.state.inputItem.description,
       };
-  
       let newMenu = {
         drinks: [...this.state.menu.drinks],
         dishes: [...this.state.menu.dishes],
       };
-  
       newMenu[this.state.inputItem.type].push(newItem);
-  
       this.setState({ 
         menu: newMenu, 
         inputItem: { 
@@ -92,7 +87,6 @@ class MenuManager extends Component {
           available: true, 
         } 
       });
-
       this.props.updateMenuDb(newMenu);
     }
   };
@@ -105,9 +99,8 @@ class MenuManager extends Component {
 
   saveEditItem = (event, idx) => {
     event.preventDefault();
-
     if(this.itemIsDuplicate(this.state.itemEdit, idx)) {
-      console.log('item is duplicate');
+      this.setState({ error: "Item is duplicate" });
     } else {
       let newItem = { 
         name: this.state.itemEdit.name, 
@@ -119,9 +112,7 @@ class MenuManager extends Component {
         drinks: [...this.state.menu.drinks],
         dishes: [...this.state.menu.dishes],
       };
-  
       newMenu[this.state.itemEdit.type][idx] = newItem;
-  
       this.setState({ 
         menu: newMenu,  
         itemEdit: {
@@ -134,7 +125,6 @@ class MenuManager extends Component {
           description: '',
         }
       });
-
       this.props.updateMenuDb(newMenu);
     };
   };
@@ -160,7 +150,6 @@ class MenuManager extends Component {
     };
     newMenu[type].splice(index, 1);
     if(newMenu[type].length === 0) newMenu[type] = [];
-
     this.setState({ 
       menu: newMenu,  
       itemEdit: {
@@ -173,7 +162,6 @@ class MenuManager extends Component {
         description: '',
       }
     });
-
     this.props.updateMenuDb(newMenu);
   };
 
@@ -209,7 +197,7 @@ class MenuManager extends Component {
         addIsInvalid={addIsInvalid}
         deleteItem={this.deleteItem}
         cancelEdit={this.cancelEdit}
-        dishesIsempty={dishesIsEmpty}
+        dishesIsEmpty={dishesIsEmpty}
         drinksIsEmpty={drinksIsEmpty}
         isInvalidEdit={isInvalidEdit}
         itemEdit={this.state.itemEdit}

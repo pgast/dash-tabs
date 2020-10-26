@@ -10,16 +10,15 @@ const ClientMenuItemCard = ({
   getItemQty,
   currentItem,
   isCurrentItem,
-  setCurrentItem,
   upgradeItemQty,
+  setCurrentItem,
 }) => {
-
   return (
     <> 
       {!isCurrentItem && (
         <div 
-          className="client_menuItemCard" 
           id={isInOrder && "isInOrder"} 
+          className="client_menuItemCard" 
           onClick={() => setCurrentItem(type, idx, item)}
         >
           <h3>{item.name.toUpperCase()}</h3>

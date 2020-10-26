@@ -136,7 +136,7 @@ class SignUpFormBase extends Component {
           />
         </div>
         <div 
-          onClick={isInvalid ? null : () => this.onSubmit()}
+          onClick={isInvalid ? null : (e) => this.onSubmit(e)}
           className={isInvalid ? "btn btn_disabled" : "btn"}
           >
           CREATE ACCOUNT

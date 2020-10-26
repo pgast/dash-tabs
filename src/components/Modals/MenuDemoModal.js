@@ -16,7 +16,10 @@ export default class MenuDemoModal extends Component {
           </p>
         </div>
         <div>
-          <div className="btn">
+          <div 
+            onClick={() => this.props.toggleModal()}
+            className="btn"
+            >
             GOT IT!
           </div>
         </div>

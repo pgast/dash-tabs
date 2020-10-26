@@ -43,7 +43,7 @@ class PasswordChangeForm extends Component {
     return (
       <PasswordChangeView 
         isInvalid={isInvalid}
-        error={this.state.error}
+        error={error}
         onSubmit={this.onSubmit}
         onChange={this.onChange}
         passwordOne={passwordOne}

@@ -60,6 +60,10 @@
   padding-top: 1.5rem;
 }
 
+#logo {
+  color: red;
+}
+
 @media screen and (max-width: 480px) {
   .navBar {
     display: none;

@@ -56,9 +56,7 @@ class Menu extends Component {
         if(snapshot.val().dishes !== 0) newMenu.dishes = snapshot.val().dishes.filter(el => el.available);
         if(snapshot.val().drinks !== 0) newMenu.drinks = snapshot.val().drinks.filter(el => el.available);
         let table = this.props.match.params.table === "takeout" ? "takeout" : Number(this.props.match.params.table);
-
         let currentUser = this.props.firebase.getCurrentUser();
-
         this.setState({ 
           table,
           menu: newMenu, 
@@ -66,10 +64,8 @@ class Menu extends Component {
           order: { ...this.state.order, table },
           showModal: currentUser === null ? false : currentUser.isAnonymous,
         });
-
-
       } else {
-        this.setState({ error: 'data not found' });
+        this.setState({ error: true });
       }
     });
   }
@@ -111,15 +107,12 @@ class Menu extends Component {
 
   getTakeoutOrder = (orders) => {
     let orderNum = 0;
-
     orders.current.forEach(el => {
       if(el.table === "takeout" && el.orderNum > orderNum) orderNum = el.orderNum;
     });
-
     orders.past.forEach(el => {
       if(el.table === "takeout" && el.orderNum > orderNum) orderNum = el.orderNum;
     });
-
     return orderNum + 1;
   }
 
@@ -129,13 +122,11 @@ class Menu extends Component {
         this.setState({ error: "Check table number" });
         return;
       }
-  
       if(this.state.orderIsValid === false) {
         this.setState({ error: "Order number is invalid" });
         return;
       }
     }
-
     let newOrders = {...this.state.fetchedOrders};
     let order = {
       ...this.state.order,
@@ -147,15 +138,13 @@ class Menu extends Component {
     };
     order.comments = this.state.comments;
 
-
     if(this.state.table === "takeout") {
       order.orderNum = this.getTakeoutOrder(newOrders);
     } 
 
     if(order.items.dishes.length === 0) order.items.dishes = 0;
     if(order.items.drinks.length === 0) order.items.drinks = 0;
-    if(newOrders.past.length === 0) newOrders.past = 0;
-    
+    if(newOrders.past.length === 0) newOrders.past = 0; 
     newOrders.current.push(order);
     this.props.firebase.userOrders(this.props.match.params.uid).set(newOrders);
     this.setState({ orderSent: true })
@@ -181,7 +170,6 @@ class Menu extends Component {
         drinks: [...this.state.order.items.drinks],
       }
     };
-
     let foundItem = this.state.order.items[type].find(it => it.name === item.name);
     let itemSubtotal = this.getItemCost(item.name, type) * foundItem.qty;
     newOrder.items[type] = newOrder.items[type].filter(el => el.name !== item.name);
@@ -203,12 +191,10 @@ class Menu extends Component {
 
   toggleConfirmScreen = () => {
     window.scrollTo(0,0); 
-
     this.setState({
       confirmScreen: !this.state.confirmScreen
     });
   };
-
 
   setCurrentItem = (type, idx, item) => {
     if(this.itemExistsInOrder(item.name, type)) {
@@ -249,7 +235,6 @@ class Menu extends Component {
   addItem = () => {
     let { order, currentItem } = this.state;
     let newOrder = { ...order, items: { dishes: [...order.items.dishes], drinks: [...order.items.drinks] } };
-
     if(this.itemExistsInOrder(currentItem.name, currentItem.type)) {
       let foundItemIdx = newOrder.items[currentItem.type].findIndex(el => el.name === currentItem.name);
       let prevItemSubtotal = newOrder.items[currentItem.type][foundItemIdx].qty * this.getItemCost(currentItem.name, currentItem.type);
@@ -258,23 +243,19 @@ class Menu extends Component {
       if(newItemSubtotal > prevItemSubtotal) {
         newOrder.cost = newOrder.cost + (newItemSubtotal - prevItemSubtotal);
       }
-
       if(newItemSubtotal < prevItemSubtotal) {
         newOrder.cost = newOrder.cost - (prevItemSubtotal - newItemSubtotal);
       }
-
     } else {
       newOrder.items[currentItem.type].push({ name: currentItem.name, qty: currentItem.qty });
       newOrder.cost = newOrder.cost + currentItem.subtotal;
     }
-
     this.setState({ order: newOrder, currentItem: { type: null, idx: null }});
   };
 
   render() {
     const {
       menu,
-      table,
       error,
       order,
       showModal,
@@ -294,7 +275,6 @@ class Menu extends Component {
     return (
       <MenuView 
         error={error}
-        table={table}
         order={order}
         drinks={menu.drinks}
         dishes={menu.dishes}
@@ -307,19 +287,19 @@ class Menu extends Component {
         orderIsEmpty={orderIsEmpty}
         businessName={businessName}
         deleteItem={this.deleteItem}
+        getItemQty={this.getItemQty}
         drinksIsEmpty={drinksIsEmpty}
         dishesIsEmpty={dishesIsEmpty}
+        confirmScreen={confirmScreen}
         toggleModal={this.toggleModal}
-        getItemQty={this.getItemQty}
+        getItemCost={this.getItemCost}
         setCurrentItem={this.setCurrentItem}
         upgradeItemQty={this.upgradeItemQty}
         handleFormInput={this.handleFormInput}
         orderDishesIsEmpty={orderDishesIsEmpty}
         orderDrinksIsEmpty={orderDrinksIsEmpty}
-        confirmScreen={confirmScreen}
         itemExistsInOrder={this.itemExistsInOrder}
         toggleConfirmScreen={this.toggleConfirmScreen}
-        getItemCost={this.getItemCost}
       />
     );
   }

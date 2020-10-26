@@ -27,7 +27,7 @@ const MenuManagerView = ({
       </div>
       <div className="menuItemCardsView">
         <div>
-          <h3>DRINKS</h3>
+          {!drinksIsEmpty && <h3>DRINKS</h3>}
           <div className="menuItemCards_items">
             {drinksIsEmpty ? 
               <h3>NO REGISTERED DRINKS</h3>
@@ -49,7 +49,7 @@ const MenuManagerView = ({
           </div>
         </div>
         <div>
-          <h3>DISHES</h3>
+          {!dishesIsEmpty && <h3>DISHES</h3>}
           <div className="menuItemCards_items">  
             {dishesIsEmpty ?
               <h3>NO REGISTERED DISHES</h3>

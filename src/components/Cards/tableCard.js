@@ -6,12 +6,11 @@ const TableCard = ({
   editTable,
   isSelected,
 }) => {
-
   return (
     <div 
       className="tableCard" 
-      id={isSelected && "cardSelected"}
       onClick={() => editTable(idx)}
+      id={isSelected && "cardSelected"}
     >
       <h3>
         #{table.number}

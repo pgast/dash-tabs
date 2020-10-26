@@ -44,3 +44,9 @@
   width: 10rem;
   margin-bottom: 2rem;
 }
+
+.signInView p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}

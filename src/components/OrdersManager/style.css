@@ -228,6 +228,7 @@
   padding-top: 0.3rem;
   margin-bottom: 0.4rem;
   padding-bottom: 0.6rem;
+  justify-content: center;
   border-bottom: 1px dashed black;
 }
 

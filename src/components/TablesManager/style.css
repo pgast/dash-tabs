@@ -86,3 +86,7 @@
 .tableCard > h3:first-of-type {
   margin-right: 2rem;
 }
+
+.tableCardsView h4 {
+  margin-bottom: 2rem;
+}

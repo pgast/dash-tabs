@@ -1,8 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-// 
-import 'firebase/storage';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -17,21 +15,10 @@ const config = {
 class Firebase {
   constructor() {
     app.initializeApp(config);
-
     this.auth = app.auth();
     this.db = app.database();
-
-    //
-    this.storage = app.storage();
   }
-
-  // STORAGE NOODLE
-  storageRef = () => this.storage.ref().child('pr.png').getDownloadURL().then(url => {
-    console.log(url);
-    return url;
-  });
-
-  // *** Auth API ***
+  // Auth API
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
 
@@ -45,7 +32,7 @@ class Firebase {
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
 
-  // *** Merge Auth and DB User API *** //
+  // Merge Auth and DB User API
   onAuthUserListener = (next, fallback) =>
     this.auth.onAuthStateChanged(authUser => {
       if (authUser) {
@@ -70,7 +57,7 @@ class Firebase {
   doSignInAnonymously = () =>
     this.auth.signInAnonymously();
 
-  // *** Cleanup DB ***
+  // Cleanup DB
 
     // one cleanup function
     // INPUTS
@@ -78,7 +65,7 @@ class Firebase {
     // db ref path
     // ref path function
 
-  // *** Cleanup Orders ***
+  // Cleanup Orders
   cleanupDemoOrders = (time) => {
     let keysToDelete = [];
     this.db.ref(`orders/`).once('value').then(snapshot => { 
@@ -97,7 +84,7 @@ class Firebase {
     });
   }
 
-  // *** Cleanup Menu ***
+  // Cleanup Menu
   cleanupDemoMenus = (time) => {
     let keysToDelete = [];
     this.db.ref(`menus/`).once('value').then(snapshot => { 
@@ -116,7 +103,7 @@ class Firebase {
     });
   }
 
-  // *** Cleanup Users ***
+  // Cleanup Users
   cleanupDemoUsers = (time) => {
     let keysToDelete = [];
     this.db.ref(`users/`).once('value').then(snapshot => { 
@@ -135,7 +122,6 @@ class Firebase {
     });
   }
 
-
   demoCleanupDb = () => {
     let currentTime = new Date().getTime();
     this.cleanupDemoOrders(currentTime);  
@@ -146,7 +132,7 @@ class Firebase {
   getCurrentUserUid = () => this.auth.currentUser.uid;
   getCurrentUser = () => this.auth.currentUser;
 
-  // *** User API ***
+  // User API
   userOrders = uid => this.db.ref(`orders/${uid}`);
   userMenu = uid => this.db.ref(`menus/${uid}`);
   userTables = uid => this.db.ref(`users/${uid}/tables`);

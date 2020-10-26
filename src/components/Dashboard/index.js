@@ -24,7 +24,6 @@ class Dashboard extends Component {
     // fetch current user info
     this.props.firebase.user(userUid).on('value', snapshot => {
       const userObject = snapshot.val();
-
       // check for demo user logout prevent crash
       if(this.props.firebase.getCurrentUser() === null || this.props.firebase.getCurrentUserUid() === null || userObject === null) return;
       userObject.uid = userUid;
@@ -35,13 +34,10 @@ class Dashboard extends Component {
         showModal: userIsAnonymous,
       });
     })
-
-
     // fetch menu with user uid
     this.props.firebase.userMenu(userUid).on('value', snapshot => {
       this.setState({ menu: snapshot.val() });
     });
-
     // fetch orders with user uid
     this.props.firebase.userOrders(userUid).on('value', snapshot => {
       let orders = snapshot.val();
@@ -49,8 +45,6 @@ class Dashboard extends Component {
       if(orders === null) return;
       this.setState({ orders: snapshot.val() });
     })
-
-    console.log(this.state);
   }
 
   componentWillUnmount() {       
@@ -61,7 +55,6 @@ class Dashboard extends Component {
     // check that items are always arrays with items or 0
     if(newMenu.drinks.length === 0) newMenu.drinks = 0;
     if(newMenu.dishes.length === 0) newMenu.dishes = 0;
-
     // change second props with user uid in state
     this.props.firebase.userMenu(this.state.user.uid).set({ 
       drinks: newMenu.drinks,
@@ -70,7 +63,6 @@ class Dashboard extends Component {
   }
 
   updateTablesDb = (newTables) => {
-    // check for arrays with items or set as 0
     if(newTables.length === 0) newTables = 0;
     this.props.firebase.userTables(this.state.user.uid).set(newTables);
   }
@@ -88,7 +80,6 @@ class Dashboard extends Component {
   }
 
   toggleModal = () => {
-    console.log(this.state.showModal)
     this.setState({
       showModal: !this.state.showModal
     });
@@ -96,7 +87,6 @@ class Dashboard extends Component {
 
   render() {
     const { loading, menu, orders, showModal } = this.state;
-
     return (
       <DashboardView 
         menu={menu}

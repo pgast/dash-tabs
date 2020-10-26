@@ -1,19 +1,72 @@
 .homeView {
-  margin: 0;
   width: 100%;
-  padding-left: 7rem;
-  text-align: center;
+  padding-left: 6.8rem;
 }
 
-.content {
+
+
+.secondRow div,
+.firstRow div,
+.introRow div {
+  width: 50%;
   display: flex;
   flex-direction: column;
-  height: auto;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.homeView div {
-  /* height: 33rem; */
-  background: blue;
-  height: 2rem;
-  padding: 1rem;
+/* Intro Row */
+.introRow div:last-of-type {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.introRow {
+  height: 100vh;
+  background: #F5F5F7;
+  display: flex;
+  width: 100%;
+}
+/*  */
+
+.benefitsRow,
+.secondRow,
+.firstRow {
+  display: flex;
+  height: 60vh;
+}
+
+.benefitsRow {
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.benefitsRow div {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 28%;
+}
+
+.secondRow {
+  background: #F5F5F7;
+}
+
+.firstRow div:last-of-type {
+  background: rgb(218, 218, 218);
+}
+
+.firstRow .fa-layers {
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  background: rgb(218, 218, 218);
+  height: 2.6rem;
 }

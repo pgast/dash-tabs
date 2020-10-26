@@ -7,7 +7,6 @@ import './style.css';
 
 const MenuView = ({
   error,
-  table,
   order,
   drinks,
   dishes,
@@ -16,14 +15,14 @@ const MenuView = ({
   sendOrder,
   orderSent,
   deleteItem,
+  getItemQty,
   currentItem,
   toggleModal,
-  confirmScreen,
   getItemCost,
   dataFetched,
-  getItemQty,
   orderIsEmpty,
   businessName,
+  confirmScreen,
   drinksIsEmpty,
   dishesIsEmpty,
   setCurrentItem,
@@ -49,10 +48,12 @@ const MenuView = ({
 
     <div className="menuContainer">
       {/* FETCHING DATA SCREEN */}
-      {!dataFetched && <h1>Fetching Data</h1>}
+      {!dataFetched && 
+        <div id="fetchingData">
+          <h3>FETCHING DATA...</h3>
+        </div>
+      }
       {/* FETCHING DATA SCREEN END */}
-
-
       {/* MAIN SCREEN */}
       {(!orderSent && !confirmScreen) && (
         <div className="client_menuItems">
@@ -105,8 +106,6 @@ const MenuView = ({
         </div>
       )}
       {/* MAIN SCREEN END */}
-
-
       {/* ORDER SUCCESS SCREEN */}
       {orderSent && (
         <div className="orderSent">
@@ -120,13 +119,15 @@ const MenuView = ({
         </div>
       )}
       {/* ORDER SUCCESS SCREEN END */}
-
-
       {/* ERROR SCREEN */}
-      {error && <p>{error}</p>}
+      {/* check different error messages */}
+      {error && 
+        <div id="menuView_error">
+          <h3>ERROR FETCHING ITEMS FROM MENU</h3>
+          <h3>PLEASE TRY AGAIN</h3>
+        </div>
+      }
       {/* ERROR SCREEN END */}
-
-
       {/* CONFIRM SCREEN */}
       {(confirmScreen && !orderSent) && (
         <OrderConfirmScreen 
@@ -139,8 +140,6 @@ const MenuView = ({
         />
       )}
       {/* CONFIRM SCREEN  */}
-
-
       {!orderSent && (
         <div className="bottomNav" id={confirmScreen && "bottomNavConfirm"}>
           <div>
@@ -156,11 +155,9 @@ const MenuView = ({
         </div>
       )}
     </div>
-
-
     {/* DEMO MODAL */}
-    <Modal toggleModal={toggleModal} show={showModal}>
-      <MenuDemoModal />
+    <Modal show={showModal}>
+      <MenuDemoModal toggleModal={toggleModal} />
     </Modal>
     {/* DEMO MODAL END */}
   </div>

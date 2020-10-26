@@ -7,7 +7,6 @@ const MenuItemCard = ({
   isSelected,
   editItemType,
 }) => {
-
   return (
     <div 
       className="menuItemCard" 

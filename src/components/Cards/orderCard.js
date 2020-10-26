@@ -30,14 +30,17 @@ const OrderCard = ({
 
   const itemsAreValid = (items) => items !== 0 ? true : false;
 
-
   return (
-    <div onClick={() => toggleSideboard()} className={cardClasses()} id={isSelected && "cardSelected"}>
+    <div 
+      className={cardClasses()} 
+      onClick={() => toggleSideboard()} 
+      id={isSelected && "cardSelected"}
+    >
       {cardType() === 'currentOrder' && (
         <>
           <div>
-            <h3>#{el.orderNum}</h3> 
             <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+            { el.table === "takeout" && <h3>#{el.orderNum}</h3> }
           </div>
           <h3 id="time">{getTimeDate(el.start)}</h3>
         </>
@@ -46,8 +49,8 @@ const OrderCard = ({
         <div>
           <div className="highlightCard_header">
             <div>
-              <h3>#{el.orderNum}</h3> 
               <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+              { el.table === "takeout" && <h3>#{el.orderNum}</h3> }
             </div>
             <h3 id="time">{getTimeDate(el.start)}</h3>
           </div>
@@ -80,8 +83,8 @@ const OrderCard = ({
       {cardType() === 'pastOrder' && (
         <>
           <div className="pastOrder_header">
-            <h3>#{el.orderNum}</h3> 
             <h3>{el.table === "takeout" ? "TAKEOUT" : `TABLE ${el.table}`}</h3>
+            { el.table === "takeout" && <h3>#{el.orderNum}</h3> }
           </div>
           <div>
             <div className="pastOrder_time">

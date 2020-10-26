@@ -19,7 +19,6 @@ const DashboardView = ({
   updateTablesDb,
 }) => {
   const { state } = useContext(Store);
-
   return (
     <div className="dashboardFull">
       {state.view === "orders" && 
