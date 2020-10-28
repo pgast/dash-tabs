@@ -3,8 +3,12 @@
   padding-left: 6.8rem;
 }
 
+.homeView p {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 
-
+.secondRow div:last-of-type,
 .secondRow div,
 .firstRow div,
 .introRow div {
@@ -20,6 +24,23 @@
 .introRow div:last-of-type {
   align-items: flex-start;
   text-align: left;
+}
+
+.introRow h1 {
+  font-size: 1.8rem;
+}
+
+.introRow p {
+  width: 16rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  margin-bottom: 4rem;
+}
+
+.introRow div:last-of-type .btn {
+  margin: 0;
+  width: 7rem;
+  align-items: center;
 }
 
 .introRow {
@@ -43,30 +64,62 @@
 }
 
 .benefitsRow div {
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
+  text-align: center;
   align-items: center;
   width: 28%;
+}
+
+.benefitsRow p {
+  margin-top: 2rem;
+  width: 10rem;
 }
 
 .secondRow {
   background: #F5F5F7;
 }
 
-.firstRow div:last-of-type {
+#rowText {
+  align-self: center;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#rowText p {
+  margin-bottom: 1rem;
+}
+
+#rowText p:last-of-type {
+  margin-bottom: 0;
+}
+
+.firstRow > div:last-of-type {
   background: rgb(218, 218, 218);
 }
 
-.firstRow .fa-layers {
-  align-content: center;
+.qrIcons {
+  display: flex;
+  width: 15rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lastRow {
+  display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
-  flex-direction: column;
+  padding-bottom: 1rem;
 }
 
 .footer {
-  background: rgb(218, 218, 218);
-  height: 2.6rem;
+  background: #F5F5F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.4rem;
 }
+
+

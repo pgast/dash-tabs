@@ -100,8 +100,8 @@ const NavigationNonAuth = ({ displayingMenu }) => (
     <div id="logo">
       <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.HOME}>DASH-TABS</Link>
     </div>
-    <div className="navLinks">
-      {!displayingMenu && <Link style={{ textDecoration: 'none' }} to={ROUTES.SIGN_IN}>SIGN IN</Link>}
+    <div className="navLinks bottomNav">
+      {!displayingMenu && <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.SIGN_IN}>SIGN IN</Link>}
     </div>
   </div>
 );

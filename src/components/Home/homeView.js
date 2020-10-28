@@ -16,54 +16,107 @@ const HomeView = ({ launchDemo, signUpRoute }) => (
   <div className="homeView">
     <div className="introRow">
       <div>
-        <FontAwesomeIcon icon={faReceipt} size="8x" />
+        <FontAwesomeIcon icon={faReceipt} size="9x"/>
       </div>
       <div>
         <h1>WELCOME TO DASHTABS.</h1>
-        <p>SDLFKJS sfdl ke lsdj sel sdlfk es ldfse lsdf sel dlkfjs ea adflkse lma e m ald es; ds</p>
-        {/* <Link to={signUpRoute}>CREATE ACCOUNT</Link> */}
+        {/* <h1>TO DASHTABS.</h1> */}
+        <p>Optimized order management for the food business industry.</p>
         <div className="btn" onClick={() => launchDemo()}>TRY IT NOW!</div>
       </div>
     </div>
 
     <div className="firstRow">
       <div>
-        <h3>FIRST ROW</h3>
+        <div id="rowText">
+          <p>
+            Generate your own QR codes.
+          </p>
+          <p>
+            Users scan the code and get an interactive version of your menu.
+          </p>
+          <p>
+            They input their items directly and send the order through the interactive interface.
+          </p>
+        </div>
       </div>
       <div>
-        <span className="fa-layers">
-          <FontAwesomeIcon icon={faQrcode} size="3x" />
+        <span className="qrIcons">
           <FontAwesomeIcon icon={faMobileAlt} size="10x" />
+          <FontAwesomeIcon icon={faQrcode} size="4x" id="qrIcon" />
         </span>
       </div>
     </div>
 
     <div className="secondRow">
       <div>
-        <FontAwesomeIcon icon={faStream} size="10x" />
+        <FontAwesomeIcon icon={faStream} size="8x" />
       </div>
       <div>
-        <h3>SECOND ROW</h3>
+        <div id="rowText">
+          <p>
+            Keep track of orders in real time.
+          </p>
+          <p>
+            Browse through past orders.
+          </p>
+          <p>
+            See essential order info, items, total cost and time the order was placed.
+          </p>
+        </div>
       </div>
     </div>
 
     <div className="benefitsRow">
       <div>
-        <FontAwesomeIcon icon={faUserFriends} />
-        FirstBenefit
+        <FontAwesomeIcon icon={faUserFriends} size="5x"/>
+        <p>
+          No physical menus and less waiting staff.
+        </p>
       </div>
       <div>
-        <FontAwesomeIcon icon={faChartBar} />
-        Second Benefit
+        <FontAwesomeIcon icon={faChartBar} size="5x" />
+        <p>
+          Track the completion time for every order.
+        </p>
       </div>
       <div>
-        <FontAwesomeIcon icon={faHamburger} />
-        Third Benefit
+        <FontAwesomeIcon icon={faHamburger} size="5x" />
+        <p>
+          Changes in menu? Update in real time.
+        </p>
+      </div>
+    </div>
+
+    <div className="lastRow">
+      <div className="btn" onClick={() => launchDemo()}>TRY IT NOW!</div>
+      <p>or</p>
+      <div className="btn">
+        <Link 
+          style={{ textDecoration: 'none', color: 'white' }}
+          to={signUpRoute}
+        >
+            CREATE ACCOUNT
+          </Link>
       </div>
     </div>
 
     <div className="footer">
-      <h3>FOOTER</h3>
+      <div style={{
+          opacity: 0.3,
+          fontSize: 15,
+          fontWeight: 'bold',
+          textAlign: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <a 
+          style={{ 'textDecoration': 'none', 'color': "gray" }} 
+          href="http://www.github.com/pgast" 
+        >
+          &lt;/&gt; pgast
+        </a>
+      </div>
     </div>
   </div>
 );
