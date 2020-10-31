@@ -12,15 +12,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
-const HomeView = ({ launchDemo, signUpRoute }) => (
+const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
   <div className="homeView">
+    <div className="mobileHeader">
+      <div className="btn">
+        <Link style={{ textDecoration: 'none', color: 'white' }} to={signInRoute}>SIGN IN</Link>
+      </div>
+    </div>
     <div className="introRow">
       <div>
         <FontAwesomeIcon icon={faReceipt} size="9x"/>
       </div>
       <div>
         <h1>WELCOME TO DASHTABS.</h1>
-        {/* <h1>TO DASHTABS.</h1> */}
         <p>Optimized order management for the food business industry.</p>
         <div className="btn" onClick={() => launchDemo()}>TRY IT NOW!</div>
       </div>

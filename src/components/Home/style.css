@@ -4,8 +4,12 @@
 }
 
 .homeView p {
-  font-size: 0.9rem;
   font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.mobileHeader {
+  display: none;
 }
 
 .secondRow div:last-of-type,
@@ -14,16 +18,16 @@
 .introRow div {
   width: 50%;
   display: flex;
-  flex-direction: column;
-  justify-items: center;
-  justify-content: center;
   align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Intro Row */
 .introRow div:last-of-type {
-  align-items: flex-start;
   text-align: left;
+  align-items: flex-start;
 }
 
 .introRow h1 {
@@ -44,18 +48,18 @@
 }
 
 .introRow {
+  width: 100%;
+  display: flex;
   height: 100vh;
   background: #F5F5F7;
-  display: flex;
-  width: 100%;
 }
 /*  */
 
 .benefitsRow,
 .secondRow,
 .firstRow {
-  display: flex;
   height: 60vh;
+  display: flex;
 }
 
 .benefitsRow {
@@ -64,16 +68,16 @@
 }
 
 .benefitsRow div {
+  width: 28%;
   display: flex;
-  flex-direction: column;
   text-align: center;
   align-items: center;
-  width: 28%;
+  flex-direction: column;
 }
 
 .benefitsRow p {
-  margin-top: 2rem;
   width: 10rem;
+  margin-top: 2rem;
 }
 
 .secondRow {
@@ -81,9 +85,9 @@
 }
 
 #rowText {
-  align-self: center;
   width: 15rem;
   display: flex;
+  align-self: center;
   flex-direction: column;
   align-items: flex-start;
 }
@@ -101,25 +105,141 @@
 }
 
 .qrIcons {
-  display: flex;
   width: 15rem;
-  justify-content: space-between;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .lastRow {
   display: flex;
   align-items: center;
-  justify-content: center;
   padding-bottom: 1rem;
+  justify-content: center;
 }
 
 .footer {
-  background: #F5F5F7;
   display: flex;
-  align-items: center;
-  justify-content: center;
   height: 2.4rem;
+  align-items: center;
+  background: #F5F5F7;
+  justify-content: center;
 }
 
+/* MOBILE */
+@media screen and (max-width: 480px) {
+  .homeView {
+    padding-left: 0;
+  }
 
+  /* Intro Row */
+  .introRow {
+    padding: 0 1.6rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .introRow div:last-of-type {
+    width: auto;
+    margin-top: 3rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .introRow h1 {
+    font-size: 1.1rem;
+  }
+
+  .introRow p {
+    width: auto;
+    margin-bottom: 3rem;
+  }
+  /*  */
+
+  /* First Row */
+  .firstRow {
+    height: auto;
+    text-align: center;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+
+  .firstRow > div:first-of-type {
+    width: 100%;
+    padding: 3rem 0;
+  }
+
+  .firstRow > div:last-of-type {
+    width: 100%;
+    background: none;
+    padding-top: 3rem;
+  }
+
+  .qrIcons {
+    width: 12rem;
+  }
+  /*  */
+
+  /* Second Row */
+  .secondRow {
+    height: auto;
+    padding: 3rem 0;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .secondRow div:last-of-type,
+  .secondRow div {
+    height: 50%;
+    justify-items: center;
+    justify-content: center;
+  }
+
+  .secondRow #rowText {
+    margin-top: 2rem;
+  }
+  /*  */
+
+  /* Benefits Row */
+  .benefitsRow {
+    height: auto;
+  }
+
+  .benefitsRow div {
+    width: 100%;
+    padding: 2.7rem 0;
+    border-bottom: 2px solid rgb(218, 218, 218);
+  }
+
+  .benefitsRow p {
+    margin-top: 1rem;
+  }
+  /*  */
+
+  /* Last Row */
+  .lastRow {
+    height: 6rem;
+    display: flex;
+    padding: 1rem 0;
+    align-items: center;
+    justify-content: center;
+  }
+  /*  */
+
+  .introRow,
+  .benefitsRow,
+  .secondRow {
+    flex-direction: column;
+  }
+
+  .mobileHeader {
+    top: 0;
+    right: 0;
+    display: block;
+    position: fixed;
+  }
+
+  #rowText {
+    align-items: center;
+  }
+}

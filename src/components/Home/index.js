@@ -27,7 +27,7 @@ class HomePage extends Component {
   };
 
   render() {
-    return <HomeView launchDemo={this.launchDemo} signUpRoute={ROUTES.SIGN_UP} />
+    return <HomeView launchDemo={this.launchDemo} signUpRoute={ROUTES.SIGN_UP} signInRoute={ROUTES.SIGN_IN} />
   };
 };
 
