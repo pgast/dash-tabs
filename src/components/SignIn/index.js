@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 const SignInPage = () => (
   <div className="signInView">
+    <div id="backBtn">
+      <Link to={ROUTES.HOME} style={{ color: 'black' }}>
+        <FontAwesomeIcon icon={faCaretLeft} size="2x" />
+      </Link>
+    </div>
+    <div className="mobileHeader">
+      <h3>SIGN IN</h3>
+    </div>
+
     <div className="dashboardHeader">
       <h1>SIGN IN</h1>
     </div>

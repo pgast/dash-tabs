@@ -3,10 +3,21 @@ import { Link, withRouter } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 const SignUpPage = () => (
   <div className="signupView">
+    <div id="backBtn">
+      <Link to={ROUTES.HOME} style={{ color: 'black' }}>
+        <FontAwesomeIcon icon={faCaretLeft} size="2x" />
+      </Link>
+    </div>
+    <div className="mobileHeader">
+      <h3>SIGN UP</h3>
+    </div>
+
     <div className="dashboardHeader">
       <h1>SIGN UP</h1>
     </div>
@@ -127,13 +138,15 @@ class SignUpFormBase extends Component {
           </div>
         </div>
         <div>
-          <h3>BUSINESS NAME</h3>
-          <input
-            type="text"
-            name="businessName"
-            value={businessName}
-            onChange={this.onChange}
-          />
+          <div>
+            <h3>BUSINESS NAME</h3>
+            <input
+              type="text"
+              name="businessName"
+              value={businessName}
+              onChange={this.onChange}
+            />
+          </div>
         </div>
         <div 
           onClick={isInvalid ? null : (e) => this.onSubmit(e)}
@@ -150,7 +163,7 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
   <div>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    Don't have an account? <Link to={ROUTES.SIGN_UP} style={{ color: 'black' }}>Sign Up</Link>
   </div>
 );
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PasswordChangeView from './passwordChangeView';
-
 import { withFirebase } from '../Firebase';
 
 const INITIAL_STATE = {

@@ -3,12 +3,23 @@ import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 const PasswordForgetPage = () => (
   <div className="passwordForget">
-     <div className="dashboardHeader">
-        <h1>RESET PASSWORD</h1>
+    <div id="backBtn">
+      <Link to={ROUTES.HOME} style={{ color: 'black' }}>
+        <FontAwesomeIcon icon={faCaretLeft} size="2x" />
+      </Link>
+    </div>
+    <div className="mobileHeader">
+      <h3>RESET PW</h3>
+    </div>
+
+    <div className="dashboardHeader">
+      <h1>RESET PASSWORD</h1>
     </div>
     <PasswordForgetForm />
   </div>
@@ -74,7 +85,7 @@ class PasswordForgetFormBase extends Component {
 
 const PasswordForgetLink = () => (
   <div>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
+    <Link to={ROUTES.PASSWORD_FORGET} style={{ color: 'black' }}>Forgot Password?</Link>
   </div>
 );
 

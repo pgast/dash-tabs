@@ -44,3 +44,17 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+/* MOBILE */
+@media screen and (max-width: 480px) {
+  .passwordForget > div:last-of-type {
+    justify-content: center;
+    margin-top: 0;
+    margin-left: 0;
+    padding-top: 0;
+  }
+
+  .passwordForget > div:last-of-type > div:first-of-type {
+    margin-bottom: 4rem;
+  }
+}

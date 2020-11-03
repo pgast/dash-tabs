@@ -2,19 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faReceipt, 
-  faMobileAlt, 
   faStream,
   faQrcode,
-  faUserFriends,
-  faHamburger,
+  faReceipt, 
   faChartBar,
+  faHamburger,
+  faMobileAlt, 
+  faUserFriends,
 } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
   <div className="homeView">
-    <div className="mobileHeader">
+    <div className="mobileHomeHeader">
       <div className="btn">
         <Link style={{ textDecoration: 'none', color: 'white' }} to={signInRoute}>SIGN IN</Link>
       </div>
@@ -29,7 +29,6 @@ const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
         <div className="btn" onClick={() => launchDemo()}>TRY IT NOW!</div>
       </div>
     </div>
-
     <div className="firstRow">
       <div>
         <div id="rowText">
@@ -51,7 +50,6 @@ const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
         </span>
       </div>
     </div>
-
     <div className="secondRow">
       <div>
         <FontAwesomeIcon icon={faStream} size="8x" />
@@ -70,7 +68,6 @@ const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
         </div>
       </div>
     </div>
-
     <div className="benefitsRow">
       <div>
         <FontAwesomeIcon icon={faUserFriends} size="5x"/>
@@ -91,7 +88,6 @@ const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
         </p>
       </div>
     </div>
-
     <div className="lastRow">
       <div className="btn" onClick={() => launchDemo()}>TRY IT NOW!</div>
       <p>or</p>
@@ -104,7 +100,6 @@ const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
           </Link>
       </div>
     </div>
-
     <div className="footer">
       <div style={{
           opacity: 0.3,

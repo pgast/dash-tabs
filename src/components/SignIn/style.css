@@ -9,32 +9,32 @@
   height: 100%;
   display: flex;
   align-self: center;
-  justify-content: center;
   margin-left: 6.8rem;
   padding-top: 5.3rem;
   flex-direction: column;
+  justify-content: center;
 }
 
 .signInView > div:last-of-type > div:nth-child(2),
 .signInView > div:last-of-type > div:last-of-type {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 0.7rem;
   font-weight: 500;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.7rem;
 }
 
 .signInForm {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 }
 
 .signInForm input {
   width: 12rem;
   border: none;
   height: 1.8rem;
-  margin-bottom: 1rem;
   font-size: 0.9rem;
+  margin-bottom: 1rem;
   border-radius: .3rem;
   padding: 1rem 0.7rem;
   background: #F5F5F7;
@@ -46,7 +46,46 @@
 }
 
 .signInView p {
-  font-size: 0.9rem;
   font-weight: 500;
+  font-size: 0.9rem;
   margin-bottom: 1rem;
+}
+
+#backBtn {
+  display: none;
+}
+
+/* MOBILE */
+@media screen and (max-width: 480px) {
+  #backBtn {
+    top: 0;
+    left: 0;
+    display: block;
+    position: fixed;
+    z-index: 2;
+    padding: 1.65rem;
+  }
+
+  .signInView > div:last-of-type {
+    margin-left: 0;
+    padding-top: 0;
+    padding-top: 7rem;
+  }  
+
+  .mobileHeader {
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    height: 5.4rem;
+    position: fixed;
+    padding: 0 2rem;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px dashed black;
+  }
+
+  .mobileHeader > h3:first-of-type {
+    font-size: 1.8rem;
+  }
 }
