@@ -33,10 +33,16 @@
 .navBar #logo {
   padding: 0;
   height: 5.5rem;
+  display: flex;
+  flex-direction: column;
   background: none;
-  text-align: center;
-  align-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 1rem 0;
+  font-size: 0.9rem;
 }
+
+#logo 
 
 .navBar .dashboardLinks {
   background: none;
@@ -58,10 +64,6 @@
 .bottomNav {
   border-top: 1px dashed white;
   padding-top: 1.5rem;
-}
-
-#logo {
-  color: red;
 }
 
 @media screen and (max-width: 480px) {

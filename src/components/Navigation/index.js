@@ -6,6 +6,8 @@ import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import { withRouter } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReceipt } from '@fortawesome/free-solid-svg-icons';
 
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
@@ -32,17 +34,24 @@ const Navigation = (props) => {
 const NavigationAuth = ({ authUser, displayingMenu, history }) => {
   const { state, dispatch } = useContext(Store);
   const toggleView = view => dispatch({ type: 'TOGGLE_VIEW', payload: view });
+  const updateSideboardState = (mode) => dispatch({ type: 'TOGGLE_SIDEBOARD', payload: mode });
   let parameter = window.location.href.split('').slice(-9).join('');
+
+  const toggleToOrders = () => {
+    toggleView('orders');
+    updateSideboardState(false);
+  };
 
   return (
     <div className="navBar">
       <div>
         <div id="logo">
+          <FontAwesomeIcon icon={faReceipt}/>
           <Link 
-            style={{ textDecoration: 'none' }}
-            onClick={() => toggleView=('orders')}
             to={ROUTES.HOME}
-            >
+            onClick={() => toggleToOrders()}
+            style={{ textDecoration: 'none', color: 'white' }}
+          >
               DASH-TABS
             </Link>
         </div>
@@ -50,7 +59,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
           <div className="navLinks dashboardLinks">
             <div>
               <p 
-                onClick={() => toggleView('orders')} 
+                onClick={() => toggleToOrders()}
                 id={state.view !== 'orders' && "inactiveLink"}
               >
                 ORDERS
@@ -98,6 +107,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
 const NavigationNonAuth = ({ displayingMenu }) => (
   <div className="navBar">
     <div id="logo">
+      <FontAwesomeIcon icon={faReceipt}/>
       <Link style={{ textDecoration: 'none', color: 'white' }} to={ROUTES.HOME}>DASH-TABS</Link>
     </div>
     <div className="navLinks bottomNav">

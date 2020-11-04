@@ -50,7 +50,7 @@
 }
 
 .demoMenuModal p {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   margin-bottom: 1rem;
 }
 
@@ -75,6 +75,10 @@
   text-align: center;
   align-items: center;
   flex-direction: column;
+}
+
+.demoMenuModal h3 {
+  font-size: 0.8rem;
 }
 
 .demoModal_content > h3:last-of-type,
