@@ -23,8 +23,9 @@ const TablesManagerView = ({
   setInputTable,
   sideboardView,
   inputIsInvalid,
-  resetTableEdit,
-  toggleAddTableForm,
+  cancelAddTable,
+  cancelTableEdit,
+  toggleAddTableForm
 }) => (
   <div className="viewSmall">
     <div className="dashboardHeader">
@@ -63,7 +64,8 @@ const TablesManagerView = ({
         saveEditTable={saveEditTable}
         editIsInvalid={editIsInvalid}
         inputIsInvalid={inputIsInvalid}
-        resetTableEdit={resetTableEdit}
+        cancelAddTable={cancelAddTable}
+        cancelTableEdit={cancelTableEdit}
         toggleAddTableForm={toggleAddTableForm}
       />
     </div>

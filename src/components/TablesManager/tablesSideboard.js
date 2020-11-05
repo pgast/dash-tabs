@@ -12,15 +12,10 @@ const TablesSideboard = ({
   saveEditTable,
   editIsInvalid,
   inputIsInvalid,
-  resetTableEdit,
+  cancelAddTable,
+  cancelTableEdit,
   toggleAddTableForm,
 }) => {
-  const cancelTableEdit = () => {
-    resetTableEdit();
-    toggleAddTableForm('close');
-  };
-
-
   return (
     <div className="tablesSideboard">
       {/* MENU */}
@@ -83,7 +78,7 @@ const TablesSideboard = ({
             </div>
             <div 
               className="btn btn_secondary"
-              onClick={() => toggleAddTableForm("close")}
+              onClick={() => cancelAddTable()}
             >
               CANCEL
             </div>

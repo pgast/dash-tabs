@@ -44,7 +44,7 @@ class TablesManager extends Component {
     if(currentIdx !== null) {
       let newTables = this.state.tables.filter((el, idx) => idx !== currentIdx);
       for(let j=0; j<newTables.length; j++) {
-        if(newTables[j].number === this.state.tableEdit.newNumber) return true;
+        if(newTables[j].number === newNumber) return true;
       }
     } else {
       for(let i=0; i<this.state.tables.length; i++) {
@@ -101,7 +101,7 @@ class TablesManager extends Component {
 
   saveEditTable = (e) => {
     e.preventDefault();
-    if(this.tableIsDuplicate(this.state.tableEdit.newNumber, this.state.tableEdit.current)) {
+    if(this.tableIsDuplicate(this.state.tableEdit.newNumber*1, this.state.tableEdit.current)) {
       let newError = { ...this.state.error, msg: 'TABLE NUMBER IS DUPLICATE, PLEASE TRY ANOTHER NUMBER' };
       this.setState({ error: newError });
     } else {
@@ -187,6 +187,19 @@ class TablesManager extends Component {
     };
   }
 
+  clearError = () => {this.setState({ error: { exists: false } }) };
+
+  cancelTableEdit = () => {
+    this.resetTableEdit();
+    this.clearError();
+    this.toggleAddTableForm('close');
+  };
+
+  cancelAddTable = () => {
+    this.toggleAddTableForm("close")
+    this.clearError();
+  };
+
   render() {
     const { 
       qrSrc, 
@@ -204,6 +217,8 @@ class TablesManager extends Component {
 
     return (
       <TablesManagerView 
+        cancelAddTable={this.cancelAddTable}
+        cancelTableEdit={this.cancelTableEdit}
         qrSrc={qrSrc}
         error={error}
         tables={tables}
@@ -222,10 +237,9 @@ class TablesManager extends Component {
         setTableEdit={this.setTableEdit}
         saveEditTable={this.saveEditTable}
         setInputTable={this.setInputTable}
-        resetTableEdit={this.resetTableEdit}
         generateQrCodes={this.generateQrCodes}
-        updateTablesDb={this.props.updateTablesDb}
         toggleAddTableForm={this.toggleAddTableForm}
+        updateTablesDb={this.props.updateTablesDb}
       />
     )
   }

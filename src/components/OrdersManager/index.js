@@ -109,7 +109,7 @@ class OrdersManager extends Component {
     let date = new Date(mils);
     let minutes = date.getMinutes() + '';
     if(minutes.length === 1) minutes = "0" + minutes;
-    return `${date.getHours()}:${date.getMinutes()}`
+    return `${date.getHours()}:${minutes}`
   }
 
   getDate = (mils) => { 
