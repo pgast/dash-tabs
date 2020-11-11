@@ -33,6 +33,7 @@ class Dashboard extends Component {
       if(this.props.firebase.getCurrentUser() === null || this.props.firebase.getCurrentUserUid() === null || userObject === null) return;
       userObject.uid = userUid;
       this.setState({ user: userObject });
+      console.log(userObject);
     })
 
     // fetch menu with user uid

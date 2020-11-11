@@ -64,9 +64,9 @@ export const USER = {
   timestamp: new Date().getTime(),
   email: "DemoSession",
   tables: [
-    { description: "By the door", number: 12 },
-    { description: "Large table", number: 3 },
+    { description: "By the door", number: 12, waitingOrder: false },
+    { description: "Large table", number: 3, waitingOrder: false },
   ],
   username: 'DemoSession', 
-  businessName: 'YellowBird - Coffeehouse'
+  businessName:'The Coffeehouse'
 };
