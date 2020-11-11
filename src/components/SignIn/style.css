@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-.signInView > div:last-of-type {
+.signInView > div:nth-child(4) {
   width: auto;
   height: 100%;
   display: flex;

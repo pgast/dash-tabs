@@ -6,6 +6,15 @@ export default class DashboardDemoModal extends Component {
     return (
       <div className="demoModal_wide">
         <div className="demoModal_content">
+          <div id="mobileModal">
+            <p>
+              The dashboard is currently not optimized for mobile usage.
+            </p>
+            <p>
+              Please switch to a desktop computer to get the best experience.
+            </p>
+          </div>
+
           <div className="demoModal_header">
             <h3>WELCOME TO DASH TABS!</h3>
             <h3>The dashboard is the core of dash tab's functionality and its split into three sections</h3>

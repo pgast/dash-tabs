@@ -1,5 +1,7 @@
 import React from 'react';
 import Modal from '../Modals';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { ClientMenuItemCard } from '../Cards';
 import MenuDemoModal from '../Modals/MenuDemoModal';
 import OrderConfirmScreen from './orderConfirmScreen';
@@ -123,7 +125,8 @@ const MenuView = ({
       {/* check different error messages */}
       {error && 
         <div id="menuView_error">
-          <h3>ERROR FETCHING ITEMS FROM MENU</h3>
+          <FontAwesomeIcon icon={faExclamationTriangle} size="4x"/>
+          <h3>{error}</h3>
           <h3>PLEASE TRY AGAIN</h3>
         </div>
       }

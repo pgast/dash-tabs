@@ -28,6 +28,7 @@ class MenuManager extends Component {
   };
 
   componentDidMount() {
+    // console.log('[COMPONENT DID MOUNT] MENU MANAGER')
     let menu = {
       drinks: this.props.menu.drinks === 0 ? [] : this.props.menu.drinks,
       dishes: this.props.menu.dishes === 0 ? [] : this.props.menu.dishes
@@ -36,6 +37,7 @@ class MenuManager extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('[COMPONENT DID UPDATE] MENU MANAGER')
     if(this.props.menu !== prevProps.menu) {
       let menu = {
         drinks: this.props.menu.drinks === 0 ? [] : this.props.menu.drinks,

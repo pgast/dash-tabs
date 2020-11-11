@@ -63,6 +63,7 @@ const OrdersManagerView = ({
               {orders.past.map((el, idx) => (
                 <OrderCard 
                   el={el}
+                  key={idx}
                   idx={idx}
                   isCurrent={false}
                   getTimeDate={getTimeDate}

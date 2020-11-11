@@ -90,7 +90,7 @@
 }
 
 /* contenedor de columnas */
-.demoModal_content > div:nth-child(2) {
+.demoModal_content > div:nth-child(3) {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -160,4 +160,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#mobileModal {
+  display: none;
+}
+
+/* MOBILE */
+@media screen and (max-width: 480px) {
+  .demoModal_wide > .demoModal_content {
+    padding: 1rem;
+    padding-top: 4rem;
+    justify-content: center;
+  }
+
+  .demoModal_content h3 {
+    display: none;
+  }
+
+  .demoModal_infoColumn {
+    display: none;
+  }
+
+  #mobileModal {
+    display: block;
+  }
+
+  #mobileModal p {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+  }
 }

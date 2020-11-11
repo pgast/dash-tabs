@@ -15,7 +15,7 @@ const OrdersSideboard = ({
       <div className="ordersSideboard_view">
         <div className="ordersSideboard_view_header">
           <div className="order_title">
-            <h3>ORDER #{selectedOrder.orderNum}</h3>
+            {selectedOrder.orderNum !== undefined && <h3>ORDER #{selectedOrder.orderNum}</h3>}
             <h3>{selectedOrder.table === "takeout" ? `TAKEOUT` : `TABLE ${selectedOrder.table}`}</h3>
           </div>
           <div className="order_info">

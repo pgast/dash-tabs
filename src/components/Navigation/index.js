@@ -92,7 +92,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
         {(!authUser.isAnonymous && !displayingMenu) && 
           <Link 
             to={ROUTES.ACCOUNT}
-            onClick={() => toggleView=('orders')}
+            onClick={() => toggleView('orders')}
             style={{ textDecoration: 'none', color: 'white' }} 
             >
               ACCOUNT

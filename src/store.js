@@ -8,7 +8,9 @@ function reducer (state, action) {
       return { ...state, view: action.payload };
     case 'TOGGLE_SIDEBOARD':
       return { ...state, sideboardOpen: action.payload };
-  };
+    default:
+      return { ...state };
+  }
 };
 
 export function StoreProvider (props) {

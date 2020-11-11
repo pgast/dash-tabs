@@ -21,25 +21,29 @@ class Dashboard extends Component {
     this.setState({ loading: true });
     let userUid = this.props.firebase.getCurrentUserUid();
     let userIsAnonymous = this.props.firebase.getCurrentUser().isAnonymous ? true : false;
-    // fetch current user info
+    this.setState({
+      loading: false,
+      userIsAnonymous,
+      showModal: userIsAnonymous,
+    });
+
     this.props.firebase.user(userUid).on('value', snapshot => {
       const userObject = snapshot.val();
       // check for demo user logout prevent crash
       if(this.props.firebase.getCurrentUser() === null || this.props.firebase.getCurrentUserUid() === null || userObject === null) return;
       userObject.uid = userUid;
-      this.setState({ 
-        loading: false,  
-        userIsAnonymous, 
-        user: userObject, 
-        showModal: userIsAnonymous,
-      });
+      this.setState({ user: userObject });
     })
+
     // fetch menu with user uid
     this.props.firebase.userMenu(userUid).on('value', snapshot => {
+      console.log('fetch')
       this.setState({ menu: snapshot.val() });
     });
+
     // fetch orders with user uid
     this.props.firebase.userOrders(userUid).on('value', snapshot => {
+      console.log('fetch 2');
       let orders = snapshot.val();
       // check for demo user logout prevent crash
       if(orders === null) return;

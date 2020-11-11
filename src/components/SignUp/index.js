@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
@@ -6,24 +6,39 @@ import * as ROUTES from '../../constants/routes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
+import Modal from '../Modals';
+import MobileModal from '../Modals/MobileModal';
 
-const SignUpPage = () => (
-  <div className="signupView">
-    <div id="backBtn">
-      <Link to={ROUTES.HOME} style={{ color: 'black' }}>
-        <FontAwesomeIcon icon={faCaretLeft} size="2x" />
-      </Link>
-    </div>
-    <div className="mobileHeader">
-      <h3>SIGN UP</h3>
-    </div>
+const SignUpPage = () => {
+  const [showModal, setShowModal] = useState(false);
 
-    <div className="dashboardHeader">
-      <h1>SIGN UP</h1>
+  useEffect(() => {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      setShowModal(true);
+     };
+  });
+
+  return (
+    <div className="signupView">
+      <div id="backBtn">
+        <Link to={ROUTES.HOME} style={{ color: 'black' }}>
+          <FontAwesomeIcon icon={faCaretLeft} size="2x" />
+        </Link>
+      </div>
+      <div className="mobileHeader">
+        <h3>SIGN UP</h3>
+      </div>
+
+      <div className="dashboardHeader">
+        <h1>SIGN UP</h1>
+      </div>
+      <SignUpForm />
+      <Modal show={showModal}>
+        <MobileModal />
+      </Modal>
     </div>
-    <SignUpForm />
-  </div>
-);
+  )
+};
 
 const INITIAL_STATE = {
   username: '',

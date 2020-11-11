@@ -65,7 +65,7 @@ class Menu extends Component {
           showModal: currentUser === null ? false : currentUser.isAnonymous,
         });
       } else {
-        this.setState({ error: true });
+        this.setState({ error: "ERROR FETCHING ITEMS FROM MENU" });
       }
     });
   }
@@ -119,11 +119,11 @@ class Menu extends Component {
   sendOrder = () => {
     if(this.state.table !== "takeout") {
       if(this.state.tableIsValid === false) {
-        this.setState({ error: "Check table number" });
+        this.setState({ error: "CHECK TABLE NUMBER" });
         return;
       }
       if(this.state.orderIsValid === false) {
-        this.setState({ error: "Order number is invalid" });
+        this.setState({ error: "ORDER NUMBER IS INVALID" });
         return;
       }
     }

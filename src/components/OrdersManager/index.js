@@ -21,13 +21,24 @@ class OrdersManager extends Component {
   }
 
   componentDidMount() {
-    this.setState({ orders: this.props.dbOrders });
+    this.setState({ orders: this.sortOrdersByTime(this.props.dbOrders) });
   }
 
   componentDidUpdate(prevProps) {
     if(this.props.dbOrders !== prevProps.dbOrders) {
-      this.setState({ orders: this.props.dbOrders });
+      this.setState({ orders: this.sortOrdersByTime(this.props.dbOrders) });
     }
+  }
+
+  sortOrdersByTime = (orders) => {
+    var sortedOrders = {...orders}; 
+    if(sortedOrders.current !== 0) {
+      sortedOrders.current = sortedOrders.current.slice().sort((a,b) => b.start - a.start);
+    }
+    if(sortedOrders.past !== 0) {
+      sortedOrders.past = sortedOrders.past.slice().sort((a,b) => b.start - a.start); 
+    }
+    return sortedOrders;
   }
 
   toggleViews = (input) => {
@@ -120,7 +131,6 @@ class OrdersManager extends Component {
       time: this.getTimeDate(mils) 
     };
   }
-
 
   getOrderTime = (start, end) => {
     let minutes = ((end-start)/1000)/60;

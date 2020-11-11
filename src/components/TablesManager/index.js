@@ -30,7 +30,7 @@ class TablesManager extends Component {
     this.setState({ tables: this.props.dbTables})
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if(this.props.dbTables !== prevProps.dbTables) {
       this.setState({ tables: this.props.dbTables });
     }
