@@ -4,9 +4,11 @@ import OrdersManager from '../OrdersManager';
 import TablesManager from '../TablesManager';
 import Modal from '../Modals';
 import DashboardDemoModal from '../Modals/DashboardDemoModal';
+import MobileModal from '../Modals/MobileModal';
 import { Store } from '../../store';
 
 const DashboardView = ({ 
+  isMobile,
   menu,
   tables,
   orders,
@@ -42,7 +44,11 @@ const DashboardView = ({
         }
       {loading && <div>Loading ...</div>}
       <Modal show={showModal}>
-        <DashboardDemoModal toggleModal={toggleModal} />
+        {isMobile ? 
+          <MobileModal />
+          :
+          <DashboardDemoModal toggleModal={toggleModal} />
+        }
       </Modal>
     </div>
   );

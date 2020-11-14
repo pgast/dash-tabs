@@ -14,6 +14,7 @@ class Dashboard extends Component {
       menu: {},
       orders: { current: [], past: [] },
       showModal: false,
+      isMobile: false,
     };
   };
 
@@ -25,6 +26,7 @@ class Dashboard extends Component {
       loading: false,
       userIsAnonymous,
       showModal: userIsAnonymous,
+      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
     });
 
     this.props.firebase.user(userUid).on('value', snapshot => {
@@ -33,18 +35,15 @@ class Dashboard extends Component {
       if(this.props.firebase.getCurrentUser() === null || this.props.firebase.getCurrentUserUid() === null || userObject === null) return;
       userObject.uid = userUid;
       this.setState({ user: userObject });
-      console.log(userObject);
     })
 
     // fetch menu with user uid
     this.props.firebase.userMenu(userUid).on('value', snapshot => {
-      console.log('fetch')
       this.setState({ menu: snapshot.val() });
     });
 
     // fetch orders with user uid
     this.props.firebase.userOrders(userUid).on('value', snapshot => {
-      console.log('fetch 2');
       let orders = snapshot.val();
       // check for demo user logout prevent crash
       if(orders === null) return;
@@ -91,9 +90,10 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { loading, menu, orders, showModal } = this.state;
+    const { loading, menu, orders, showModal, isMobile } = this.state;
     return (
       <DashboardView 
+        isMobile={isMobile}
         menu={menu}
         orders={orders}
         loading={loading}

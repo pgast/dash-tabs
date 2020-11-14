@@ -76,10 +76,6 @@
     align-items: center;
   }
 
-  .signupView > div:nth-child(4) > div > div {
-    margin-bottom: 1rem;
-  }
-
   .signupView > div:nth-child(4) > div > div:first-of-type {
     margin-right: 0;
   }

@@ -72,6 +72,7 @@ class SignUpFormBase extends Component {
           .then(() => {
             this.props.firebase.userOrders(authUser.user.uid)
             .set({ current: 0, past: 0 })
+            this.props.history.push(ROUTES.DASHBOARD);
           })
         })
       })

@@ -39,10 +39,8 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 1rem 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
-
-#logo 
 
 .navBar .dashboardLinks {
   background: none;

@@ -38,7 +38,7 @@
   width: 16rem;
   font-weight: 600;
   margin-top: 0.5rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .introRow div:last-of-type .btn {
@@ -152,7 +152,6 @@
 
   .introRow p {
     width: auto;
-    margin-bottom: 3rem;
   }
   /*  */
 
