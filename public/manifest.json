@@ -1,13 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64",
-      "type": "image/png"
-    }
-  ],
+  "short_name": "DashTabs",
+  "name": "DashTabs",
+  "icons": [],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
