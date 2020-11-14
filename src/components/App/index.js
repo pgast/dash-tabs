@@ -9,10 +9,9 @@ import SignInPage from '../SignIn';
 import AccountPage from '../Account';
 import Dashboard from '../Dashboard';
 import Navigation from '../Navigation';
-import PasswordForgetPage from '../PasswordForget';
-
-import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
+import * as ROUTES from '../../constants/routes';
+import PasswordForgetPage from '../PasswordForget';
 
 const App = () => (
   <StoreProvider>

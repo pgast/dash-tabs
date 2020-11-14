@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import OrdersManagerView from './ordersManagerView';
 
 class OrdersManager extends Component {

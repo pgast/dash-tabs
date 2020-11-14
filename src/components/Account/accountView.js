@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PasswordChangeForm from '../PasswordChange';
 import './style.css';
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PasswordChangeView from './passwordChangeView';
+
 import { withFirebase } from '../Firebase';
+import PasswordChangeView from './passwordChangeView';
 
 const INITIAL_STATE = {
   passwordOne: '',
@@ -16,7 +17,6 @@ class PasswordChangeForm extends Component {
 
   onSubmit = event => {
     const { passwordOne } = this.state;
-
     this.props.firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
@@ -35,14 +35,13 @@ class PasswordChangeForm extends Component {
 
   render() {
     const { passwordOne, passwordTwo, error } = this.state;
-
     const isInvalid =
       passwordOne !== passwordTwo || passwordOne === '';
 
     return (
       <PasswordChangeView 
-        isInvalid={isInvalid}
         error={error}
+        isInvalid={isInvalid}
         onSubmit={this.onSubmit}
         onChange={this.onChange}
         passwordOne={passwordOne}

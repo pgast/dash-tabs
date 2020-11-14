@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
+
+import Modal from '../Modals';
+import { Store } from '../../store';
 import MenuManager from '../MenuManager';
 import OrdersManager from '../OrdersManager';
 import TablesManager from '../TablesManager';
-import Modal from '../Modals';
-import DashboardDemoModal from '../Modals/DashboardDemoModal';
 import MobileModal from '../Modals/MobileModal';
-import { Store } from '../../store';
+import DashboardDemoModal from '../Modals/DashboardDemoModal';
 
 const DashboardView = ({ 
-  isMobile,
   menu,
   tables,
   orders,
   loading,
+  isMobile,
   createQR,
   showModal,
   toggleModal,

@@ -1,7 +1,8 @@
 import React from 'react';
-import TablesSideboard from './tablesSideboard';
-import { TableCard } from '../Cards';
+
 import Modal from '../Modals';
+import { TableCard } from '../Cards';
+import TablesSideboard from './tablesSideboard';
 import TableQRModal from '../Modals/TableQRModal';
 
 const TablesManagerView = ({

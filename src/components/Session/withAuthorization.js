@@ -1,6 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 
 import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
@@ -11,15 +11,12 @@ const withAuthorization = condition => Component => {
     componentDidMount() {
       let currentUrl = window.location.href.split('').slice(window.location.href.length-7).join('');
       let visitingAccount = currentUrl === "account" ? true : false;
-
       this.listener = this.props.firebase.onAuthUserListener(
         authUser => {
           // demo version validation
-          // if user uid is the one of the demo and url is account
           if(authUser.isAnonymous && visitingAccount) {
             this.props.history.push(ROUTES.HOME);
           }
-
           if (!condition(authUser)) {
             this.props.history.push(ROUTES.SIGN_IN);
           }

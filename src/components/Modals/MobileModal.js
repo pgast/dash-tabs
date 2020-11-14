@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes';
 
+import * as ROUTES from '../../constants/routes';
 
 const MobileModal = (props) => (
   <div className="demoModal_wide">

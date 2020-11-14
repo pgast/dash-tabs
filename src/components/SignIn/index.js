@@ -1,17 +1,16 @@
 import React, { Component, useState, useEffect } from 'react';
-import { withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
-
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withRouter, Link } from 'react-router-dom';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import './style.css';
 import Modal from '../Modals';
+import { SignUpLink } from '../SignUp';
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/routes';
 import MobileModal from '../Modals/MobileModal';
-
+import { PasswordForgetLink } from '../PasswordForget';
 
 const SignInPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -83,7 +82,6 @@ class SignInFormBase extends Component {
 
   render() {
     const { email, password, error } = this.state;
-
     const isInvalid = password === '' || email === '';
 
     return (

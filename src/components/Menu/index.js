@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MenuView from './menuView';
 
+import MenuView from './menuView';
 import { withFirebase } from '../Firebase';
 
 class Menu extends Component {

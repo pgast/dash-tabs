@@ -54,7 +54,6 @@
   margin-bottom: 1rem;
 }
 
-/* espacio de contenido dashboard */
 .demoModal_wide > .demoModal_content {
   width: 100%;
   padding: 4rem;
@@ -68,7 +67,6 @@
   margin-bottom: 1rem;
 }
 
-/* header */
 .demoModal_header {
   width: 100%;
   display: flex;
@@ -89,14 +87,12 @@
   margin-top: 0.3rem;
 }
 
-/* contenedor de columnas */
 .demoModal_content > div:nth-child(3) {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-/* individual columns */
 .demoModal_infoColumn {
   width: 25%;
   display: flex;
@@ -166,7 +162,6 @@
   display: none;
 }
 
-/* MOBILE */
 @media screen and (max-width: 480px) {
   .demoModal_wide > .demoModal_content {
     padding: 1rem;

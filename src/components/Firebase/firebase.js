@@ -4,12 +4,12 @@ import 'firebase/database';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
 };
 
 class Firebase {
@@ -56,14 +56,6 @@ class Firebase {
 
   doSignInAnonymously = () =>
     this.auth.signInAnonymously();
-
-  // Cleanup DB
-
-    // one cleanup function
-    // INPUTS
-    // time
-    // db ref path
-    // ref path function
 
   // Cleanup Orders
   cleanupDemoOrders = (time) => {
@@ -133,12 +125,12 @@ class Firebase {
   getCurrentUser = () => this.auth.currentUser;
 
   // User API
-  userOrders = uid => this.db.ref(`orders/${uid}`);
-  userMenu = uid => this.db.ref(`menus/${uid}`);
-  userTables = uid => this.db.ref(`users/${uid}/tables`);
-  user = uid => this.db.ref(`users/${uid}`);
-  userBusinessName = uid => this.db.ref(`users/${uid}/businessName`);
   users = () => this.db.ref('users');
+  user = uid => this.db.ref(`users/${uid}`);
+  userMenu = uid => this.db.ref(`menus/${uid}`);
+  userOrders = uid => this.db.ref(`orders/${uid}`);
+  userTables = uid => this.db.ref(`users/${uid}/tables`);
+  userBusinessName = uid => this.db.ref(`users/${uid}/businessName`);
 };
 
 export default Firebase;

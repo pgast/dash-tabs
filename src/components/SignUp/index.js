@@ -1,13 +1,13 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+
 import './style.css';
 import Modal from '../Modals';
+import { withFirebase } from '../Firebase';
 import MobileModal from '../Modals/MobileModal';
+import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -41,12 +41,12 @@ const SignUpPage = () => {
 };
 
 const INITIAL_STATE = {
-  username: '',
   email: '',
+  error: null,
+  username: '',
   passwordOne: '',
   passwordTwo: '',
   businessName: '',
-  error: null,
 };
 
 class SignUpFormBase extends Component {
@@ -57,18 +57,14 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     const { username, email, passwordOne, businessName } = this.state;
-
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-
       .then(authUser => {
         this.props.firebase.user(authUser.user.uid)
         .set({ username, email, tables: 0, businessName })
-        
         .then(() => {
           this.props.firebase.userMenu(authUser.user.uid)
           .set({ drinks: 0, dishes: 0 })
-
           .then(() => {
             this.props.firebase.userOrders(authUser.user.uid)
             .set({ current: 0, past: 0 })
@@ -96,11 +92,11 @@ class SignUpFormBase extends Component {
 
   render() {
     const {
-      username,
       email,
+      error,
+      username,
       passwordOne,
       passwordTwo,
-      error,
       businessName
     } = this.state;
 

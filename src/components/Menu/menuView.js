@@ -1,11 +1,12 @@
 import React from 'react';
-import Modal from '../Modals';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+
+import './style.css';
+import Modal from '../Modals';
 import { ClientMenuItemCard } from '../Cards';
 import MenuDemoModal from '../Modals/MenuDemoModal';
 import OrderConfirmScreen from './orderConfirmScreen';
-import './style.css';
 
 const MenuView = ({
   error,
@@ -49,14 +50,14 @@ const MenuView = ({
     )}
 
     <div className="menuContainer">
-      {/* FETCHING DATA SCREEN */}
+      {/* Fetching Data Screen */}
       {!dataFetched && 
         <div id="fetchingData">
           <h3>FETCHING DATA...</h3>
         </div>
       }
-      {/* FETCHING DATA SCREEN END */}
-      {/* MAIN SCREEN */}
+      {/* Fetching Data Screen End */}
+      {/* Main Screen */}
       {(!orderSent && !confirmScreen) && (
         <div className="client_menuItems">
           <div>
@@ -107,8 +108,8 @@ const MenuView = ({
           </div>
         </div>
       )}
-      {/* MAIN SCREEN END */}
-      {/* ORDER SUCCESS SCREEN */}
+      {/* Main Screen End */}
+      {/* Order Success Screen */}
       {orderSent && (
         <div className="orderSent">
           <div>
@@ -120,9 +121,8 @@ const MenuView = ({
           </div>
         </div>
       )}
-      {/* ORDER SUCCESS SCREEN END */}
-      {/* ERROR SCREEN */}
-      {/* check different error messages */}
+      {/* Order Success Screen End */}
+      {/* Error Screen */}
       {error && 
         <div id="menuView_error">
           <FontAwesomeIcon icon={faExclamationTriangle} size="4x"/>
@@ -130,8 +130,8 @@ const MenuView = ({
           <h3>PLEASE TRY AGAIN</h3>
         </div>
       }
-      {/* ERROR SCREEN END */}
-      {/* CONFIRM SCREEN */}
+      {/* Error Screen End */}
+      {/* Confirm Screen */}
       {(confirmScreen && !orderSent) && (
         <OrderConfirmScreen 
           order={order}
@@ -142,7 +142,7 @@ const MenuView = ({
           orderDishesIsEmpty={orderDishesIsEmpty}
         />
       )}
-      {/* CONFIRM SCREEN  */}
+      {/* Confirm Screen End */}
       {!orderSent && (
         <div className="bottomNav" id={confirmScreen && "bottomNavConfirm"}>
           <div>
@@ -158,11 +158,11 @@ const MenuView = ({
         </div>
       )}
     </div>
-    {/* DEMO MODAL */}
+    {/* Demo Modal */}
     <Modal show={showModal}>
       <MenuDemoModal toggleModal={toggleModal} />
     </Modal>
-    {/* DEMO MODAL END */}
+    {/* Demo Modal End */}
   </div>
 );
 

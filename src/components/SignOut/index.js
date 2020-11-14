@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import * as ROUTES from '../../constants/routes';
-import { Store } from '../../store';
 
+import { Store } from '../../store';
 import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/routes';
 
 const SignOutButton = ({ firebase, userIsAnonymous, history }) => {
   const { dispatch } = useContext(Store);

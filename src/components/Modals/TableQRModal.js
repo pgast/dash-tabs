@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import printJS from 'print-js';
+
 import './style.css';
 
 export default class TableQRModal extends Component {
   render() {
-    const singleQr = this.props.tablesQrCodes === null ? true : false;
-
+    const singleQr = this.props.tablesQrCodes === null ? true : false
     return (
       <div className={singleQr ? "tableModal" : "tableModal_wide"}>
         {singleQr && (

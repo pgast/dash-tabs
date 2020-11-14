@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
 import DashboardView from './dashboardView';
+import { withAuthorization } from '../Session';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -79,7 +79,6 @@ class Dashboard extends Component {
     const currentUrl = window.location.href;
     let qrUrl = currentUrl.split('').slice(0, currentUrl.length-9).join('');
     qrUrl = `${qrUrl}menu/${this.state.user.uid}/${takeOut ? 'takeout' : tableNum}`;
-    console.log(`CURRENT URL: ${currentUrl} / QRURL: ${qrUrl}`);
     return `https://api.qrserver.com/v1/create-qr-code/?data=${qrUrl}&amp;size=500x500`;
   }
 
@@ -93,10 +92,10 @@ class Dashboard extends Component {
     const { loading, menu, orders, showModal, isMobile } = this.state;
     return (
       <DashboardView 
-        isMobile={isMobile}
         menu={menu}
         orders={orders}
         loading={loading}
+        isMobile={isMobile}
         showModal={showModal}
         createQR={this.createQR}
         toggleModal={this.toggleModal}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import TablesManagerView from './tablesManagerView';
+
 import './style.css';
+import TablesManagerView from './tablesManagerView';
 
 class TablesManager extends Component {
   constructor(props) {
@@ -217,8 +218,6 @@ class TablesManager extends Component {
 
     return (
       <TablesManagerView 
-        cancelAddTable={this.cancelAddTable}
-        cancelTableEdit={this.cancelTableEdit}
         qrSrc={qrSrc}
         error={error}
         tables={tables}
@@ -237,9 +236,11 @@ class TablesManager extends Component {
         setTableEdit={this.setTableEdit}
         saveEditTable={this.saveEditTable}
         setInputTable={this.setInputTable}
+        cancelAddTable={this.cancelAddTable}
+        cancelTableEdit={this.cancelTableEdit}
         generateQrCodes={this.generateQrCodes}
-        toggleAddTableForm={this.toggleAddTableForm}
         updateTablesDb={this.props.updateTablesDb}
+        toggleAddTableForm={this.toggleAddTableForm}
       />
     )
   }

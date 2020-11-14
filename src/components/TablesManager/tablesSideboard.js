@@ -18,7 +18,7 @@ const TablesSideboard = ({
 }) => {
   return (
     <div className="tablesSideboard">
-      {/* MENU */}
+      {/* Menu */}
       {sideboardView === "menu" && (
         <div className="tablesSideboard_view main">
           <div 
@@ -43,9 +43,7 @@ const TablesSideboard = ({
           </div>
         </div>
       )}
-
-
-      {/* ADD TABLE FORM */}
+      {/* Add Table Form */}
       {sideboardView === "addTable" && (
         <>
           <div className="tablesSideboard_view">
@@ -85,9 +83,7 @@ const TablesSideboard = ({
           </div>
         </>
       )}
-
-
-      {/* EDIT TABLE FORM */}
+      {/* Edit Table Form */}
       {sideboardView === "editTable" && (
         <>
           <div className="tablesSideboard_view">

@@ -61,7 +61,7 @@
   align-items: flex-start;
 }
 
-/* MENU SIDEBOARD */
+/* Menu Sideboard */
 .menuSideboard {
   height: 100%;
   display: flex;
@@ -100,7 +100,7 @@
   border-top: 1px dashed black;
 }
 
-/* NEW ITEM FORM */
+/* New Item Form */
 .inputGroup {
   font-size: 0.7rem;
 }

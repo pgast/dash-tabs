@@ -1,4 +1,3 @@
-/* TABLES SIDEBOARD */
 .tablesSideboard {
   height: 100%;
   display: flex;
@@ -61,8 +60,6 @@
   margin-top: 3rem;
 }
 
-
-/* TABLE CARD */
 .tableCard {
   height: 2rem;
   margin-bottom: 1rem;

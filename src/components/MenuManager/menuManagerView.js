@@ -1,7 +1,8 @@
 import React from 'react';
-import MenuSideboard from './menuSideboard';
-import { MenuItemCard } from '../Cards';
+
 import './style.css';
+import { MenuItemCard } from '../Cards';
+import MenuSideboard from './menuSideboard';
 
 const MenuManagerView = ({
   menu,
@@ -19,7 +20,6 @@ const MenuManagerView = ({
   drinksIsEmpty,
   isInvalidEdit,
 }) => {
-
   return (
     <div className="viewSmall">
       <div className="dashboardHeader">

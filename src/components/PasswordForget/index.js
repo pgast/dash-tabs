@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import './style.css';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import './style.css';
 
 const PasswordForgetPage = () => (
   <div className="passwordForget">
@@ -17,7 +17,6 @@ const PasswordForgetPage = () => (
     <div className="mobileHeader">
       <h3>RESET PW</h3>
     </div>
-
     <div className="dashboardHeader">
       <h1>RESET PASSWORD</h1>
     </div>
@@ -38,7 +37,6 @@ class PasswordForgetFormBase extends Component {
 
   onSubmit = event => {
     const { email } = this.state;
-
     this.props.firebase
       .doPasswordReset(email)
       .then(() => {
@@ -47,7 +45,6 @@ class PasswordForgetFormBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
-
     event.preventDefault();
   };
 
@@ -58,7 +55,6 @@ class PasswordForgetFormBase extends Component {
   render() {
     const { email, error } = this.state;
     const isInvalid = email === '';
-
     return (
       <div>
         <div>

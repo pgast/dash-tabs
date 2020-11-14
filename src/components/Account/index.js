@@ -32,7 +32,6 @@ const AccountPage = (props) => {
   )
 };
 
-
 const condition = authUser => !!authUser;
 
 export default compose(

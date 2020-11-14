@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import OrdersSideboard from './ordersSideboard';
-import { OrderCard } from '../Cards';
+
 import './style.css';
 import { Store } from '../../store';
+import { OrderCard } from '../Cards';
+import OrdersSideboard from './ordersSideboard';
 
 const OrdersManagerView = ({
   orders,

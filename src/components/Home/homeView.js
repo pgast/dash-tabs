@@ -10,6 +10,7 @@ import {
   faMobileAlt, 
   faUserFriends,
 } from '@fortawesome/free-solid-svg-icons';
+
 import './style.css';
 
 const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
