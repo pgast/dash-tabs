@@ -12,9 +12,16 @@ import { withFirebase } from '../Firebase';
 import { AuthUserContext } from '../Session';
 import * as ROUTES from '../../constants/routes';
 
+interface NavigationAuthProps {
+  authUser: { isAnonymous: boolean },
+  displayingMenu: boolean,
+  history: any
+}
+
+type Views = "tables" | "menu" | "orders";
 
 const Navigation = (props) => {
-  const displayingMenu = props.location.pathname.slice(1,5) === "menu" ? true : false;
+  const displayingMenu: boolean = props.location.pathname.slice(1,5) === "menu" ? true : false;
   const history = props.history;
   return (
     <AuthUserContext.Consumer>
@@ -29,13 +36,13 @@ const Navigation = (props) => {
   );
 };
 
-const NavigationAuth = ({ authUser, displayingMenu, history }) => {
+const NavigationAuth = ({ authUser, displayingMenu, history }: NavigationAuthProps) => {
   const { state, dispatch } = useContext(Store);
-  const toggleView = view => dispatch({ type: 'TOGGLE_VIEW', payload: view });
-  const updateSideboardState = (mode) => dispatch({ type: 'TOGGLE_SIDEBOARD', payload: mode });
-  let parameter = window.location.href.split('').slice(-9).join('');
+  const toggleView = (view: Views) => dispatch({ type: 'TOGGLE_VIEW', payload: view });
+  const updateSideboardState = (mode: boolean) => dispatch({ type: 'TOGGLE_SIDEBOARD', payload: mode });
+  let parameter: string = window.location.href.split('').slice(-9).join('');
 
-  const toggleToOrders = () => {
+  const toggleToOrders = (): void => {
     toggleView('orders');
     updateSideboardState(false);
   };
@@ -102,7 +109,7 @@ const NavigationAuth = ({ authUser, displayingMenu, history }) => {
   );
 };
 
-const NavigationNonAuth = ({ displayingMenu }) => (
+const NavigationNonAuth = ({ displayingMenu }: { displayingMenu: boolean }) => (
   <div className="navBar">
     <div id="logo">
       <FontAwesomeIcon icon={faReceipt}/>

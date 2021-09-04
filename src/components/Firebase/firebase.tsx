@@ -2,7 +2,71 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-const config = {
+interface Table {
+  description: string,
+  number: number,
+  waitingOrder: boolean
+}
+
+export interface User {
+  businessName: string,
+  email: string,
+  username: string,
+  tables: Table[],
+  once?: (val: string, func: any) => void
+}
+
+interface MenuItem {
+  available: boolean,
+  description: string,
+  name: string,
+  price: number
+}
+
+interface Menu {
+  dishes: MenuItem[],
+  drinks: MenuItem[]
+}
+
+type Menus = Menu[]
+
+interface OrderItem {
+  name: string,
+  qty: number
+}
+
+interface CurrentOrder {
+  comments: string,
+  cost: number,
+  items: OrderItem[],
+  orderNum: number,
+  ready: boolean,
+  start: number,
+  table: string
+}
+
+interface PastOrder extends CurrentOrder {
+  end: number
+}
+
+interface UserOrders {
+  current: CurrentOrder[],
+  past: PastOrder[],
+}
+
+type DatabaseOrders = UserOrders[];
+
+interface ConfigType {
+  apiKey: string,
+  appId: string,
+  authDomain: string,
+  databaseURL: string,
+  projectId: string,
+  messagingSenderId: string,
+  storageBucket: string,
+}
+
+const config: ConfigType = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
@@ -19,17 +83,17 @@ class Firebase {
     this.db = app.database();
   }
   // Auth API
-  doCreateUserWithEmailAndPassword = (email, password) =>
+  doCreateUserWithEmailAndPassword = (email: string, password: string): void =>
     this.auth.createUserWithEmailAndPassword(email, password);
 
-  doSignInWithEmailAndPassword = (email, password) =>
+  doSignInWithEmailAndPassword = (email: string, password: string): void =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  doSignOut = () => this.auth.signOut();
+  doSignOut = (): void => this.auth.signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = (email: string): void => this.auth.sendPasswordResetEmail(email);
 
-  doPasswordUpdate = password =>
+  doPasswordUpdate = (password: string): void =>
     this.auth.currentUser.updatePassword(password);
 
   // Merge Auth and DB User API
@@ -125,12 +189,12 @@ class Firebase {
   getCurrentUser = () => this.auth.currentUser;
 
   // User API
-  users = () => this.db.ref('users');
-  user = uid => this.db.ref(`users/${uid}`);
-  userMenu = uid => this.db.ref(`menus/${uid}`);
-  userOrders = uid => this.db.ref(`orders/${uid}`);
-  userTables = uid => this.db.ref(`users/${uid}/tables`);
-  userBusinessName = uid => this.db.ref(`users/${uid}/businessName`);
+  users = (): User[] => this.db.ref('users');
+  user = (uid: string): User => this.db.ref(`users/${uid}`);
+  userMenu = (uid: string): Menu => this.db.ref(`menus/${uid}`);
+  userOrders = (uid: string): UserOrders => this.db.ref(`orders/${uid}`);
+  userTables = (uid: string): Table[]=> this.db.ref(`users/${uid}/tables`);
+  userBusinessName = (uid: string): string=> this.db.ref(`users/${uid}/businessName`);
 };
 
 export default Firebase;
