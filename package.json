@@ -6,13 +6,18 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "firebase": "^5.11.1",
     "print-js": "^1.3.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
-    "recompose": "^0.30.0"
+    "recompose": "^0.30.0",
+    "typescript": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",

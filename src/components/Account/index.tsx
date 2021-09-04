@@ -4,9 +4,18 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { AuthUserContext, withAuthorization } from '../Session';
 import AccountView from './accountView';
+import { User } from '../Firebase/firebase';
 
-const AccountPage = (props) => {
-  const [newBusinessName, setNewBusinessName] = useState('');
+interface Props {
+  firebase: {
+    getCurrentUserUid: () => string,
+    user: (uid: string) => User,
+    userBusinessName: (uid: string) => string,
+  }
+}
+
+const AccountPage = (props: Props) => {
+  const [newBusinessName, setNewBusinessName] = useState<string>('');
 
   useEffect(() => {
     props.firebase.user(props.firebase.getCurrentUserUid()).once('value', snapshot => {
@@ -14,7 +23,7 @@ const AccountPage = (props) => {
     });
   }, []);
 
-  const updateBusinessName = (businessName) => {
+  const updateBusinessName = (businessName: string): void => {
     props.firebase.userBusinessName(props.firebase.getCurrentUserUid()).set(businessName);
   }
 

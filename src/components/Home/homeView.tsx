@@ -13,7 +13,13 @@ import {
 
 import './style.css';
 
-const HomeView = ({ launchDemo, signUpRoute, signInRoute }) => (
+interface Props {
+  launchDemo: () => void;
+  signUpRoute: string;
+  signInRoute: string;
+}
+
+const HomeView = ({ launchDemo, signUpRoute, signInRoute }: Props) => (
   <div className="homeView">
     <div className="mobileHomeHeader">
       <div className="btn">

@@ -5,8 +5,19 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as DEMODATA from '../../constants/demoData';
 
-const HomePage = (props) => {
-  const launchDemo = () => {
+interface Props {
+  firebase: {
+    doSignOut: () => void,
+    doSignInAnonymously: () => void,
+    getCurrentUserUid: () => string,
+    userOrders: () => void,
+    userMenu: () => void,
+    user: () => void,
+  }
+}
+
+const HomePage = (props: Props)=> {
+  const launchDemo = (): void => {
     props.firebase.doSignOut();
     props.firebase.doSignInAnonymously()
       .then(() => {
@@ -15,7 +26,7 @@ const HomePage = (props) => {
         props.firebase.userMenu(currentUid).set(DEMODATA.MENU);
         props.firebase.user(currentUid).set(DEMODATA.USER);
         props.firebase.demoCleanupDb();
-        let clientMenuUrl = `${window.location.href}menu/${currentUid}/takeout`;
+        let clientMenuUrl : string = `${window.location.href}menu/${currentUid}/takeout`;
         props.history.push(ROUTES.DASHBOARD);
         window.open(clientMenuUrl, "_blank");
       });

@@ -10,7 +10,7 @@ import MobileModal from '../Modals/MobileModal';
 import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -40,7 +40,16 @@ const SignUpPage = () => {
   )
 };
 
-const INITIAL_STATE = {
+interface InitialState {
+  email: string,
+  error: any,
+  username: string,
+  passwordOne: string,
+  passwordTwo: string,
+  businessName: string
+}
+
+const INITIAL_STATE: InitialState = {
   email: '',
   error: null,
   username: '',
