@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { compose } from 'recompose';
+import { compose } from 'react-recompose';
 
 import { withFirebase } from '../Firebase';
 import { AuthUserContext, withAuthorization } from '../Session';

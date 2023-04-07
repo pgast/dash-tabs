@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { compose } from 'recompose';
+import { compose } from 'react-recompose';
 import { withRouter, Link } from 'react-router-dom';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose } from 'recompose';
+import { compose } from 'react-recompose';
 import { withRouter } from 'react-router-dom';
 
 import AuthUserContext from './context';

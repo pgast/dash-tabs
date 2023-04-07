@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { compose } from 'recompose';
+import { compose } from 'react-recompose';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { faReceipt } from '@fortawesome/free-solid-svg-icons';
